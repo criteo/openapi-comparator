@@ -1,6 +1,6 @@
 # [WIP] Open API Comparator
 
-A simple comparator able to detect differences between 2 versions of an API based on its Open API specifications.
+An API change detector.
 
 ## Installation
 
@@ -21,7 +21,7 @@ var messages = comparator.Compare(
 
 ## Documentation
 
-Each comparison rule is domentated in the [documentation section](https://github.com/criteo/openapi-comparator/tree/main/documentation).
+Each comparison rule is documented in the [documentation section](https://github.com/criteo/openapi-comparator/tree/main/documentation).
 
 ## License
 
