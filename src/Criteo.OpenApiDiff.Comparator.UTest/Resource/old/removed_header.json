@@ -1,0 +1,45 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "operation_check_03",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Parameters": {
+      "get": {
+        "operationId": "Responses_Get",
+        "responses": {
+          "200": {
+            "description": null,
+            "headers": {
+              "x-b": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "x-d": { }
+            }
+          }
+        }
+      }
+    },
+    "/api/Responses": {
+      "get": {
+        "operationId": "Responses_Get",
+        "responses": {
+          "200": {
+            "description": null,
+            "headers": {
+              "x-a": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "x-c": { }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "X-ms-paths",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Paths": {
+      "get": {
+        "operationId": "Paths_Get",
+        "responses": { }
+      }
+    },
+    "/api/Operations": {
+      "get": {
+        "operationId": "Operations_Get",
+        "responses": { }
+      },
+      "post": {
+        "operationId": "Operations_Post",
+        "responses": { }
+      }
+    }
+  },
+  "x-ms-paths": {
+    "/myPath/query-drive?op=folder": {
+      "get": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of pet to use",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Dog"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/myPath/query-drive?op=file": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cat"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Dog": {
+        "type": "object",
+        "properties": {
+          "playWith": {
+            "type": "string"
+          },
+          "enjoyWalk": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Cat": {
+        "type": "object",
+        "properties": {
+          "food": {
+            "type": "string"
+          },
+          "sleepTime": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

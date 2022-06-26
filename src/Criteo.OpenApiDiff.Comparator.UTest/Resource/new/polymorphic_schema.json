@@ -1,0 +1,137 @@
+﻿{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "2.0",
+    "title": "OpenApi Petstore"
+  },
+  "servers": [
+    {
+      "url": "https://petstore.openapi.io/v1"
+    }
+  ],
+  "paths": {
+    "/pets": {
+      "put": {
+        "summary": "Add a pet",
+        "operationId": "addPet",
+        "tags": [
+          "pets"
+        ],
+        "parameters": [
+          {
+            "name": "Pet parameter",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PetWithoutDiscriminator": {
+        "properties": {
+          "petKind": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "petKind"
+        ]
+      },
+      "Pet": {
+        "discriminator": {
+          "propertyName": "petKind"
+        },
+        "properties": {
+          "petKind": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "petKind"
+        ]
+      },
+      "Cat": {
+        "description": "A representation of a cat",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PetWithoutDiscriminator"
+          },
+          {
+            "properties": {
+              "huntingSkill": {
+                "type": "string",
+                "description": "The measured skill for hunting",
+                "default": "lazy",
+                "enum": [
+                  "clueless",
+                  "lazy",
+                  "adventurous",
+                  "aggressive"
+                ]
+              }
+            },
+            "required": [
+              "huntingSkill"
+            ]
+          }
+        ],
+        "properties": {
+          "breed": {
+            "type": "string"
+          }
+        }
+      },
+      "Dog": {
+        "description": "A representation of a dog",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Pet"
+          },
+          {
+            "properties": {
+              "packSize": {
+                "type": "integer",
+                "format": "int32",
+                "description": "the size of the pack the dog is from",
+                "default": 0,
+                "minimum": 0
+              }
+            },
+            "required": [
+              "packSize"
+            ]
+          }
+        ],
+        "properties": {
+          "breed": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

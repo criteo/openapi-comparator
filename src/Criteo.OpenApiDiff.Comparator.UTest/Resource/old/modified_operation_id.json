@@ -1,0 +1,24 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "changed_operation_id",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Paths": {
+      "get": {
+        "operationId": "Paths_Get",
+        "responses": { }
+      }
+    },
+    "/api/Operations": {
+      "get": {
+        "responses": { }
+      },
+      "post": {
+        "operationId": "Operations_Post",
+        "responses": { }
+      }
+    }
+  }
+}

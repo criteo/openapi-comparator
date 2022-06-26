@@ -1,0 +1,62 @@
+{
+    "openapi": "3.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Pet store",
+        "description": "Pet store."
+    },
+    "paths": {
+        "/pets": {
+            "get": {
+                "parameters:": [
+                    {
+                        "$ref": "#/components/parameters/skipParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Pet"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Pet": {
+                "description": "Just a Pet.",
+                "type": "object",
+                "properties": {
+                    "sleepTime": {
+                        "description": "How much time does he sleep.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "numberOfEyes": {
+                        "description": "No question asked.",
+                        "type": "string",
+                        "format": "email"
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "skipParam": {
+                "name": "skip",
+                "in": "query",
+                "description": "number of items to skip",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        }
+    }
+}

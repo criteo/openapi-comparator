@@ -1,0 +1,12 @@
+# Usual stuff
+bin
+obj
+
+# Gradle
+.build/
+
+# IDE
+.idea/
+
+# NUnit
+Folder.DotSettings.user

@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "removed_path",
+    "version": "2.0"
+  },
+  "paths": {
+    "/api/Paths": {
+      "get": {
+        "operationId": "Paths_Get",
+        "responses": { }
+      },
+      "post": {
+        "operationId": "Paths_Post",
+        "responses": { }
+      }
+    },
+    "/api/Operations": {
+      "get": {
+        "operationId": "Operations_Get",
+        "responses": { }
+      },
+      "post": {
+        "operationId": "Operations_Post",
+        "responses": { }
+      },
+      "head": {
+        "operationId": "Operations_Head",
+        "responses": { }
+      }
+    },
+    "/api/Parameters/{a}": {
+      "get": {
+        "operationId": "Parameters_Get",
+        "responses": { }
+      }
+    },
+    "/api/Responses": {
+      "get": {
+        "operationId": "Responses_Get",
+        "responses": {
+          "200": {
+            "description": null
+          }
+        }
+      }
+    }
+  }
+}

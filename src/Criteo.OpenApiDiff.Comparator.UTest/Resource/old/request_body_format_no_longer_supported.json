@@ -1,0 +1,120 @@
+﻿{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Petstore API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/pets": {
+      "post": {
+        "description": "Post multiple pets",
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schema/Pet"
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schema/Pet"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets/{id}": {
+      "post": {
+        "description": "Post one pet according to its id",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PetBody"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pet": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "petType": {
+            "type": "string",
+            "enum": [
+              "cat",
+              "dog"
+            ]
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "PetBody": {
+        "content": {
+          "text/plain": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schema/Pet"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schema/Pet"
+            }
+          }
+        }
+      }
+    }
+  }
+}

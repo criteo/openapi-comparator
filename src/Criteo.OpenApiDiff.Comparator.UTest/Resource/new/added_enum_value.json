@@ -1,0 +1,108 @@
+﻿{
+  "openapi": 3.0,
+  "info": {
+    "title": "removed_definition",
+    "version": "2.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    },
+    {
+      "url":"https://localhost:8000"
+    }
+  ],
+  "paths": {
+    "/api/Parameters": {
+      "put": {
+        "tags": [ "Parameters" ],
+        "operationId": "Parameters_Put",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/skipParam"
+          },
+          {
+            "$ref": "#/components/parameters/limitParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pet": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "petType"
+        },
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "petType": {
+            "type": "string",
+            "enum": [
+              "cat",
+              "dot",
+              "bird"
+            ]
+          },
+          "accountType": {
+            "type": "string",
+            "enum": [
+              "Standard_LRS",
+              "Standard_ZRS",
+              "Standard_GRS",
+              "Standard_RAGRS",
+              "Premium_LRS"
+            ],
+            "x-ms-enum": {
+              "name": "AccountType",
+              "modelAsString": true
+            }
+          }
+        },
+        "required": [
+          "name",
+          "petType"
+        ]
+      }
+    },
+    "parameters": {
+      "skipParam": {
+        "name": "skipParam",
+        "in": "query",
+        "description": "number of items to skip",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "limitParam": {
+        "name": "limitParam",
+        "in": "query",
+        "description": "max records to return",
+        "required": true,
+        "schema" : {
+          "type": "string",
+          "enum": [
+            "clueless",
+            "adventurous"
+          ]
+        }
+      }
+    }
+  }
+}
