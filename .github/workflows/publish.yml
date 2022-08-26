@@ -1,0 +1,19 @@
+name: Continuous Integration
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 5.0.x
+      - name: Install dependencies
+        run: dotnet restore ./src/Criteo.OpenApi.Comparator.UTest
+      - name: Build
+        run: dotnet build ./src/Criteo.OpenApi.Comparator.UTest --configuration Release --no-restore
+      - name: Pack
+        run: dotnet pack
+      - name: Test
+        run: dotnet test ./src/Criteo.OpenApi.Comparator.UTest --no-restore --verbosity minimal
