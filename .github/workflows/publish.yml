@@ -10,10 +10,13 @@ jobs:
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 5.0.x
-      - name: Install dependencies
-        run: dotnet restore ./src/Criteo.OpenApi.Comparator.UTest
-      - name: Build
-        run: dotnet build ./src/Criteo.OpenApi.Comparator.UTest --configuration Release --no-restore
-      - name: Pack
-        run: dotnet pack ./src/Criteo.OpenApi.Comparator
+          dotnet-version: 3.1.x
+      - name: Publish NuGet
+        id: publish_nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/Criteo.OpenApi.Comparator/Criteo.OpenApi.Comparator.csproj
+          BUILD_CONFIGURATION: Release
+          TAG_COMMIT: true
+          TAG_FORMAT: v*
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
