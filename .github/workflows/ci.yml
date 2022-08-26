@@ -3,15 +3,18 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['3.0', '3.1.x', '5.0.x' ]
     steps:
       - uses: actions/checkout@v3
-      - name: Setup .NET Core SDK 3.1.x
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '3.1.x'
+          dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
         run: dotnet restore ./src/Criteo.OpenApi.Comparator.UTest
       - name: Build
         run: dotnet build ./src/Criteo.OpenApi.Comparator.UTest --configuration Release --no-restore
       - name: Test
-        run: dotnet test ./src/Criteo.OpenApi.Comparator.UTest --no-restore --verbosity normal
+        run: dotnet test ./src/Criteo.OpenApi.Comparator.UTest --no-restore --verbosity minimal
