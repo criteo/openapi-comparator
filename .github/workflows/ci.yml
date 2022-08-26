@@ -1,0 +1,17 @@
+name: dotnet package
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET Core SDK 6.0.x
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build ./src/Criteo.OpenApi.Comparator.UTest/Criteo.OpenApi.Comparator.UTest.csproj --configuration Release --no-restore
+      - name: Test
+        run: dotnet test ./src/Criteo.OpenApi.Comparator.UTest/Criteo.OpenApi.Comparator.UTest.csproj --no-restore --verbosity normal
