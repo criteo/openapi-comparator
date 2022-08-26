@@ -1,5 +1,7 @@
-name: Continuous Integration
-on: [push]
+name: Package publication
+on:
+  release:
+    types: [created]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,6 +16,4 @@ jobs:
       - name: Build
         run: dotnet build ./src/Criteo.OpenApi.Comparator.UTest --configuration Release --no-restore
       - name: Pack
-        run: dotnet pack
-      - name: Test
-        run: dotnet test ./src/Criteo.OpenApi.Comparator.UTest --no-restore --verbosity minimal
+        run: dotnet pack ./src/Criteo.OpenApi.Comparator
