@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>Criteo.OpenApi.Comparator.UTest</RootNamespace>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildProjectDirectory)\Resource\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Criteo.OpenApi.Comparator.Core\Criteo.OpenApi.Comparator.Core.csproj" />
+    <ProjectReference Include="..\Criteo.OpenApi.Comparator\Criteo.OpenApi.Comparator.csproj" />
+  </ItemGroup>
+</Project>
