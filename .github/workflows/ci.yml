@@ -10,8 +10,8 @@ jobs:
         with:
           dotnet-version: '6.0.x'
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ./src/Criteo.OpenApi.Comparator.UTest
       - name: Build
-        run: dotnet build ./src/Criteo.OpenApi.Comparator.UTest/Criteo.OpenApi.Comparator.UTest.csproj --configuration Release --no-restore
+        run: dotnet build ./src/Criteo.OpenApi.Comparator.UTest --configuration Release --no-restore
       - name: Test
-        run: dotnet test ./src/Criteo.OpenApi.Comparator.UTest/Criteo.OpenApi.Comparator.UTest.csproj --no-restore --verbosity normal
+        run: dotnet test ./src/Criteo.OpenApi.Comparator.UTest --no-restore --verbosity normal
