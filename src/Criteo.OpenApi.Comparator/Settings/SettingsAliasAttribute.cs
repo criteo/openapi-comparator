@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Criteo.OpenApi.Comparator.Core
+namespace Criteo.OpenApi.Comparator.Settings
 {
     /// <summary>
     /// Attribute used for extending parameters with aliases.

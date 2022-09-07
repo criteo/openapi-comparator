@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators;
-using Criteo.OpenApi.Comparator.Core;
+using Criteo.OpenApi.Comparator.Parser;
 using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator
@@ -26,10 +26,10 @@ namespace Criteo.OpenApi.Comparator
             string oldOpenApiSpec,
             string newFileName,
             string newOpenApiSpec,
-            Settings settings = null)
+            Settings.Settings settings = null)
         {
-            var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec, oldFileName, settings);
-            var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec, newFileName, settings);
+            var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec, oldFileName);
+            var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec, newFileName);
 
             var context = new ComparisonContext<OpenApiDocument>(oldOpenApiDocument, newOpenApiDocument, settings);
 

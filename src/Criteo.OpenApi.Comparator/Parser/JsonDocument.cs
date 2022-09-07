@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace Criteo.OpenApi.Comparator.Core
+namespace Criteo.OpenApi.Comparator.Parser
 {
     /// <summary>
     /// An interface for untyped parsed JSON.

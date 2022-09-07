@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Criteo.OpenApi.Comparator.Core;
-using Criteo.OpenApi.Comparator.Core.Logging;
+using Criteo.OpenApi.Comparator.Parser;
+using Criteo.OpenApi.Comparator.Logging;
 
 namespace Criteo.OpenApi.Comparator
 {
@@ -20,7 +20,7 @@ namespace Criteo.OpenApi.Comparator
         /// <param name="oldOpenApiDocument">an old document of type T.</param>
         /// <param name="newOpenApiDocument">a new document of type T</param>
         /// <param name="settings">Comparison settings retrieved from command line</param>
-        public ComparisonContext(JsonDocument<T> oldOpenApiDocument, JsonDocument<T> newOpenApiDocument, Settings settings = null)
+        public ComparisonContext(JsonDocument<T> oldOpenApiDocument, JsonDocument<T> newOpenApiDocument, Settings.Settings settings = null)
         {
             _oldOpenApiDocument = oldOpenApiDocument;
             _newOpenApiDocument = newOpenApiDocument;
@@ -76,7 +76,7 @@ namespace Criteo.OpenApi.Comparator
                 Path,
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
-                Category.Info,
+                Severity.Info,
                 formatArguments
             ));
 
@@ -91,7 +91,7 @@ namespace Criteo.OpenApi.Comparator
                 Path,
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
-                Category.Error,
+                Severity.Error,
                 formatArguments
             ));
 
@@ -106,7 +106,7 @@ namespace Criteo.OpenApi.Comparator
                 Path,
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
-                Strict ? Category.Error : Category.Warning,
+                Strict ? Severity.Error : Severity.Warning,
                 formatArguments
             ));
 

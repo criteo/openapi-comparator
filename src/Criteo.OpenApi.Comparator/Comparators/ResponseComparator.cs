@@ -70,26 +70,26 @@ namespace Criteo.OpenApi.Comparator.Comparators
             oldHeaders = oldHeaders ?? new Dictionary<string, OpenApiHeader>();
 
             context.PushProperty("headers");
-            foreach (var (newHeaderName, newHeader) in newHeaders)
+            foreach (var header in newHeaders)
             {
-                context.PushProperty(newHeaderName);
-                if (!oldHeaders.TryGetValue(newHeaderName, out var oldHeader))
+                context.PushProperty(header.Key);
+                if (!oldHeaders.TryGetValue(header.Key, out var oldHeader))
                 {
-                    context.LogInfo(ComparisonMessages.AddingHeader, newHeaderName);
+                    context.LogInfo(ComparisonMessages.AddingHeader, header.Key);
                 }
                 else
                 {
-                    base.Compare(context, oldHeader, newHeader);
+                    base.Compare(context, oldHeader, header.Value);
                 }
                 context.Pop();
             }
 
-            foreach (var (oldHeaderName, _) in oldHeaders)
+            foreach (var oldHeader in oldHeaders)
             {
-                context.PushProperty(oldHeaderName);
-                if (!newHeaders.ContainsKey(oldHeaderName))
+                context.PushProperty(oldHeader.Key);
+                if (!newHeaders.ContainsKey(oldHeader.Key))
                 {
-                    context.LogBreakingChange(ComparisonMessages.RemovingHeader, oldHeaderName);
+                    context.LogBreakingChange(ComparisonMessages.RemovingHeader, oldHeader.Key);
                 }
                 context.Pop();
             }

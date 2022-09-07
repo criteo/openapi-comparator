@@ -4,8 +4,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Criteo.OpenApi.Comparator.Core.Logging;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
+using Criteo.OpenApi.Comparator.Logging;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Exceptions;
 using Microsoft.OpenApi.Models;
@@ -261,9 +261,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
         private static OpenApiPaths RemovePathVariables(OpenApiPaths paths)
         {
             var pathsResult = new OpenApiPaths();
-            foreach (var (pathAsString, pathItem) in paths)
+            foreach (var path in paths)
             {
-                pathsResult[ObjectPath.OpenApiPathName(pathAsString)] = pathItem;
+                pathsResult[ObjectPath.OpenApiPathName(path.Key)] = path.Value;
             }
             return pathsResult;
         }
@@ -476,20 +476,20 @@ namespace Criteo.OpenApi.Comparator.Comparators
              IDictionary<string, OpenApiSchema> newSchemas)
          {
              context.PushProperty("schemas");
-             foreach (var (oldSchemaName, oldSchema) in oldSchemas)
+             foreach (var oldSchema in oldSchemas)
              {
-                 context.PushProperty(oldSchemaName);
-                 if (!newSchemas.TryGetValue(oldSchemaName, out var newSchema))
+                 context.PushProperty(oldSchema.Key);
+                 if (!newSchemas.TryGetValue(oldSchema.Key, out var newSchema))
                  {
-                     if (!_isSchemaReferenced[oldSchema])
+                     if (!_isSchemaReferenced[oldSchema.Value])
                      {
                          // It's only an error if the schema is referenced in the old service.
-                         context.LogBreakingChange(ComparisonMessages.RemovedDefinition, oldSchemaName);
+                         context.LogBreakingChange(ComparisonMessages.RemovedDefinition, oldSchema.Key);
                      }
                  }
                  else
                  {
-                     _schemaComparator.Compare(context, oldSchema, newSchema, _isSchemaReferenced[oldSchema]);
+                     _schemaComparator.Compare(context, oldSchema.Value, newSchema, _isSchemaReferenced[oldSchema.Value]);
                  }
                  context.Pop();
              }

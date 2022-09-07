@@ -6,8 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Criteo.OpenApi.Comparator.Parser;
 
-namespace Criteo.OpenApi.Comparator.Core.Logging
+namespace Criteo.OpenApi.Comparator.Logging
 {
     /// <summary>
     /// Represents a path into an object.

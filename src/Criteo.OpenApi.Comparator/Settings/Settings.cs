@@ -11,7 +11,7 @@ using System.IO;
 using System.Reflection;
 using Criteo.OpenApi.Comparator.Core.Properties;
 
-namespace Criteo.OpenApi.Comparator.Core
+namespace Criteo.OpenApi.Comparator.Settings
 {
     /// <summary>
     /// Class that represents the command line options

@@ -6,8 +6,8 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Criteo.OpenApi.Comparator.Core;
-using Criteo.OpenApi.Comparator.Core.Logging;
+using Criteo.OpenApi.Comparator.Parser;
+using Criteo.OpenApi.Comparator.Logging;
 
 namespace Criteo.OpenApi.Comparator
 {
@@ -29,7 +29,7 @@ namespace Criteo.OpenApi.Comparator
             ObjectPath path,
             IJsonDocument oldDocument,
             IJsonDocument newDocument,
-            Category severity,
+            Severity severity,
             params object[] formatArguments
         )
         {
@@ -49,7 +49,7 @@ namespace Criteo.OpenApi.Comparator
         private IJsonDocument NewDocument { get; }
 
         /// Info, Error, Warning
-        public Category Severity { get; }
+        public Severity Severity { get; }
 
         public string Message { get; }
 

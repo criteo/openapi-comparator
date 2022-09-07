@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
-using Criteo.OpenApi.Comparator.Core;
+using Criteo.OpenApi.Comparator.Parser;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -26,7 +26,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string fileName = "invalid_json_file.txt";
             var documentAsString = ReadOpenApiFile(fileName);
-            Assert.Throws<JsonReaderException>(() => OpenApiParser.Parse(documentAsString, fileName, new Settings()));
+            Assert.Throws<JsonReaderException>(() => OpenApiParser.Parse(documentAsString, fileName));
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string fileName = "openapi_specification.json";
             var documentAsString = ReadOpenApiFile(fileName);
-            var validOpenApiDocument = OpenApiParser.Parse(documentAsString, fileName, new Settings());
+            var validOpenApiDocument = OpenApiParser.Parse(documentAsString, fileName);
             Assert.IsInstanceOf<JsonDocument<OpenApiDocument>>(validOpenApiDocument);
         }
     }

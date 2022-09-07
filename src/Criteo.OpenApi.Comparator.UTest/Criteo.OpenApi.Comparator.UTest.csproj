@@ -16,7 +16,6 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Criteo.OpenApi.Comparator.Core\Criteo.OpenApi.Comparator.Core.csproj" />
     <ProjectReference Include="..\Criteo.OpenApi.Comparator\Criteo.OpenApi.Comparator.csproj" />
   </ItemGroup>
 </Project>

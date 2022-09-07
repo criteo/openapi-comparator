@@ -1,4 +1,4 @@
-# [WIP] Open API Comparator
+# Open API Comparator
 
 An API change detector.
 

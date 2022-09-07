@@ -6,7 +6,7 @@ using System.Linq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Reflection;
-using Criteo.OpenApi.Comparator.Core.Logging;
+using Criteo.OpenApi.Comparator.Logging;
 
 namespace Criteo.OpenApi.Comparator.UTest
 {
@@ -40,7 +40,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.NoVersionChange,
-                Severity = Category.Info,
+                Severity = Severity.Info,
                 OldJsonRef = "old/no_version_change.json#/info/version"
             });
         }
@@ -53,7 +53,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.VersionsReversed,
-                Severity = Category.Error,
+                Severity = Severity.Error,
                 OldJsonRef = "old/version_reversed.json#/info/version"
             });
         }
@@ -66,13 +66,13 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedPath,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_path.json#/paths/~1api~1Parameters~1{a}"
             });
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedPath,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_path.json#/paths/~1api~1Responses"
             });
         }
@@ -85,7 +85,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedPath,
-                Severity = Category.Info,
+                Severity = Severity.Info,
                 NewJsonRef = "new/added_path.json#/paths/~1api~1Paths"
             });
         }
@@ -98,7 +98,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedOperation,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/removed_operation.json#/paths/~1api~1Operations/post"
             });
         }
@@ -111,7 +111,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedOperation,
-                Severity = Category.Info,
+                Severity = Severity.Info,
                 NewJsonRef = "new/added_operation.json#/paths/~1api~1Paths/post"
             });
         }
@@ -124,7 +124,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ModifiedOperationId,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/modified_operation_id.json#/paths/~1api~1Paths/get/operationId",
                 OldJsonRef = "old/modified_operation_id.json#/paths/~1api~1Operations/get/operationId"
             });
@@ -138,7 +138,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddingResponseCode,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/added_response_code.json#/paths/~1api~1Operations/post/responses/200"
             });
         }
@@ -151,7 +151,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedResponseCode,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_response_code.json#/paths/~1api~1Operations/post/responses/200"
             });
         }
@@ -164,7 +164,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddingHeader,
-                Severity = Category.Info,
+                Severity = Severity.Info,
                 NewJsonRef = "new/added_header.json#/paths/~1api~1Responses/get/responses/200/headers/x-c"
             });
         }
@@ -177,7 +177,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovingHeader,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_header.json#/paths/~1api~1Responses/get/responses/200/headers/x-c"
             });
         }
@@ -190,7 +190,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.LongRunningOperationExtensionChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/long_running_operation.json#/paths/~1api~1Parameters/put/x-ms-long-running-operation"
             });
         }
@@ -207,7 +207,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedDefinition,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_schema.json#/schemas/Pet"
             });
         }
@@ -220,7 +220,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedClientParameter,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_client_parameter.json#/parameters/limitParam"
             });
         }
@@ -233,7 +233,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedRequiredParameter,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_required_parameter.json#/paths/~1api~1Parameters/put/parameters/1"
             });
         }
@@ -246,7 +246,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddingRequiredParameter,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/added_required_parameter.json#/paths/~1api~1Parameters/put/parameters/1"
             });
         }
@@ -259,7 +259,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ParameterInHasChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/parameter_in_has_changed.json#/paths/~1api~1Parameters/put/parameters/0/in"
             });
         }
@@ -273,13 +273,13 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstantStatusHasChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/constant_status_has_changed.json#/paths/~1api~1Parameters/put/parameters/1/enum"
             }, 1);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstraintIsWeaker,
-                Severity = Category.Info,
+                Severity = Severity.Info,
             }, 1);
         }
 
@@ -300,7 +300,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ReferenceRedirection,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/reference_redirection.json#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items"
             });
         }
@@ -313,13 +313,13 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedEnumValue,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_enum_value.json#/paths/~1api~1Parameters/put/parameters/0/schema/enum"
             }, 2);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstraintIsStronger,
-                Severity = Category.Info,
+                Severity = Severity.Info,
             }, 2);
         }
 
@@ -331,13 +331,13 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedEnumValue,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/added_enum_value.json#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/properties/petType/enum"
             }, 1);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstraintIsWeaker,
-                Severity = Category.Info,
+                Severity = Severity.Info,
             }, 2);
         }
 
@@ -349,7 +349,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedAdditionalProperties,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/added_additional_properties.json#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/additionalProperties"
             });
         }
@@ -362,7 +362,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedAdditionalProperties,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_additional_properties.json#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/additionalProperties"
             });
         }
@@ -381,7 +381,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.TypeFormatChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/type_format_changed.json#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/sleepTime/format"
             });
         }
@@ -410,7 +410,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.TypeChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/type_changed.json#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/name/type"
             });
         }
@@ -423,7 +423,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.DefaultValueChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/default_value_changed.json#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/name/default"
             });
         }
@@ -436,7 +436,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ReadonlyPropertyChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/readonly_property_changed.json#/paths/~1pets/get/responses/default/content/application~1json/schema/readOnly"
             });
         }
@@ -449,7 +449,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.DifferentDiscriminator,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/different_discriminator.json#/paths/~1pets/get/responses/404/content/application~1json/schema/discriminator"
             });
         }
@@ -462,7 +462,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedProperty,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_property.json#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/petType"
             });
         }
@@ -475,7 +475,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedRequiredProperty,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/added_required_property.json#/paths/~1pets/get/responses/200/content/application~1json/schema/items"
             });
         }
@@ -488,7 +488,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddingOptionalParameter,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/added_optional_parameter.json#/paths/~1api~1Parameters/put/parameters/1"
             });
         }
@@ -501,7 +501,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedOptionalProperty,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/added_optional_property.json#/paths/~1api~1Parameters/put/parameters/0/schema/properties/message"
             });
         }
@@ -514,7 +514,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ChangedParameterOrder,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/changed_parameter_order.json#/paths/~1api~1Parameters/put/parameters"
             });
         }
@@ -527,7 +527,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedPropertyInResponse,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/added_property_in_response.json#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/petType"
             });
         }
@@ -540,7 +540,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedReadOnlyPropertyInResponse,
-                Severity = Category.Info,
+                Severity = Severity.Info,
                 NewJsonRef = "new/added_readOnly_property_in_response.json#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/petType"
             });
         }
@@ -553,18 +553,18 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstraintChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/constraint_changed.json#/paths/~1pets/get/parameters/0/schema/properties/accessKey/pattern"
             }, 3);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedEnumValue,
-                Severity = Category.Warning
+                Severity = Severity.Warning
             }, 1);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstraintChanged,
-                Severity = Category.Info
+                Severity = Severity.Info
             }, 1);
         }
 
@@ -576,13 +576,13 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstraintIsStronger,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/constraint_is_stronger.json#/paths/~1pets/get/parameters/0/schema/properties/minLimit/maximum"
             }, 6);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstraintIsStronger,
-                Severity = Category.Info
+                Severity = Severity.Info
             }, 2);
         }
 
@@ -594,13 +594,13 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstraintIsWeaker,
-                Severity = Category.Info,
+                Severity = Severity.Info,
                 OldJsonRef = "old/constraint_is_weaker.json#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum"
             }, 7);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ConstraintIsWeaker,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
             }, 1);
         }
 
@@ -612,7 +612,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.DifferentAllOf,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/different_allOf.json#/paths/~1pets/get/parameters/0/schema/allOf"
             });
         }
@@ -625,13 +625,13 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedProperty,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/recursive_model.json#/paths/~1api~1Operations/post/parameters/0/schema/properties/error/properties/target"
             }, 1);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ReadonlyPropertyChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
             }, 1);
         }
 
@@ -643,7 +643,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RequestBodyFormatNowSupported,
-                Severity = Category.Info,
+                Severity = Severity.Info,
                 NewJsonRef = "new/request_body_format_now_supported.json#/paths/~1pets/post/requestBody/content/application~1xml"
             });
         }
@@ -656,7 +656,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ResponseBodyFormatNowSupported,
-                Severity = Category.Info,
+                Severity = Severity.Info,
                 NewJsonRef = "new/response_body_format_now_supported.json#/paths/~1pets/get/responses/200/content/application~1xml"
             });
         }
@@ -669,7 +669,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RequestBodyFormatNoLongerSupported,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/request_body_format_no_longer_supported.json#/paths/~1pets/post/requestBody/content/text~1plain"
             });
         }
@@ -682,7 +682,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ServerNoLongerSupported,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/server_no_longer_supported.json#/servers/1"
             });
         }
@@ -695,7 +695,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.ParameterStyleChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/parameter_style_changed.json#/paths/~1pets/get/parameters/0/style"
             });
         }
@@ -712,7 +712,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedOptionalProperty,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/polymorphic_schema.json#/schemas/Dog/properties/breed"
             });
         }
@@ -728,19 +728,19 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedPath,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/x-ms-paths.json#/x-ms-paths/~1myPath~1query-drive?op=file"
             }, 1);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RequiredStatusChange,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/x-ms-paths.json#/x-ms-paths/~1myPath~1query-drive?op=folder/get/parameters/0/required"
             }, 1);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonMessages.TypeChanged,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/x-ms-paths.json#/schemas/Cat/properties/sleepTime/type"
             }, 1);
         }
@@ -753,7 +753,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.AddedRequestBody,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 NewJsonRef = "new/added_request_body.json#/paths/~1pets/post/requestBody"
             });
         }
@@ -766,7 +766,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonMessages.RemovedRequestBody,
-                Severity = Category.Warning,
+                Severity = Severity.Warning,
                 OldJsonRef = "old/removed_request_body.json#/paths/~1pets/post/requestBody"
             });
         }
@@ -867,7 +867,7 @@ namespace Criteo.OpenApi.Comparator.UTest
     {
         public MessageTemplate Rule;
 
-        public Category? Severity;
+        public Severity? Severity;
 
         public string OldJsonRef;
 

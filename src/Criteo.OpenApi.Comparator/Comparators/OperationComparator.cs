@@ -210,10 +210,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
 
             var commonResponses = oldResponses.Where(response => newResponses.ContainsKey(response.Key));
-            foreach (var (statusCode, oldResponse) in commonResponses)
+            foreach (var response in commonResponses)
             {
-                context.PushProperty(statusCode);
-                _response.Compare(context, oldResponse, newResponses[statusCode]);
+                context.PushProperty(response.Key);
+                _response.Compare(context, response.Value, newResponses[response.Key]);
                 context.Pop();
             }
             context.Pop();

@@ -26,9 +26,9 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var paths = new OpenApiPaths();
 
-            foreach (var (path, pathItem) in rawPaths)
+            foreach (var path in rawPaths)
             {
-                paths.Add(path, (pathItem as OpenApiObject)?.ToOpenApiPathItem());
+                paths.Add(path.Key, (path.Value as OpenApiObject)?.ToOpenApiPathItem());
             }
             return paths;
         }
@@ -76,9 +76,9 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var properties = new Dictionary<string, OpenApiSchema>();
 
-            foreach (var (propertyName, property) in propertiesAsObject)
+            foreach (var property in propertiesAsObject)
             {
-                properties.Add(propertyName, (property as OpenApiObject)?.ToSchema());
+                properties.Add(property.Key, (property.Value as OpenApiObject)?.ToSchema());
             }
             return properties;
         }
@@ -86,43 +86,43 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         private static OpenApiSchema ToSchema(this OpenApiObject schemaAsObject)
         {
             var schema = new OpenApiSchema();
-            foreach (var (schemaAttribute, value) in schemaAsObject)
+            foreach (var schemaObject in schemaAsObject)
             {
-                switch (schemaAttribute)
+                switch (schemaObject.Key)
                 {
                     case "$ref":
                         schema.UnresolvedReference = true;
-                        schema.Reference = (value as OpenApiString)?.Value.ToReference(ReferenceType.Schema);
+                        schema.Reference = (schemaObject.Value as OpenApiString)?.Value.ToReference(ReferenceType.Schema);
                         return schema;
                     case "readOnly":
-                        schema.ReadOnly = (value as OpenApiBoolean)?.Value ?? false;
+                        schema.ReadOnly = (schemaObject.Value as OpenApiBoolean)?.Value ?? false;
                         continue;
                     case "discriminator":
-                        schema.Discriminator = (value as OpenApiObject)?.ToDiscriminator();
+                        schema.Discriminator = (schemaObject.Value as OpenApiObject)?.ToDiscriminator();
                         continue;
                     case "default":
-                        schema.Default = value;
+                        schema.Default = schemaObject.Value;
                         continue;
                     case "type":
-                        schema.Type = (value as OpenApiString)?.Value;
+                        schema.Type = (schemaObject.Value as OpenApiString)?.Value;
                         continue;
                     case "items":
-                        schema.Items = (value as OpenApiObject)?.ToSchema();
+                        schema.Items = (schemaObject.Value as OpenApiObject)?.ToSchema();
                         continue;
                     case "enum":
-                        schema.Enum = value as OpenApiArray;
+                        schema.Enum = schemaObject.Value as OpenApiArray;
                         continue;
                     case "format":
-                        schema.Format = (value as OpenApiString)?.Value;
+                        schema.Format = (schemaObject.Value as OpenApiString)?.Value;
                         continue;
                     case "allOf":
-                        schema.AllOf = (value as OpenApiArray)?.ToAllOf();
+                        schema.AllOf = (schemaObject.Value as OpenApiArray)?.ToAllOf();
                         continue;
                     case "properties":
-                        schema.Properties = (value as OpenApiObject)?.ToProperties();
+                        schema.Properties = (schemaObject.Value as OpenApiObject)?.ToProperties();
                         continue;
                     case "required":
-                        schema.Required = (value as OpenApiArray)?.ToRequiredArray();
+                        schema.Required = (schemaObject.Value as OpenApiArray)?.ToRequiredArray();
                         continue;
                 }
             }
@@ -138,25 +138,25 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var parameter = new OpenApiParameter();
 
-            foreach (var (parameterAttribute, parameterValue) in parametersAsObject)
+            foreach (var parameterAsObject in parametersAsObject)
             {
-                switch (parameterAttribute)
+                switch (parameterAsObject.Key)
                 {
                     case "$ref":
                         parameter.UnresolvedReference = true;
-                        parameter.Reference = (parameterValue as OpenApiString)?.Value.ToReference(ReferenceType.Parameter);
+                        parameter.Reference = (parameterAsObject.Value as OpenApiString)?.Value.ToReference(ReferenceType.Parameter);
                         return parameter;
                     case "name":
-                        parameter.Name = (parameterValue as OpenApiString)?.Value;
+                        parameter.Name = (parameterAsObject.Value as OpenApiString)?.Value;
                         continue;
                     case "in":
-                        parameter.In = (parameterValue as OpenApiString)?.Value.ToParameterLocation();
+                        parameter.In = (parameterAsObject.Value as OpenApiString)?.Value.ToParameterLocation();
                         continue;
                     case "required":
-                        parameter.Required = (parameterValue as OpenApiBoolean)?.Value ?? false;
+                        parameter.Required = (parameterAsObject.Value as OpenApiBoolean)?.Value ?? false;
                         continue;
                     case "schema":
-                        parameter.Schema = (parameterValue as OpenApiObject)?.ToSchema();
+                        parameter.Schema = (parameterAsObject.Value as OpenApiObject)?.ToSchema();
                         continue;
                 }
             }
@@ -178,19 +178,19 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var requestBody = new OpenApiRequestBody();
 
-            foreach (var (key, value) in responsesAsObject)
+            foreach (var responseAsObject in responsesAsObject)
             {
-                switch (key)
+                switch (responseAsObject.Key)
                 {
                     case "content":
-                        requestBody.Content = (value as OpenApiObject)?.ToContent();
+                        requestBody.Content = (responseAsObject.Value as OpenApiObject)?.ToContent();
                         continue;
                     case "required":
-                        requestBody.Required = (value as OpenApiBoolean)?.Value ?? false;
+                        requestBody.Required = (responseAsObject.Value as OpenApiBoolean)?.Value ?? false;
                         continue;
                     case "$ref":
                         requestBody.UnresolvedReference = true;
-                        requestBody.Reference = (value as OpenApiString)?.Value.ToReference(ReferenceType.RequestBody);
+                        requestBody.Reference = (responseAsObject.Value as OpenApiString)?.Value.ToReference(ReferenceType.RequestBody);
                         return requestBody;
                 }
             }
@@ -201,12 +201,12 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var response = new OpenApiMediaType();
 
-            foreach (var (mediaTypeAttribute, value) in mediaTypeAsObject)
+            foreach (var mediaType in mediaTypeAsObject)
             {
-                switch (mediaTypeAttribute)
+                switch (mediaType.Key)
                 {
                     case "schema":
-                        response.Schema = (value as OpenApiObject)?.ToSchema();
+                        response.Schema = (mediaType.Value as OpenApiObject)?.ToSchema();
                         continue;
                 }
             }
@@ -218,9 +218,9 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var response = new Dictionary<string, OpenApiMediaType>();
 
-            foreach (var (mediaType, mediaTypeObject) in mediaTypeAsObject)
+            foreach (var mediaType in mediaTypeAsObject)
             {
-                response.Add(mediaType, (mediaTypeObject as OpenApiObject)?.ToMediaTypeObject());
+                response.Add(mediaType.Key, (mediaType.Value as OpenApiObject)?.ToMediaTypeObject());
             }
 
             return response;
@@ -230,16 +230,16 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var response = new OpenApiResponse();
 
-            foreach (var (responseAttribute, value) in responseAsObject)
+            foreach (var responseAttribute in responseAsObject)
             {
-                switch (responseAttribute)
+                switch (responseAttribute.Key)
                 {
                     case "$ref":
                         response.UnresolvedReference = true;
-                        response.Reference = (value as OpenApiString)?.Value.ToReference(ReferenceType.Response);
+                        response.Reference = (responseAttribute.Value as OpenApiString)?.Value.ToReference(ReferenceType.Response);
                         return response;
                     case "content":
-                        response.Content = (value as OpenApiObject)?.ToContent();
+                        response.Content = (responseAttribute.Value as OpenApiObject)?.ToContent();
                         continue;
                 }
             }
@@ -251,9 +251,9 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var responses = new OpenApiResponses();
 
-            foreach (var (statusCode, responseAsObject) in responsesAsObject)
+            foreach (var responseAsObject in responsesAsObject)
             {
-                responses.Add(statusCode, (responseAsObject as OpenApiObject)?.ToResponse());
+                responses.Add(responseAsObject.Key, (responseAsObject.Value as OpenApiObject)?.ToResponse());
             }
             return responses;
         }
@@ -262,21 +262,21 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var operation = new OpenApiOperation();
 
-            foreach (var (key, value) in operationAsObject)
+            foreach (var operationProperty in operationAsObject)
             {
-                switch (key)
+                switch (operationProperty.Key)
                 {
                     case "operationId":
-                        operation.OperationId = (value as OpenApiString)?.Value;
+                        operation.OperationId = (operationProperty.Value as OpenApiString)?.Value;
                         continue;
                     case "parameters":
-                        operation.Parameters = (value as OpenApiArray)?.ToParameters();
+                        operation.Parameters = (operationProperty.Value as OpenApiArray)?.ToParameters();
                         continue;
                     case "requestBody":
-                        operation.RequestBody = (value as OpenApiObject)?.ToRequestBody();
+                        operation.RequestBody = (operationProperty.Value as OpenApiObject)?.ToRequestBody();
                         continue;
                     case "responses":
-                        operation.Responses = (value as OpenApiObject)?.ToResponses();
+                        operation.Responses = (operationProperty.Value as OpenApiObject)?.ToResponses();
                         continue;
                 }
             }
@@ -287,18 +287,18 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         {
             var pathItem = new OpenApiPathItem();
 
-            foreach (var (pathItemKey, operation) in rawPathItem)
+            foreach (var operation in rawPathItem)
             {
-                if (_operationTypesMap.ContainsKey(pathItemKey))
+                if (_operationTypesMap.ContainsKey(operation.Key))
                 {
-                    pathItem.Operations.Add(_operationTypesMap[pathItemKey], (operation as OpenApiObject)?.ToOperation());
+                    pathItem.Operations.Add(_operationTypesMap[operation.Key], (operation.Value as OpenApiObject)?.ToOperation());
                 }
                 else
                 {
-                    switch (pathItemKey)
+                    switch (operation.Key)
                     {
                         case "parameters":
-                            pathItem.Parameters = (operation as OpenApiArray)?.ToParameters();
+                            pathItem.Parameters = (operation.Value as OpenApiArray)?.ToParameters();
                             continue;
                     }
                 }

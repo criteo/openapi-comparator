@@ -470,25 +470,25 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 : newSchema.Properties.Where(property =>
                     !oldSchema.Properties.TryGetValue(property.Key, out var oldProperty) || oldProperty == null);
 
-            foreach (var (propertyName, addedProperty) in addedProperties)
+            foreach (var property in addedProperties)
             {
-                context.PushProperty(propertyName);
+                context.PushProperty(property.Key);
 
-                if (oldSchema.IsPropertyRequired(propertyName))
+                if (oldSchema.IsPropertyRequired(property.Key))
                 {
-                    context.LogBreakingChange(ComparisonMessages.AddedRequiredProperty, propertyName);
+                    context.LogBreakingChange(ComparisonMessages.AddedRequiredProperty, property.Key);
                 }
 
                 if (context.Direction == DataDirection.Response)
                 {
-                    if (addedProperty.ReadOnly)
-                        context.LogInfo(ComparisonMessages.AddedReadOnlyPropertyInResponse, propertyName);
+                    if (property.Value.ReadOnly)
+                        context.LogInfo(ComparisonMessages.AddedReadOnlyPropertyInResponse, property.Key);
                     else
-                        context.LogBreakingChange(ComparisonMessages.AddedPropertyInResponse, propertyName);
+                        context.LogBreakingChange(ComparisonMessages.AddedPropertyInResponse, property.Key);
                 }
-                else if (isSchemaReferenced && !newSchema.IsPropertyRequired(propertyName))
+                else if (isSchemaReferenced && !newSchema.IsPropertyRequired(property.Key))
                 {
-                    context.LogBreakingChange(ComparisonMessages.AddedOptionalProperty, propertyName);
+                    context.LogBreakingChange(ComparisonMessages.AddedOptionalProperty, property.Key);
                 }
 
                 context.Pop();
@@ -503,10 +503,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             var commonProperties =
                 oldSchema.Properties.Where(property => newSchema.Properties.ContainsKey(property.Key));
-            foreach (var (propertyName, oldProperty) in commonProperties)
+            foreach (var property in commonProperties)
             {
-                context.PushProperty(propertyName);
-                Compare(context, oldProperty, newSchema.Properties[propertyName]);
+                context.PushProperty(property.Key);
+                Compare(context, property.Value, newSchema.Properties[property.Key]);
                 context.Pop();
             }
         }

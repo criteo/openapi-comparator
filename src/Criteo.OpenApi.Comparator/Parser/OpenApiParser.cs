@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Criteo.OpenApi.Comparator.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
 
-namespace Criteo.OpenApi.Comparator
+namespace Criteo.OpenApi.Comparator.Parser
 {
     /// <summary>
     /// Converts a swagger into a C# object
@@ -16,8 +15,7 @@ namespace Criteo.OpenApi.Comparator
     {
         /// <param name="openApiDocumentAsString">Swagger as string</param>
         /// <param name="fileName">Name of the swagger file</param>
-        /// <param name="comparisonSettings">Will be used to compare the comparison Version to the detected version by the parser</param>
-        public static JsonDocument<OpenApiDocument> Parse(string openApiDocumentAsString, string fileName, Settings comparisonSettings)
+        public static JsonDocument<OpenApiDocument> Parse(string openApiDocumentAsString, string fileName)
         {
             var settings = new JsonSerializerSettings
             {

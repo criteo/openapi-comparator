@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Criteo.OpenApi.Comparator.Core
+namespace Criteo.OpenApi.Comparator.Settings
 {
     /// <summary>
     /// Helper attribute used for documentation generation in AutoRest command line interface.

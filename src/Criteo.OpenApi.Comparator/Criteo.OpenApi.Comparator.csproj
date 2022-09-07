@@ -1,16 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Disable generation of fake program file done by Microsoft.NET.Test.Sdk in order to replace it with a static (*Demo.)Main method: -->
     <GenerateProgramFile>false</GenerateProgramFile>
     <RootNamespace>Criteo.OpenApi.Comparator</RootNamespace>
     <!-- Nuget Package definition -->
-    <Title>OpenApi.Comparator</Title>
+    <PackageId>OpenApi-Comparator</PackageId>
+    <Title>Criteo.OpenApi.Comparator</Title>
     <Description>OpenApi Specification v3 comparator. The tool is able to detect API differences between 2 versions of a specification in version 3.</Description>
     <Authors>Criteo</Authors>
     <Company>Criteo</Company>
+    <copyright>Criteo</copyright>
+    <Version>1.2.0</Version>
     <PackageProjectUrl>https://github.com/criteo/openapi-comparator</PackageProjectUrl>
     <RepositoryUrl>https://github.com/criteo/openapi-comparator</RepositoryUrl>
     <PackageTags>Criteo, OpenApi, OpenApi-Comparator, OpenApi-Diff</PackageTags>
@@ -21,8 +24,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.OpenApi" Version="1.3.2" />
     <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Criteo.OpenApi.Comparator.Core\Criteo.OpenApi.Comparator.Core.csproj" />
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
