@@ -4,9 +4,9 @@ An API change detector.
 
 ## Installation
 
-The tool will soon be available as a nuget package.
+The tool is available as a [nuget package](https://www.nuget.org/packages/Criteo.OpenApi.Comparator).
 
-## Code Samble
+## Code Sample
 
 ```C#
 var comparator = new OpenApiComparator();
