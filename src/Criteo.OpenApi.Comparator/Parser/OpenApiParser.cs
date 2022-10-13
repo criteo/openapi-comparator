@@ -19,6 +19,7 @@ namespace Criteo.OpenApi.Comparator.Parser
         {
             var settings = new JsonSerializerSettings
             {
+                MaxDepth = 128,
                 TypeNameHandling = TypeNameHandling.None,
                 MetadataPropertyHandling = MetadataPropertyHandling.Ignore
             };
