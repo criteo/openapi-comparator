@@ -23,13 +23,13 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             if (oldRequestBody == null)
             {
-                context.LogBreakingChange(ComparisonMessages.AddedRequestBody);
+                context.LogBreakingChange(ComparisonRules.AddedRequestBody);
                 return context.Messages;
             }
 
             if (newRequestBody == null)
             {
-                context.LogBreakingChange(ComparisonMessages.RemovedRequestBody);
+                context.LogBreakingChange(ComparisonRules.RemovedRequestBody);
                 return context.Messages;
             }
 
@@ -62,11 +62,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 context.PushProperty("required");
                 if (newRequired)
                 {
-                    context.LogBreakingChange(ComparisonMessages.RequiredStatusChange, oldRequired, newRequired);
+                    context.LogBreakingChange(ComparisonRules.RequiredStatusChange, oldRequired, newRequired);
                 }
                 else
                 {
-                    context.LogInfo(ComparisonMessages.RequiredStatusChange, oldRequired, newRequired);
+                    context.LogInfo(ComparisonRules.RequiredStatusChange, oldRequired, newRequired);
                 }
                 context.Pop();
             }

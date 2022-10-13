@@ -68,11 +68,11 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Store new difference as an info
         /// </summary>
-        /// <param name="template">Type/rule of the difference</param>
+        /// <param name="rule">Type/rule of the difference</param>
         /// <param name="formatArguments">Dynamic arguments providing dynamic details</param>
-        public void LogInfo(MessageTemplate template, params object[] formatArguments) =>
+        public void LogInfo(ComparisonRule rule, params object[] formatArguments) =>
             _messages.Add(new ComparisonMessage(
-                template,
+                rule,
                 Path,
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
@@ -83,11 +83,11 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Store new difference as an error
         /// </summary>
-        /// <param name="template">Type/rule of the difference</param>
+        /// <param name="rule">Type/rule of the difference</param>
         /// <param name="formatArguments">Dynamic arguments providing dynamic details</param>
-        public void LogError(MessageTemplate template, params object[] formatArguments) =>
+        public void LogError(ComparisonRule rule, params object[] formatArguments) =>
             _messages.Add(new ComparisonMessage(
-                template,
+                rule,
                 Path,
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
@@ -98,11 +98,11 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Log a breaking change as Error if Strict option is set and as Warning if not
         /// </summary>
-        /// <param name="template">Message's format</param>
+        /// <param name="rule">Message's format</param>
         /// <param name="formatArguments">Dynamic arguments providing dynamic details</param>
-        public void LogBreakingChange(MessageTemplate template, params object[] formatArguments) =>
+        public void LogBreakingChange(ComparisonRule rule, params object[] formatArguments) =>
             _messages.Add(new ComparisonMessage(
-                template,
+                rule,
                 Path,
                 _oldOpenApiDocument,
                 _newOpenApiDocument,

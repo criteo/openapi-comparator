@@ -72,7 +72,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         {
             if (newReference?.ReferenceV3 != null && !newReference.ReferenceV3.Equals(oldReference?.ReferenceV3))
             {
-                context.LogBreakingChange(ComparisonMessages.ReferenceRedirection);
+                context.LogBreakingChange(ComparisonRules.ReferenceRedirection);
             }
         }
     }

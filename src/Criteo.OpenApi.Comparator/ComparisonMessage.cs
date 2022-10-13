@@ -18,14 +18,14 @@ namespace Criteo.OpenApi.Comparator
     {
         private const string _docBaseUrl = "https://github.com/Azure/openapi-diff/tree/master/docs/rules/";
 
-        /// <param name="template">Links a difference to its related comparison rule</param>
+        /// <param name="rule">Links a difference to its related comparison rule</param>
         /// <param name="path">Path of the compared JSON element</param>
         /// <param name="oldDocument">Old JSON element</param>
         /// <param name="newDocument">New JSON element</param>
         /// <param name="severity">Severity of the difference (Info, Error, Warning)</param>
         /// <param name="formatArguments">List of arguments inserted in the string message as dynamic arguments</param>
         public ComparisonMessage(
-            MessageTemplate template,
+            ComparisonRule rule,
             ObjectPath path,
             IJsonDocument oldDocument,
             IJsonDocument newDocument,
@@ -34,14 +34,14 @@ namespace Criteo.OpenApi.Comparator
         )
         {
             Severity = severity;
-            Message = $"{string.Format(CultureInfo.CurrentCulture, template.Message, formatArguments)}";
+            Message = $"{string.Format(CultureInfo.CurrentCulture, rule.Message, formatArguments)}";
             Path = path;
             OldDocument = oldDocument;
             NewDocument = newDocument;
-            Id = template.Id;
-            Code = template.Code;
-            DocUrl = $"{_docBaseUrl}{template.Id}.md";
-            Mode = template.Type;
+            Id = rule.Id;
+            Code = rule.Code;
+            DocUrl = $"{_docBaseUrl}{rule.Id}.md";
+            Mode = rule.Type;
         }
 
         private IJsonDocument OldDocument { get; }

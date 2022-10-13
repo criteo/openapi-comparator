@@ -75,7 +75,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 context.PushProperty(header.Key);
                 if (!oldHeaders.TryGetValue(header.Key, out var oldHeader))
                 {
-                    context.LogInfo(ComparisonMessages.AddingHeader, header.Key);
+                    context.LogInfo(ComparisonRules.AddingHeader, header.Key);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 context.PushProperty(oldHeader.Key);
                 if (!newHeaders.ContainsKey(oldHeader.Key))
                 {
-                    context.LogBreakingChange(ComparisonMessages.RemovingHeader, oldHeader.Key);
+                    context.LogBreakingChange(ComparisonRules.RemovingHeader, oldHeader.Key);
                 }
                 context.Pop();
             }

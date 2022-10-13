@@ -1,14 +1,14 @@
 ﻿namespace Criteo.OpenApi.Comparator
 {
     /// <summary>
-    /// Contains all the message templates for the implemented rules
+    /// Contains all the comparison rules for the implemented rules
     /// </summary>
-    public static class ComparisonMessages
+    public static class ComparisonRules
     {
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1000.md
         /// </summary>
-        public static MessageTemplate VersionsReversed = new MessageTemplate
+        public static ComparisonRule VersionsReversed = new ComparisonRule
         {
             Id = 1000,
             Code = nameof(VersionsReversed),
@@ -19,7 +19,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1001.md
         /// </summary>
-        public static MessageTemplate NoVersionChange = new MessageTemplate
+        public static ComparisonRule NoVersionChange = new ComparisonRule
         {
             Id = 1001,
             Code = nameof(NoVersionChange),
@@ -30,7 +30,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1002.md
         /// </summary>
-        public static MessageTemplate ProtocolNoLongerSupported = new MessageTemplate
+        public static ComparisonRule ProtocolNoLongerSupported = new ComparisonRule
         {
             Id = 1002,
             Code = nameof(ProtocolNoLongerSupported),
@@ -41,7 +41,7 @@
         /// <summary>
         /// OpenApi Specification version 3 specific
         /// </summary>
-        public static MessageTemplate ServerNoLongerSupported = new MessageTemplate
+        public static ComparisonRule ServerNoLongerSupported = new ComparisonRule
         {
             Id = 10021,
             Code = nameof(ServerNoLongerSupported),
@@ -52,7 +52,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1003.md
         /// </summary>
-        public static MessageTemplate RequestBodyFormatNoLongerSupported = new MessageTemplate
+        public static ComparisonRule RequestBodyFormatNoLongerSupported = new ComparisonRule
         {
             Id = 1003,
             Code = nameof(RequestBodyFormatNoLongerSupported),
@@ -64,7 +64,7 @@
         /// Extension of rule 1003
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1003.md
         /// </summary>
-        public static MessageTemplate ResponseBodyInOperationFormatNoLongerSupported = new MessageTemplate
+        public static ComparisonRule ResponseBodyInOperationFormatNoLongerSupported = new ComparisonRule
         {
             Id = 10031,
             Code = nameof(ResponseBodyInOperationFormatNoLongerSupported),
@@ -75,7 +75,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1004.md
         /// </summary>
-        public static MessageTemplate ResponseBodyFormatNowSupported = new MessageTemplate
+        public static ComparisonRule ResponseBodyFormatNowSupported = new ComparisonRule
         {
             Id = 1004,
             Code = nameof(ResponseBodyFormatNowSupported),
@@ -87,7 +87,7 @@
         /// Extension of rule 1004
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1004.md
         /// </summary>
-        public static MessageTemplate ResponseBodyInOperationFormatNowSupported = new MessageTemplate
+        public static ComparisonRule ResponseBodyInOperationFormatNowSupported = new ComparisonRule
         {
             Id = 10041,
             Code = nameof(ResponseBodyInOperationFormatNowSupported),
@@ -98,7 +98,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1005.md
         /// </summary>
-        public static MessageTemplate RemovedPath = new MessageTemplate
+        public static ComparisonRule RemovedPath = new ComparisonRule
         {
             Id = 1005,
             Code = nameof(RemovedPath),
@@ -110,7 +110,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1006.md
         /// </summary>
-        public static MessageTemplate RemovedDefinition = new MessageTemplate
+        public static ComparisonRule RemovedDefinition = new ComparisonRule
         {
             Id = 1006,
             Code = nameof(RemovedDefinition),
@@ -122,7 +122,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1007.md
         /// </summary>
-        public static MessageTemplate RemovedClientParameter = new MessageTemplate
+        public static ComparisonRule RemovedClientParameter = new ComparisonRule
         {
             Id = 1007,
             Code = nameof(RemovedClientParameter),
@@ -134,7 +134,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1008.md
         /// </summary>
-        public static MessageTemplate ModifiedOperationId = new MessageTemplate
+        public static ComparisonRule ModifiedOperationId = new ComparisonRule
         {
             Id = 1008,
             Code = nameof(ModifiedOperationId),
@@ -145,7 +145,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1009.md
         /// </summary>
-        public static MessageTemplate RemovedRequiredParameter = new MessageTemplate
+        public static ComparisonRule RemovedRequiredParameter = new ComparisonRule
         {
             Id = 1009,
             Code = nameof(RemovedRequiredParameter),
@@ -156,7 +156,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1010.md
         /// </summary>
-        public static MessageTemplate AddingRequiredParameter = new MessageTemplate
+        public static ComparisonRule AddingRequiredParameter = new ComparisonRule
         {
             Id = 1010,
             Code = nameof(AddingRequiredParameter),
@@ -167,7 +167,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1011.md
         /// </summary>
-        public static MessageTemplate AddingResponseCode = new MessageTemplate
+        public static ComparisonRule AddingResponseCode = new ComparisonRule
         {
             Id = 1011,
             Code = nameof(AddingResponseCode),
@@ -178,7 +178,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1012.md
         /// </summary>
-        public static MessageTemplate RemovedResponseCode = new MessageTemplate
+        public static ComparisonRule RemovedResponseCode = new ComparisonRule
         {
             Id = 1012,
             Code = nameof(RemovedResponseCode),
@@ -189,7 +189,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1013.md
         /// </summary>
-        public static MessageTemplate AddingHeader = new MessageTemplate
+        public static ComparisonRule AddingHeader = new ComparisonRule
         {
             Id = 1013,
             Code = nameof(AddingHeader),
@@ -200,7 +200,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1014.md
         /// </summary>
-        public static MessageTemplate RemovingHeader = new MessageTemplate
+        public static ComparisonRule RemovingHeader = new ComparisonRule
         {
             Id = 1014,
             Code = nameof(RemovingHeader),
@@ -211,7 +211,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1015.md
         /// </summary>
-        public static MessageTemplate ParameterInHasChanged = new MessageTemplate
+        public static ComparisonRule ParameterInHasChanged = new ComparisonRule
         {
             Id = 1015,
             Code = nameof(ParameterInHasChanged),
@@ -222,7 +222,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1016.md
         /// </summary>
-        public static MessageTemplate ConstantStatusHasChanged = new MessageTemplate
+        public static ComparisonRule ConstantStatusHasChanged = new ComparisonRule
         {
             Id = 1016,
             Code = nameof(ConstantStatusHasChanged),
@@ -233,7 +233,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1017.md
         /// </summary>
-        public static MessageTemplate ReferenceRedirection = new MessageTemplate
+        public static ComparisonRule ReferenceRedirection = new ComparisonRule
         {
             Id = 1017,
             Code = nameof(ReferenceRedirection),
@@ -241,7 +241,7 @@
             Type = MessageType.Update
         };
 
-        public static MessageTemplate RequestBodyFormatNowSupported = new MessageTemplate
+        public static ComparisonRule RequestBodyFormatNowSupported = new ComparisonRule
         {
             Id = 1018,
             Code = nameof(RequestBodyFormatNowSupported),
@@ -252,7 +252,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1019.md
         /// </summary>
-        public static MessageTemplate RemovedEnumValue = new MessageTemplate
+        public static ComparisonRule RemovedEnumValue = new ComparisonRule
         {
             Id = 1019,
             Code = nameof(RemovedEnumValue),
@@ -263,7 +263,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1000.md
         /// </summary>
-        public static MessageTemplate AddedEnumValue = new MessageTemplate
+        public static ComparisonRule AddedEnumValue = new ComparisonRule
         {
             Id = 1020,
             Code = nameof(AddedEnumValue),
@@ -274,7 +274,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1021.md
         /// </summary>
-        public static MessageTemplate AddedAdditionalProperties = new MessageTemplate
+        public static ComparisonRule AddedAdditionalProperties = new ComparisonRule
         {
             Id = 1021,
             Code = nameof(AddedAdditionalProperties),
@@ -285,7 +285,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1022.md
         /// </summary>
-        public static MessageTemplate RemovedAdditionalProperties = new MessageTemplate
+        public static ComparisonRule RemovedAdditionalProperties = new ComparisonRule
         {
             Id = 1022,
             Code = nameof(RemovedAdditionalProperties),
@@ -296,7 +296,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1023.md
         /// </summary>
-        public static MessageTemplate TypeFormatChanged = new MessageTemplate
+        public static ComparisonRule TypeFormatChanged = new ComparisonRule
         {
             Id = 1023,
             Code = nameof(TypeFormatChanged),
@@ -307,7 +307,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1024.md
         /// </summary>
-        public static MessageTemplate ConstraintIsStronger = new MessageTemplate
+        public static ComparisonRule ConstraintIsStronger = new ComparisonRule
         {
             Id = 1024,
             Code = nameof(ConstraintIsStronger),
@@ -318,7 +318,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1025.md
         /// </summary>
-        public static MessageTemplate RequiredStatusChange = new MessageTemplate
+        public static ComparisonRule RequiredStatusChange = new ComparisonRule
         {
             Id = 1025,
             Code = nameof(RequiredStatusChange),
@@ -329,7 +329,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1026.md
         /// </summary>
-        public static MessageTemplate TypeChanged = new MessageTemplate
+        public static ComparisonRule TypeChanged = new ComparisonRule
         {
             Id = 1026,
             Code = nameof(TypeChanged),
@@ -340,7 +340,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1027.md
         /// </summary>
-        public static MessageTemplate DefaultValueChanged = new MessageTemplate
+        public static ComparisonRule DefaultValueChanged = new ComparisonRule
         {
             Id = 1027,
             Code = nameof(DefaultValueChanged),
@@ -351,7 +351,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1028.md
         /// </summary>
-        public static MessageTemplate ArrayCollectionFormatChanged = new MessageTemplate
+        public static ComparisonRule ArrayCollectionFormatChanged = new ComparisonRule
         {
             Id = 1028,
             Code = nameof(ArrayCollectionFormatChanged),
@@ -362,7 +362,7 @@
         /// <summary>
         /// OpenApi Specification version 3 specific
         /// </summary>
-        public static MessageTemplate ParameterStyleChanged = new MessageTemplate
+        public static ComparisonRule ParameterStyleChanged = new ComparisonRule
         {
             Id = 10281,
             Code = nameof(ParameterStyleChanged),
@@ -373,7 +373,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1029.md
         /// </summary>
-        public static MessageTemplate ReadonlyPropertyChanged = new MessageTemplate
+        public static ComparisonRule ReadonlyPropertyChanged = new ComparisonRule
         {
             Id = 1029,
             Code = nameof(ReadonlyPropertyChanged),
@@ -384,7 +384,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1031.md
         /// </summary>
-        public static MessageTemplate DifferentDiscriminator = new MessageTemplate
+        public static ComparisonRule DifferentDiscriminator = new ComparisonRule
         {
             Id = 1030,
             Code = nameof(DifferentDiscriminator),
@@ -395,7 +395,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1031.md
         /// </summary>
-        public static MessageTemplate DifferentExtends = new MessageTemplate
+        public static ComparisonRule DifferentExtends = new ComparisonRule
         {
             Id = 1031,
             Code = nameof(DifferentExtends),
@@ -406,7 +406,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1032.md
         /// </summary>
-        public static MessageTemplate DifferentAllOf = new MessageTemplate
+        public static ComparisonRule DifferentAllOf = new ComparisonRule
         {
             Id = 1032,
             Code = nameof(DifferentAllOf),
@@ -417,7 +417,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1033.md
         /// </summary>
-        public static MessageTemplate RemovedProperty = new MessageTemplate
+        public static ComparisonRule RemovedProperty = new ComparisonRule
         {
             Id = 1033,
             Code = nameof(RemovedProperty),
@@ -429,7 +429,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1034.md
         /// </summary>
-        public static MessageTemplate AddedRequiredProperty = new MessageTemplate
+        public static ComparisonRule AddedRequiredProperty = new ComparisonRule
         {
             Id = 1034,
             Code = nameof(AddedRequiredProperty),
@@ -440,7 +440,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1035.md
         /// </summary>
-        public static MessageTemplate RemovedOperation = new MessageTemplate
+        public static ComparisonRule RemovedOperation = new ComparisonRule
         {
             Id = 1035,
             Code = nameof(RemovedOperation),
@@ -452,7 +452,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
         /// </summary>
-        public static MessageTemplate ConstraintChanged = new MessageTemplate
+        public static ComparisonRule ConstraintChanged = new ComparisonRule
         {
             Id = 1036,
             Code = nameof(ConstraintChanged),
@@ -463,7 +463,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1037.md
         /// </summary>
-        public static MessageTemplate ConstraintIsWeaker = new MessageTemplate
+        public static ComparisonRule ConstraintIsWeaker = new ComparisonRule
         {
             Id = 1037,
             Code = nameof(ConstraintIsWeaker),
@@ -474,7 +474,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1038.md
         /// </summary>
-        public static MessageTemplate AddedPath = new MessageTemplate
+        public static ComparisonRule AddedPath = new ComparisonRule
         {
             Id = 1038,
             Code = nameof(AddedPath),
@@ -485,7 +485,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1039.md
         /// </summary>
-        public static MessageTemplate AddedOperation = new MessageTemplate
+        public static ComparisonRule AddedOperation = new ComparisonRule
         {
             Id = 1039,
             Code = nameof(AddedOperation),
@@ -496,7 +496,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1040.md
         /// </summary>
-        public static MessageTemplate AddedReadOnlyPropertyInResponse = new MessageTemplate
+        public static ComparisonRule AddedReadOnlyPropertyInResponse = new ComparisonRule
         {
             Id = 1040,
             Code = nameof(AddedReadOnlyPropertyInResponse),
@@ -508,7 +508,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1041.md
         /// </summary>
-        public static MessageTemplate AddedPropertyInResponse = new MessageTemplate
+        public static ComparisonRule AddedPropertyInResponse = new ComparisonRule
         {
             Id = 1041,
             Code = nameof(AddedPropertyInResponse),
@@ -519,7 +519,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1042.md
         /// </summary>
-        public static MessageTemplate ChangedParameterOrder = new MessageTemplate
+        public static ComparisonRule ChangedParameterOrder = new ComparisonRule
         {
             Id = 1042,
             Code = nameof(ChangedParameterOrder),
@@ -530,7 +530,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1043.md
         /// </summary>
-        public static MessageTemplate AddingOptionalParameter = new MessageTemplate
+        public static ComparisonRule AddingOptionalParameter = new ComparisonRule
         {
             Id = 1043,
             Code = nameof(AddingOptionalParameter),
@@ -541,7 +541,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1044.md
         /// </summary>
-        public static MessageTemplate LongRunningOperationExtensionChanged = new MessageTemplate
+        public static ComparisonRule LongRunningOperationExtensionChanged = new ComparisonRule
         {
             Id = 1044,
             Code = nameof(LongRunningOperationExtensionChanged),
@@ -552,7 +552,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1045.md
         /// </summary>
-        public static MessageTemplate AddedOptionalProperty = new MessageTemplate
+        public static ComparisonRule AddedOptionalProperty = new ComparisonRule
         {
             Id = 1045,
             Code = nameof(AddedOptionalProperty),
@@ -563,7 +563,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1046.md
         /// </summary>
-        public static MessageTemplate AddedRequestBody = new MessageTemplate
+        public static ComparisonRule AddedRequestBody = new ComparisonRule
         {
             Id = 1046,
             Code = nameof(AddedRequestBody),
@@ -574,7 +574,7 @@
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1047.md
         /// </summary>
-        public static MessageTemplate RemovedRequestBody = new MessageTemplate
+        public static ComparisonRule RemovedRequestBody = new ComparisonRule
         {
             Id = 1047,
             Code = nameof(RemovedRequestBody),

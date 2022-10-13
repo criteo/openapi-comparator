@@ -29,8 +29,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 context.PushProperty(removedMediaType);
                 var comparisonMessage = context.Direction == DataDirection.Request
-                    ? ComparisonMessages.RequestBodyFormatNoLongerSupported
-                    : ComparisonMessages.ResponseBodyInOperationFormatNoLongerSupported;
+                    ? ComparisonRules.RequestBodyFormatNoLongerSupported
+                    : ComparisonRules.ResponseBodyInOperationFormatNoLongerSupported;
                 context.LogBreakingChange(comparisonMessage, removedMediaType);
                 context.Pop();
             }
@@ -39,8 +39,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 context.PushProperty(addedMediaType);
                 var comparisonMessage = context.Direction == DataDirection.Request
-                    ? ComparisonMessages.RequestBodyFormatNowSupported
-                    : ComparisonMessages.ResponseBodyFormatNowSupported;
+                    ? ComparisonRules.RequestBodyFormatNowSupported
+                    : ComparisonRules.ResponseBodyFormatNowSupported;
                 context.LogInfo(comparisonMessage, addedMediaType);
                 context.Pop();
             }

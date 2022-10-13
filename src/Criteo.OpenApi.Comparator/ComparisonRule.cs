@@ -3,7 +3,7 @@
     /// <summary>
     /// Links a difference to its related comparison rule
     /// </summary>
-    public class MessageTemplate
+    public class ComparisonRule
     {
         public int Id { get; set; }
 
