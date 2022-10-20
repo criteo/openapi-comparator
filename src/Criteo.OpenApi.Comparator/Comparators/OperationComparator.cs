@@ -48,7 +48,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (newOperation.OperationId != oldOperation.OperationId)
             {
                 context.PushProperty("operationId");
-                context.LogBreakingChange(ComparisonMessages.ModifiedOperationId, oldOperation.OperationId, newOperation.OperationId);
+                context.LogBreakingChange(ComparisonRules.ModifiedOperationId, oldOperation.OperationId, newOperation.OperationId);
                 context.Pop();
             }
 
@@ -116,7 +116,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                 if (OrderHasChanged(priorIndex, i))
                 {
-                    context.LogBreakingChange(ComparisonMessages.ChangedParameterOrder, newParameter.Name);
+                    context.LogBreakingChange(ComparisonRules.ChangedParameterOrder, newParameter.Name);
                 }
             }
         }
@@ -143,7 +143,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 else if (oldParameter.Required || oldParameter.In == ParameterLocation.Path)
                 {
                     // Removed required parameter
-                    context.LogBreakingChange(ComparisonMessages.RemovedRequiredParameter, oldParameter.Name);
+                    context.LogBreakingChange(ComparisonRules.RemovedRequiredParameter, oldParameter.Name);
                 }
 
                 context.Pop();
@@ -177,8 +177,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     context.PushParameterByName(newParameter.Name);
                     context.LogBreakingChange(
                         newParameter.Required || newParameter.In == ParameterLocation.Path
-                            ? ComparisonMessages.AddingRequiredParameter
-                            : ComparisonMessages.AddingOptionalParameter, newParameter.Name);
+                            ? ComparisonRules.AddingRequiredParameter
+                            : ComparisonRules.AddingOptionalParameter, newParameter.Name);
                     context.Pop();
                 }
             }
@@ -197,7 +197,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             foreach (var statusCode in addedResponseCodes)
             {
                 context.PushProperty(statusCode);
-                context.LogBreakingChange(ComparisonMessages.AddingResponseCode, statusCode);
+                context.LogBreakingChange(ComparisonRules.AddingResponseCode, statusCode);
                 context.Pop();
             }
 
@@ -205,7 +205,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             foreach (var statusCode in removedResponseCodes)
             {
                 context.PushProperty(statusCode);
-                context.LogBreakingChange(ComparisonMessages.RemovedResponseCode, statusCode);
+                context.LogBreakingChange(ComparisonRules.RemovedResponseCode, statusCode);
                 context.Pop();
             }
 
@@ -239,7 +239,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
 
             context.PushProperty(longRunningOperationExtension);
-            context.LogBreakingChange(ComparisonMessages.LongRunningOperationExtensionChanged);
+            context.LogBreakingChange(ComparisonRules.LongRunningOperationExtensionChanged);
             context.Pop();
         }
 
