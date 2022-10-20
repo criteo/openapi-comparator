@@ -3,7 +3,6 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Criteo.OpenApi.Comparator.Parser;
@@ -127,47 +126,9 @@ namespace Criteo.OpenApi.Comparator
         public string NewLocation() => Location(NewDocument, NewJson());
 
         /// <summary>
-        /// Converts JSON object into a serialized JSON string
-        /// </summary>
-        /// <returns>JSON as string</returns>
-        public string GetValidationMessagesAsJson()
-        {
-            var rawMessage = new JsonComparisonMessage
-            {
-                Id = Id.ToString(),
-                Code = Code,
-                Message = Message,
-                Type = Severity.ToString(),
-                DocUrl = DocUrl,
-                Mode = Mode.ToString(),
-                Old = new JsonLocation { Ref = OldJsonRef, Path = OldJson()?.Path, Location = OldLocation(), },
-                New = new JsonLocation { Ref = NewJsonRef, Path = NewJson()?.Path, Location = NewLocation(), }
-            };
-
-            return JsonConvert.SerializeObject(
-                rawMessage,
-                Formatting.Indented,
-                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-            );
-        }
-
-        /// <summary>
         /// Converts the currents ComparisonMessage object into a string message
         /// </summary>
         public override string ToString() =>
             $"code = {Code}, type = {Severity}, message = {Message}, docurl = {DocUrl}, mode = {Mode}";
-    }
-
-    public class CustomComparer : IEqualityComparer<ComparisonMessage>
-    {
-        /// <summary>
-        /// Compares two comparison messages
-        /// </summary>
-        public bool Equals(ComparisonMessage message1, ComparisonMessage message2) =>
-            message1?.Message == message2?.Message;
-
-        /// <param name="comparison">ComparisonMessage</param>
-        /// <returns>The hash code of a ComparisonMessage object</returns>
-        public int GetHashCode(ComparisonMessage comparison) => comparison.Message.GetHashCode();
     }
 }

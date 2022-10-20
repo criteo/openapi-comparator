@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using Microsoft.OpenApi.Models;
 
-namespace Criteo.OpenApi.Comparator
+namespace Criteo.OpenApi.Comparator.Parser
 {
     public abstract class SwaggerJsonConverter : JsonConverter
     {
@@ -29,6 +29,7 @@ namespace Criteo.OpenApi.Comparator
 
             var settings = new JsonSerializerSettings
             {
+                MaxDepth = 128,
                 TypeNameHandling = TypeNameHandling.None,
                 MetadataPropertyHandling = MetadataPropertyHandling.Ignore
             };
