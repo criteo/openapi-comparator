@@ -94,4 +94,4 @@
 
 [1047 - RemovedRequestBody](rules/1047.md)
 
-[1048 - RemovedRequestBody](rules/1048.md)
+[1048 - AddSchema](rules/1048.md)
