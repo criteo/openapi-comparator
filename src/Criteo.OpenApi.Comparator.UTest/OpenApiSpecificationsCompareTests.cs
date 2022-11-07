@@ -770,6 +770,32 @@ namespace Criteo.OpenApi.Comparator.UTest
                 OldJsonRef = "old/removed_request_body.json#/paths/~1pets/post/requestBody"
             });
         }
+        
+        [Test]
+        public void Compare_OAS_Should_Return_Removed_Schema_When_Schema_Is_Removed_In_Response()
+        {
+            var differences = CompareSpecifications("removed_schema_in_response.json");
+
+            differences.AssertContainsOnly(new ExpectedDifference
+            {
+                Rule = ComparisonRules.RemovedDefinition,
+                Severity = Severity.Warning,
+                OldJsonRef = "old/removed_schema_in_response.json#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema"
+            });
+        }
+        
+        [Test]
+        public void Compare_OAS_Should_Return_Added_Schema_When_Schema_Is_Added_In_Response()
+        {
+            var differences = CompareSpecifications("added_schema_in_response.json");
+
+            differences.AssertContainsOnly(new ExpectedDifference
+            {
+                Rule = ComparisonRules.AddedSchema,
+                Severity = Severity.Error,
+                NewJsonRef = "new/added_schema_in_response.json#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema"
+            });
+        }
 
         /// <summary>
         /// Helper method -- load two Open Api Specification documents and invoke the comparison logic.

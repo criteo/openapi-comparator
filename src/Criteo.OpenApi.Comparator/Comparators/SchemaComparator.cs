@@ -43,10 +43,16 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return context.Messages;
 
             if (oldSchema == null)
-                throw new ArgumentNullException(nameof(oldSchema));
+            {
+                context.LogError(ComparisonRules.AddedSchema);
+                return context.Messages;
+            }
 
             if (newSchema == null)
-                throw new ArgumentNullException(nameof(newSchema));
+            {
+                context.LogBreakingChange(ComparisonRules.RemovedDefinition, default(string));
+                return context.Messages;
+            }
 
             if (newSchema.Reference?.ReferenceV3 != null
                 && !newSchema.Reference.ReferenceV3.Equals(oldSchema.Reference?.ReferenceV3))

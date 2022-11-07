@@ -241,6 +241,9 @@
             Type = MessageType.Update
         };
 
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1018.md
+        /// </summary>
         public static ComparisonRule RequestBodyFormatNowSupported = new ComparisonRule
         {
             Id = 1018,
@@ -579,6 +582,17 @@
             Id = 1047,
             Code = nameof(RemovedRequestBody),
             Message = "The new version is removing a requestBody that was found in the old version.",
+            Type = MessageType.Removal
+        };
+        
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1048.md
+        /// </summary>
+        public static ComparisonRule AddedSchema = new ComparisonRule
+        {
+            Id = 1048,
+            Code = nameof(AddedSchema),
+            Message = "The new version is adding a new schema that was not found in the old version.",
             Type = MessageType.Removal
         };
     }
