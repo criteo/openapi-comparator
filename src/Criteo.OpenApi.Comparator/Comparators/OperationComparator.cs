@@ -13,13 +13,13 @@ namespace Criteo.OpenApi.Comparator.Comparators
     /// <summary>
     /// Describes a single API operation on a path.
     /// </summary>
-    public class OperationComparator
+    internal class OperationComparator
     {
         private readonly ParameterComparator _parameter;
         private readonly RequestBodyComparator _requestBody;
         private readonly ResponseComparator _response;
 
-        public OperationComparator(ParameterComparator parameter,
+        internal OperationComparator(ParameterComparator parameter,
             RequestBodyComparator requestBody,
             ResponseComparator response)
         {
@@ -34,10 +34,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldOperation">The original operation.</param>
         /// <param name="newOperation">The new operation.</param>
         /// <returns>A list of messages from the comparison.</returns>
-        public IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
+        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
             OpenApiOperation oldOperation,
-            OpenApiOperation newOperation
-            )
+            OpenApiOperation newOperation)
         {
             if (oldOperation == null)
                 throw new ArgumentException(nameof(oldOperation));
@@ -69,7 +68,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="context">Comparision Context</param>
         /// <param name="oldParameters">Old Operation's parameters</param>
         /// <param name="newParameters">New Operation's parameters</param>
-        public void CompareParameters(ComparisonContext<OpenApiDocument> context,
+        internal void CompareParameters(ComparisonContext<OpenApiDocument> context,
             IList<OpenApiParameter> oldParameters,
             IList<OpenApiParameter> newParameters)
         {

@@ -4,16 +4,16 @@ using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
-    public class ContentComparator
+    internal class ContentComparator
     {
         private readonly SchemaComparator _schemaComparator;
 
-        public ContentComparator(SchemaComparator schemaComparator)
+        internal ContentComparator(SchemaComparator schemaComparator)
         {
             _schemaComparator = schemaComparator;
         }
 
-        public IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
+        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
             IDictionary<string, OpenApiMediaType> oldContent, IDictionary<string, OpenApiMediaType> newContent)
         {
             oldContent = oldContent ?? new Dictionary<string, OpenApiMediaType>();

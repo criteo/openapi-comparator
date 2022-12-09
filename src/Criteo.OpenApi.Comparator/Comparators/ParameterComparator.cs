@@ -8,32 +8,21 @@ using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
-    /// <summary>
-    /// Describes a single operation parameter.
-    /// https://github.com/wordnik/swagger-spec/blob/master/versions/2.0.md#parameterObject
-    /// </summary>
-    public class ParameterComparator : ComponentComparator
+    internal class ParameterComparator : ComponentComparator
     {
         private readonly SchemaComparator _schemaComparator;
         private readonly ContentComparator _contentComparator;
 
         private readonly LinkedList<OpenApiParameter> _visitedParameters;
 
-        public ParameterComparator(SchemaComparator schemaComparator, ContentComparator contentComparator)
+        internal ParameterComparator(SchemaComparator schemaComparator, ContentComparator contentComparator)
         {
             _schemaComparator = schemaComparator;
             _contentComparator = contentComparator;
             _visitedParameters = new LinkedList<OpenApiParameter>();
         }
 
-        /// <summary>
-        /// Compare a modified document node (this) to a previous one and look for breaking as well as non-breaking changes.
-        /// </summary>
-        /// <param name="context">The modified document context.</param>
-        /// <param name="oldParameter">The SwaggerParameter from the original document model.</param>
-        /// <param name="newParameter">The SwaggerParameter from the original document model.</param>
-        /// <returns>A list of messages from the comparison.</returns>
-        public IEnumerable<ComparisonMessage> Compare(
+        internal IEnumerable<ComparisonMessage> Compare(
             ComparisonContext<OpenApiDocument> context,
             OpenApiParameter oldParameter,
             OpenApiParameter newParameter)

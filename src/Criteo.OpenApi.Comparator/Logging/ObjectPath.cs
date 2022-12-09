@@ -10,12 +10,9 @@ using Criteo.OpenApi.Comparator.Parser;
 
 namespace Criteo.OpenApi.Comparator.Logging
 {
-    /// <summary>
-    /// Represents a path into an object.
-    /// </summary>
-    public class ObjectPath
+    internal class ObjectPath
     {
-        public static ObjectPath Empty => new ObjectPath(Enumerable.Empty<Func<JToken, string>>());
+        internal static ObjectPath Empty => new ObjectPath(Enumerable.Empty<Func<JToken, string>>());
 
         private ObjectPath(IEnumerable<Func<JToken, string>> path)
         {
@@ -24,14 +21,14 @@ namespace Criteo.OpenApi.Comparator.Logging
 
         private ObjectPath Append(Func<JToken, string> function) => new ObjectPath(Path.Concat(new[] { function }));
 
-        public ObjectPath AppendProperty(string property) => Append(_ => property);
+        internal ObjectPath AppendProperty(string property) => Append(_ => property);
 
         /// <summary>
         /// Used to add a server's index according to its url.
         /// </summary>
         /// <param name="url">The "url" attribute of the server we are looking for</param>
         /// <returns>The index of the server in the servers list</returns>
-        public ObjectPath AppendServerByUrl(string serverUrl) => Append(FindServerIndex(serverUrl));
+        internal ObjectPath AppendServerByUrl(string serverUrl) => Append(FindServerIndex(serverUrl));
 
         private static Func<JToken, string> FindServerIndex(string serverUrl) => token =>
         {
@@ -47,7 +44,7 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// <summary>
         /// Adding an Open API parameter's index in the path.
         /// </summary>
-        public ObjectPath AppendParameterByName(string parameterName) => Append(FindParameterIndex(parameterName));
+        internal ObjectPath AppendParameterByName(string parameterName) => Append(FindParameterIndex(parameterName));
 
         /// <summary>
         /// Used to find a parameter's index based on its name.
@@ -71,7 +68,7 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// This's the OpenAPI path name. To use it as an id we need to remove all parameter names.
         /// For example, "/a/{a}/" and "/a/{b}" are the same paths.
         /// </summary>
-        public static string OpenApiPathName(string path) => Regex.Replace(path, @"\{\w*\}", @"{}");
+        internal static string OpenApiPathName(string path) => Regex.Replace(path, @"\{\w*\}", @"{}");
 
         /// <summary>
         /// Find the actual value of the OpenApi Path. For example, given the path /pets/{},
@@ -84,7 +81,7 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// <summary>
         /// Adding an Open API path.
         /// </summary>
-        public ObjectPath AppendPathProperty(string openApiPath) => Append(FindPathValue(openApiPath));
+        internal ObjectPath AppendPathProperty(string openApiPath) => Append(FindPathValue(openApiPath));
 
         private IEnumerable<Func<JToken, string>> Path { get; }
 
@@ -133,19 +130,19 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public IEnumerable<(JToken token, string name)> CompletePath(JToken t) => CompletePath(Path, t);
+        internal IEnumerable<(JToken token, string name)> CompletePath(JToken t) => CompletePath(Path, t);
 
         /// <summary>
         /// Normalize file path by replacing '\\' by '/'
         /// </summary>
-        public static string FileNameNorm(string fileName) => fileName.Replace("\\", "/");
+        internal static string FileNameNorm(string fileName) => fileName.Replace("\\", "/");
 
         /// <summary>
         /// https://tools.ietf.org/html/draft-ietf-appsawg-json-pointer-04
         /// </summary>
         /// <param name="jsonDocument"></param>
         /// <returns>The json path of the json document</returns>
-        public string JsonPointer(IJsonDocument jsonDocument)
+        internal string JsonPointer(IJsonDocument jsonDocument)
         {
             var result = CompletePath(jsonDocument.Token)
                 .Select(v => v.name?

@@ -4,16 +4,16 @@ using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
-    public class RequestBodyComparator
+    internal class RequestBodyComparator
     {
         private readonly ContentComparator _contentComparator;
 
-        public RequestBodyComparator(ContentComparator contentComparator)
+        internal RequestBodyComparator(ContentComparator contentComparator)
         {
             _contentComparator = contentComparator;
         }
 
-        public IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
+        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
             OpenApiRequestBody oldRequestBody, OpenApiRequestBody newRequestBody)
         {
             context.Direction = DataDirection.Request;

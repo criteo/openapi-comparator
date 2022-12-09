@@ -4,14 +4,14 @@ using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 {
-    public static class OpenApiReferenceExtensions
+    internal static class OpenApiReferenceExtensions
     {
         /// <summary>
         /// Retrieve a parameter from the components/parameters section.
         /// </summary>
         /// <param name="reference">A document-relative reference object -- #/components/parameters/XXX</param>
         /// <param name="parameters">The parameters dictionary to use</param>
-        public static OpenApiParameter Resolve(this OpenApiReference reference,
+        internal static OpenApiParameter Resolve(this OpenApiReference reference,
             IDictionary<string, OpenApiParameter> parameters)
         {
             if (reference == null || parameters == null || !reference.IsLocal)
@@ -31,7 +31,7 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         /// </summary>
         /// <param name="reference">A document-relative reference object -- #/components/schemas/XXX</param>
         /// <param name="schemas">The schemas dictionary to use</param>
-        public static OpenApiSchema Resolve(this OpenApiReference reference, IDictionary<string, OpenApiSchema> schemas)
+        internal static OpenApiSchema Resolve(this OpenApiReference reference, IDictionary<string, OpenApiSchema> schemas)
         {
             if (reference == null || schemas == null || !reference.IsLocal)
                 return null;
@@ -47,7 +47,7 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         /// </summary>
         /// <param name="reference">A document-relative reference object -- #/components/responses/XXX</param>
         /// <param name="responses">The responses dictionary to use</param>
-        public static OpenApiResponse Resolve(this OpenApiReference reference, IDictionary<string, OpenApiResponse> responses)
+        internal static OpenApiResponse Resolve(this OpenApiReference reference, IDictionary<string, OpenApiResponse> responses)
         {
             if (reference == null || responses == null || !reference.IsLocal)
                 return null;
@@ -63,7 +63,7 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         /// </summary>
         /// <param name="reference">A document-relative reference object -- #/components/requestBodies/XXX</param>
         /// <param name="requestBodies">The requestBodies dictionary to use</param>
-        public static OpenApiRequestBody Resolve(this OpenApiReference reference, IDictionary<string, OpenApiRequestBody> requestBodies)
+        internal static OpenApiRequestBody Resolve(this OpenApiReference reference, IDictionary<string, OpenApiRequestBody> requestBodies)
         {
             if (reference == null || requestBodies == null || !reference.IsLocal)
                 return null;

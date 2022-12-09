@@ -7,7 +7,7 @@ using ParameterLocation = Microsoft.OpenApi.Models.ParameterLocation;
 
 namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 {
-    public static class OpenApiPathsExtensions
+    internal static class OpenApiPathsExtensions
     {
         private static readonly IDictionary<string, OperationType> _operationTypesMap =
             new Dictionary<string, OperationType>
@@ -22,7 +22,7 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
                 ["options"] = OperationType.Options,
             };
 
-        public static OpenApiPaths ToOpenApiPaths(this OpenApiObject rawPaths)
+        internal static OpenApiPaths ToOpenApiPaths(this OpenApiObject rawPaths)
         {
             var paths = new OpenApiPaths();
 

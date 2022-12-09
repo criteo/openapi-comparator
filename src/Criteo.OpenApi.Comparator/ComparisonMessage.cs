@@ -23,7 +23,7 @@ namespace Criteo.OpenApi.Comparator
         /// <param name="newDocument">New JSON element</param>
         /// <param name="severity">Severity of the difference (Info, Error, Warning)</param>
         /// <param name="formatArguments">List of arguments inserted in the string message as dynamic arguments</param>
-        public ComparisonMessage(
+        internal ComparisonMessage(
             ComparisonRule rule,
             ObjectPath path,
             IJsonDocument oldDocument,

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
@@ -10,34 +9,22 @@ using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
-    /// <summary>
-    /// OpenApi schema object comparator.
-    /// </summary>
-    public class SchemaComparator
+    internal class SchemaComparator
     {
         private readonly LinkedList<OpenApiSchema> _visitedSchemas;
 
         private readonly IDictionary<OpenApiSchema, DataDirection> _compareDirections;
 
-        public SchemaComparator()
+        internal SchemaComparator()
         {
             _visitedSchemas = new LinkedList<OpenApiSchema>();
             _compareDirections = new Dictionary<OpenApiSchema, DataDirection>();
         }
 
-        /// <summary>
-        /// Compare a modified document node (this) to a previous one and look for breaking as well as non-breaking changes.
-        /// </summary>
-        /// <param name="context">The modified document context.</param>
-        /// <param name="oldSchema">The original schema model.</param>
-        /// <param name="newSchema">The new schema model.</param>
-        /// <param name="isSchemaReferenced">True if te schema if referenced somewhere in the document</param>
-        /// <returns>A list of messages from the comparison.</returns>
-        public IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
+        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema,
-            bool isSchemaReferenced = true
-            )
+            bool isSchemaReferenced = true)
         {
             if (oldSchema == null && newSchema == null)
                 return context.Messages;

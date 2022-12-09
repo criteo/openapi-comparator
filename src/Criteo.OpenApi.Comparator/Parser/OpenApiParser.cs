@@ -11,11 +11,11 @@ namespace Criteo.OpenApi.Comparator.Parser
     /// <summary>
     /// Converts a swagger into a C# object
     /// </summary>
-    public static class OpenApiParser
+    internal static class OpenApiParser
     {
         /// <param name="openApiDocumentAsString">Swagger as string</param>
         /// <param name="fileName">Name of the swagger file</param>
-        public static JsonDocument<OpenApiDocument> Parse(string openApiDocumentAsString, string fileName)
+        internal static JsonDocument<OpenApiDocument> Parse(string openApiDocumentAsString, string fileName)
         {
             var settings = new JsonSerializerSettings
             {

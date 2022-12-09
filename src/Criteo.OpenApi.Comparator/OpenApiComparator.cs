@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Criteo.OpenApi.Comparator.Comparators;
 using Criteo.OpenApi.Comparator.Parser;
 using Microsoft.OpenApi.Models;
@@ -33,7 +34,7 @@ namespace Criteo.OpenApi.Comparator
 
             var context = new ComparisonContext<OpenApiDocument>(oldOpenApiDocument, newOpenApiDocument, settings);
 
-            var comparator = new OpenApiSpecComparator();
+            var comparator = new OpenApiDocumentComparator();
             var comparisonMessages = comparator.Compare(context, oldOpenApiDocument.Typed, newOpenApiDocument.Typed);
 
             return comparisonMessages;

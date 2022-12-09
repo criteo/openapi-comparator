@@ -3,15 +3,15 @@ using Microsoft.OpenApi.Any;
 
 namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 {
-    public static class PrimitiveTypesExtensions
+    internal static class PrimitiveTypesExtensions
     {
-        public static bool DifferFrom(this string oldString, string newString) =>
+        internal static bool DifferFrom(this string oldString, string newString) =>
             oldString == null && newString != null || oldString != null && !oldString.Equals(newString);
 
-        public static bool DifferFrom(this decimal? oldDecimal, decimal? newDecimal) =>
+        internal static bool DifferFrom(this decimal? oldDecimal, decimal? newDecimal) =>
             oldDecimal == null && newDecimal != null || oldDecimal != null && !oldDecimal.Equals(newDecimal);
 
-        public static bool DifferFrom(this int? oldDecimal, int? newDecimal) =>
+        internal static bool DifferFrom(this int? oldDecimal, int? newDecimal) =>
             oldDecimal == null && newDecimal != null || oldDecimal != null && !oldDecimal.Equals(newDecimal);
 
         private static bool DifferFrom(this bool oldBoolean, bool newBoolean) => oldBoolean != newBoolean;
@@ -21,7 +21,7 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         private static bool DifferFrom(this DateTime? oldTime, DateTime? newTime) =>
             oldTime == null && newTime != null || oldTime != null && oldTime.Equals(newTime);
 
-        public static bool DifferFrom(this IOpenApiAny oldOpenApiAny, IOpenApiAny newOpenApiAny)
+        internal static bool DifferFrom(this IOpenApiAny oldOpenApiAny, IOpenApiAny newOpenApiAny)
         {
             if (oldOpenApiAny == null || newOpenApiAny == null)
                 return true;
