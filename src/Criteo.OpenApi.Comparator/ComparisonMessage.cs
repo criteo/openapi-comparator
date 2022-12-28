@@ -15,7 +15,7 @@ namespace Criteo.OpenApi.Comparator
     /// </summary>
     public class ComparisonMessage
     {
-        private const string _docBaseUrl = "https://github.com/Azure/openapi-diff/tree/master/docs/rules/";
+        private const string DocBaseUrl = "https://github.com/criteo/openapi-comparator/tree/main/documentation/rules/";
 
         /// <param name="rule">Links a difference to its related comparison rule</param>
         /// <param name="path">Path of the compared JSON element</param>
@@ -39,7 +39,7 @@ namespace Criteo.OpenApi.Comparator
             NewDocument = newDocument;
             Id = rule.Id;
             Code = rule.Code;
-            DocUrl = $"{_docBaseUrl}{rule.Id}.md";
+            DocUrl = $"{DocBaseUrl}{rule.Id}.md";
             Mode = rule.Type;
         }
 
