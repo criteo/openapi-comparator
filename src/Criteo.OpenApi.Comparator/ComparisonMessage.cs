@@ -107,23 +107,23 @@ namespace Criteo.OpenApi.Comparator
         /// Return a location of the given JSON token `t` in the document `j`.
         /// </summary>
         /// <returns>a string in this format `fileName:lineNumber:linePosition`</returns>
-        private static string Location(IJsonDocument jsonDocument, IJsonLineInfo jsonToken)
+        private static string Location(IJsonLineInfo jsonToken)
         {
             // up cast.
             return jsonToken == null
                 ? null
-                : $"{ObjectPath.FileNameNorm(jsonDocument.FileName)}:{jsonToken.LineNumber}:{jsonToken.LinePosition}";
+                : $"{jsonToken.LineNumber}:{jsonToken.LinePosition}";
         }
 
         /// <summary>
         /// Location of the old swagger file
         /// </summary>
-        public string OldLocation() => Location(OldDocument, OldJson());
+        public string OldLocation() => Location(OldJson());
 
         /// <summary>
         /// Location of the new swagger file
         /// </summary>
-        public string NewLocation() => Location(NewDocument, NewJson());
+        public string NewLocation() => Location(NewJson());
 
         /// <summary>
         /// Converts the currents ComparisonMessage object into a string message

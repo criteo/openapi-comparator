@@ -26,7 +26,7 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// <summary>
         /// Used to add a server's index according to its url.
         /// </summary>
-        /// <param name="url">The "url" attribute of the server we are looking for</param>
+        /// <param name="serverUrl">The "url" attribute of the server we are looking for</param>
         /// <returns>The index of the server in the servers list</returns>
         internal ObjectPath AppendServerByUrl(string serverUrl) => Append(FindServerIndex(serverUrl));
 
@@ -65,7 +65,7 @@ namespace Criteo.OpenApi.Comparator.Logging
         };
 
         /// <summary>
-        /// This's the OpenAPI path name. To use it as an id we need to remove all parameter names.
+        /// This is the OpenAPI path name. To use it as an id we need to remove all parameter names.
         /// For example, "/a/{a}/" and "/a/{b}" are the same paths.
         /// </summary>
         internal static string OpenApiPathName(string path) => Regex.Replace(path, @"\{\w*\}", @"{}");
@@ -144,13 +144,12 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// <returns>The json path of the json document</returns>
         internal string JsonPointer(IJsonDocument jsonDocument)
         {
-            var result = CompletePath(jsonDocument.Token)
+            return CompletePath(jsonDocument.Token)
                 .Select(v => v.name?
                     .Replace("~", "~0")
                     .Replace("/", "~1")
                 )
                 .Aggregate((a, b) => a == null || b == null ? null : a + "/" + b);
-            return result == null ? null : FileNameNorm(jsonDocument.FileName) + result;
         }
     }
 }

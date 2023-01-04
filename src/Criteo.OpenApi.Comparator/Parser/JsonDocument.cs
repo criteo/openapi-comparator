@@ -6,9 +6,6 @@ namespace Criteo.OpenApi.Comparator.Parser
     {
         /// JSON object
         JToken Token { get; }
-
-        /// JSON file name
-        string FileName { get; }
     }
 
     internal sealed class JsonDocument<T> : IJsonDocument
@@ -20,20 +17,14 @@ namespace Criteo.OpenApi.Comparator.Parser
         public JToken Token { get; }
 
         /// <summary>
-        /// Representation of JSON as `T` type.
+        /// Deserialized JSON of Type T
         /// </summary>
         public T Typed { get; }
 
-        /// <summary>
-        /// JSON file name.
-        /// </summary>
-        public string FileName { get; }
-
-        public JsonDocument(JToken token, T typed, string fileName)
+        public JsonDocument(JToken token, T typed)
         {
             Token = token;
             Typed = typed;
-            FileName = fileName;
         }
     }
 
@@ -42,7 +33,7 @@ namespace Criteo.OpenApi.Comparator.Parser
         /// <summary>
         /// Creates a `JsonDocument` object. It's a syntax sugar for `new JsonDocument`.
         /// </summary>
-        public static JsonDocument<T> ToJsonDocument<T>(this JToken token, T typed, string fileName) =>
-            new JsonDocument<T>(token, typed, fileName);
+        public static JsonDocument<T> ToJsonDocument<T>(this JToken token, T typed) =>
+            new JsonDocument<T>(token, typed);
     }
 }
