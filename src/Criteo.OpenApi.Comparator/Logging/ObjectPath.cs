@@ -133,11 +133,6 @@ namespace Criteo.OpenApi.Comparator.Logging
         internal IEnumerable<(JToken token, string name)> CompletePath(JToken t) => CompletePath(Path, t);
 
         /// <summary>
-        /// Normalize file path by replacing '\\' by '/'
-        /// </summary>
-        internal static string FileNameNorm(string fileName) => fileName.Replace("\\", "/");
-
-        /// <summary>
         /// https://tools.ietf.org/html/draft-ietf-appsawg-json-pointer-04
         /// </summary>
         /// <param name="jsonDocument"></param>
