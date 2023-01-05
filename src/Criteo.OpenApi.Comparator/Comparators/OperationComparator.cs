@@ -34,7 +34,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldOperation">The original operation.</param>
         /// <param name="newOperation">The new operation.</param>
         /// <returns>A list of messages from the comparison.</returns>
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
+        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
             OpenApiOperation oldOperation,
             OpenApiOperation newOperation)
         {
@@ -68,7 +68,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="context">Comparision Context</param>
         /// <param name="oldParameters">Old Operation's parameters</param>
         /// <param name="newParameters">New Operation's parameters</param>
-        internal void CompareParameters(ComparisonContext<OpenApiDocument> context,
+        internal void CompareParameters(ComparisonContext context,
             IList<OpenApiParameter> oldParameters,
             IList<OpenApiParameter> newParameters)
         {
@@ -95,7 +95,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             CheckRequiredParametersAddition(context, oldParameters, newParameters);
         }
-        private static void CompareParametersOrder(ComparisonContext<OpenApiDocument> context,
+        private static void CompareParametersOrder(ComparisonContext context,
             IList<OpenApiParameter> oldParameters,
             IList<OpenApiParameter> newParameters)
         {
@@ -123,7 +123,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         private static bool OrderHasChanged(int priorIndex, int newIndex) => priorIndex != -1 && priorIndex != newIndex;
 
 
-        private void CheckRequiredParametersRemoval(ComparisonContext<OpenApiDocument> context,
+        private void CheckRequiredParametersRemoval(ComparisonContext context,
             IEnumerable<OpenApiParameter> oldParameters,
             IList<OpenApiParameter> newParameters)
         {
@@ -149,7 +149,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private static void CheckRequiredParametersAddition(ComparisonContext<OpenApiDocument> context,
+        private static void CheckRequiredParametersAddition(ComparisonContext context,
             IList<OpenApiParameter> oldParameters,
             IList<OpenApiParameter> newParameters)
         {
@@ -184,7 +184,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private void CompareResponses(ComparisonContext<OpenApiDocument> context,
+        private void CompareResponses(ComparisonContext context,
             OpenApiResponses oldResponses,
             OpenApiResponses newResponses)
         {
@@ -218,7 +218,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private void CompareRequestBody(ComparisonContext<OpenApiDocument> context,
+        private void CompareRequestBody(ComparisonContext context,
             OpenApiRequestBody oldRequestBody, OpenApiRequestBody newRequestBody)
         {
             context.PushProperty("requestBody");
@@ -226,7 +226,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private static void CompareExtensions(ComparisonContext<OpenApiDocument> context,
+        private static void CompareExtensions(ComparisonContext context,
             IDictionary<string, IOpenApiExtension> oldExtensions,
             IDictionary<string, IOpenApiExtension> newExtensions)
         {

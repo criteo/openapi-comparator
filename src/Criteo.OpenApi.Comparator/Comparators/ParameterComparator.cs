@@ -23,7 +23,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         internal IEnumerable<ComparisonMessage> Compare(
-            ComparisonContext<OpenApiDocument> context,
+            ComparisonContext context,
             OpenApiParameter oldParameter,
             OpenApiParameter newParameter)
         {
@@ -79,7 +79,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             return context.Messages;
         }
 
-        private static void CompareIn(ComparisonContext<OpenApiDocument> context,
+        private static void CompareIn(ComparisonContext context,
             ParameterLocation? oldIn,
             ParameterLocation? newIn)
         {
@@ -94,7 +94,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private static void CompareConstantStatus(ComparisonContext<OpenApiDocument> context,
+        private static void CompareConstantStatus(ComparisonContext context,
             OpenApiParameter oldParameter,
             OpenApiParameter newParameter)
         {
@@ -106,7 +106,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private static void CompareRequiredStatus(ComparisonContext<OpenApiDocument> context,
+        private static void CompareRequiredStatus(ComparisonContext context,
             OpenApiParameter oldParameter, OpenApiParameter newParameter)
         {
             if (oldParameter.IsRequired() == newParameter.IsRequired() || context.Direction == DataDirection.Response)
@@ -124,7 +124,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private static void CompareStyle(ComparisonContext<OpenApiDocument> context,
+        private static void CompareStyle(ComparisonContext context,
             OpenApiParameter oldParameter,
             OpenApiParameter newParameter)
         {
@@ -136,7 +136,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private void CompareSchema(ComparisonContext<OpenApiDocument> context,
+        private void CompareSchema(ComparisonContext context,
             OpenApiSchema oldSchema, OpenApiSchema newSchema)
         {
             if (oldSchema == null || newSchema == null)

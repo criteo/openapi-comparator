@@ -41,7 +41,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="newDocument">The new document model.</param>
         /// <returns>A list of messages from the comparison.</returns>
         internal IEnumerable<ComparisonMessage> Compare(
-            ComparisonContext<OpenApiDocument> context,
+            ComparisonContext context,
             OpenApiDocument oldDocument,
             OpenApiDocument newDocument
         )
@@ -86,7 +86,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// In semantic versioning schemes, only the major and minor version numbers are considered when comparing versions.
         /// Build numbers are ignored.
         /// </remarks>
-        private static void CompareVersions(ComparisonContext<OpenApiDocument> context, string oldVersion, string newVersion)
+        private static void CompareVersions(ComparisonContext context, string oldVersion, string newVersion)
         {
             if (newVersion == null || oldVersion == null)
                 return;
@@ -156,7 +156,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private static void CompareServers(ComparisonContext<OpenApiDocument> context,
+        private static void CompareServers(ComparisonContext context,
             IList<OpenApiServer> oldServers,
             IList<OpenApiServer> newServers)
         {
@@ -180,7 +180,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// Check that no paths were removed, and compare the paths that are still there.
         /// Check whether any new paths are being added
         /// </summary>
-        private void ComparePaths(ComparisonContext<OpenApiDocument> context,
+        private void ComparePaths(ComparisonContext context,
             OpenApiPaths oldPaths, OpenApiPaths newPaths,
             bool isFromExtension = false)
         {
@@ -224,7 +224,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private void CompareOperations(ComparisonContext<OpenApiDocument> context,
+        private void CompareOperations(ComparisonContext context,
             IDictionary<OperationType,OpenApiOperation> oldOperations,
             IDictionary<OperationType,OpenApiOperation> newOperations)
         {
@@ -268,7 +268,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             return pathsResult;
         }
 
-        private void CompareCustomPaths(ComparisonContext<OpenApiDocument> context, OpenApiDocument oldDocument,
+        private void CompareCustomPaths(ComparisonContext context, OpenApiDocument oldDocument,
             OpenApiDocument newDocument)
         {
             const string customPathsName = "x-ms-paths";
@@ -289,7 +289,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private void CompareComponents(ComparisonContext<OpenApiDocument> context,
+        private void CompareComponents(ComparisonContext context,
             OpenApiDocument oldDocument,
             OpenApiDocument newDocument)
         {
@@ -471,7 +471,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                  subSchema.Reference != null && FindDiscriminator(subSchema.Reference, schemas));
          }
 
-         private void CompareSchemas(ComparisonContext<OpenApiDocument> context,
+         private void CompareSchemas(ComparisonContext context,
              IDictionary<string, OpenApiSchema> oldSchemas,
              IDictionary<string, OpenApiSchema> newSchemas)
          {
@@ -496,7 +496,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
              context.Pop();
          }
 
-         private void CompareParameters(ComparisonContext<OpenApiDocument> context,
+         private void CompareParameters(ComparisonContext context,
              IDictionary<string, OpenApiParameter> oldParameters,
              IDictionary<string, OpenApiParameter> newParameters)
          {
@@ -517,7 +517,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
              context.Pop();
          }
 
-         private void CompareResponses(ComparisonContext<OpenApiDocument> context,
+         private void CompareResponses(ComparisonContext context,
              IDictionary<string, OpenApiResponse> oldResponses,
              IDictionary<string, OpenApiResponse> newResponses)
          {

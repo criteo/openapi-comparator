@@ -17,7 +17,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _contentComparator = contentComparator;
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
+        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
             OpenApiResponse oldResponse, OpenApiResponse newResponse)
         {
             if (oldResponse == null)
@@ -53,7 +53,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             return context.Messages;
         }
 
-        private void CompareHeaders(ComparisonContext<OpenApiDocument> context,
+        private void CompareHeaders(ComparisonContext context,
             IDictionary<string, OpenApiHeader> oldHeaders,
             IDictionary<string, OpenApiHeader> newHeaders)
         {

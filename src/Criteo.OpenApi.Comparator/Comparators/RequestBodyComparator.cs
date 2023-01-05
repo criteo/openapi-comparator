@@ -13,7 +13,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _contentComparator = contentComparator;
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
+        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
             OpenApiRequestBody oldRequestBody, OpenApiRequestBody newRequestBody)
         {
             context.Direction = DataDirection.Request;
@@ -54,7 +54,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             return context.Messages;
         }
 
-        private static IEnumerable<ComparisonMessage> CompareRequired(ComparisonContext<OpenApiDocument> context,
+        private static IEnumerable<ComparisonMessage> CompareRequired(ComparisonContext context,
             bool oldRequired, bool newRequired)
         {
             if (oldRequired != newRequired)

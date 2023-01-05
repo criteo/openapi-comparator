@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators;
 using Criteo.OpenApi.Comparator.Parser;
-using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator
 {
@@ -23,7 +22,7 @@ namespace Criteo.OpenApi.Comparator
             var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec);
             var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec);
 
-            var context = new ComparisonContext<OpenApiDocument>(oldOpenApiDocument, newOpenApiDocument);
+            var context = new ComparisonContext(oldOpenApiDocument, newOpenApiDocument);
 
             var comparator = new OpenApiDocumentComparator();
             var comparisonMessages = comparator.Compare(context, oldOpenApiDocument.Typed, newOpenApiDocument.Typed);
