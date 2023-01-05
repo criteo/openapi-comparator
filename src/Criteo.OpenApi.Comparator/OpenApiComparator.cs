@@ -28,12 +28,26 @@ namespace Criteo.OpenApi.Comparator
             string newOpenApiSpec,
             Settings.Settings settings = null)
         {
-            var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec, oldFileName);
-            var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec, newFileName);
+            return Compare(oldOpenApiSpec, newOpenApiSpec, settings);
+        }
+        
+        /// <summary>
+        /// Compares two OpenAPI specification.
+        /// </summary>
+        /// <param name="oldOpenApiSpec">The content of the old OpenAPI Specification</param>
+        /// <param name="newOpenApiSpec">The content of the new OpenAPI Specification</param>
+        /// <param name="settings">options retrieved from command line</param>
+        public static IEnumerable<ComparisonMessage> Compare(
+            string oldOpenApiSpec,
+            string newOpenApiSpec,
+            Settings.Settings settings = null)
+        {
+            var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec);
+            var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec);
 
             var context = new ComparisonContext<OpenApiDocument>(oldOpenApiDocument, newOpenApiDocument, settings);
 
-            var comparator = new OpenApiSpecComparator();
+            var comparator = new OpenApiDocumentComparator();
             var comparisonMessages = comparator.Compare(context, oldOpenApiDocument.Typed, newOpenApiDocument.Typed);
 
             return comparisonMessages;

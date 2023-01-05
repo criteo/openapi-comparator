@@ -10,7 +10,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Parser
 {
-    public abstract class SwaggerJsonConverter : JsonConverter
+    internal abstract class SwaggerJsonConverter : JsonConverter
     {
         protected JObject Document { get; set; }
 
@@ -47,9 +47,9 @@ namespace Criteo.OpenApi.Comparator.Parser
     /// <summary>
     /// This converter is used to merge the common parameters that do not exist a the operation level
     /// </summary>
-    public class PathLevelParameterConverter : SwaggerJsonConverter
+    internal class PathLevelParameterConverter : SwaggerJsonConverter
     {
-        public PathLevelParameterConverter(string json)
+        internal PathLevelParameterConverter(string json)
         {
             Document = JObject.Parse(json);
         }

@@ -12,7 +12,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
-    public class OpenApiSpecComparator
+    internal class OpenApiDocumentComparator
     {
         private readonly OperationComparator _operationComparator;
         private readonly SchemaComparator _schemaComparator;
@@ -23,7 +23,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
         private readonly IDictionary<OpenApiSchema, bool> _isSchemaReferenced = new Dictionary<OpenApiSchema, bool>();
 
-        public OpenApiSpecComparator()
+        internal OpenApiDocumentComparator()
         {
             _schemaComparator = new SchemaComparator();
             _contentComparator = new ContentComparator(_schemaComparator);
@@ -40,7 +40,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldDocument">The original document model.</param>
         /// <param name="newDocument">The new document model.</param>
         /// <returns>A list of messages from the comparison.</returns>
-        public IEnumerable<ComparisonMessage> Compare(
+        internal IEnumerable<ComparisonMessage> Compare(
             ComparisonContext<OpenApiDocument> context,
             OpenApiDocument oldDocument,
             OpenApiDocument newDocument

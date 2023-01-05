@@ -10,7 +10,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
     /// Compare the fields that components have in common (e.g. the $ref field)
     /// https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.0.md#componentsObject
     /// </summary>
-    public abstract class ComponentComparator
+    internal abstract class ComponentComparator
     {
         /// <summary>
         /// Compare a modified parameter to an old one and look for breaking as well as non-breaking changes.

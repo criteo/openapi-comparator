@@ -26,7 +26,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string fileName = "invalid_json_file.txt";
             var documentAsString = ReadOpenApiFile(fileName);
-            Assert.Throws<JsonReaderException>(() => OpenApiParser.Parse(documentAsString, fileName));
+            Assert.Throws<JsonReaderException>(() => OpenApiParser.Parse(documentAsString));
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string fileName = "openapi_specification.json";
             var documentAsString = ReadOpenApiFile(fileName);
-            var validOpenApiDocument = OpenApiParser.Parse(documentAsString, fileName);
+            var validOpenApiDocument = OpenApiParser.Parse(documentAsString);
             Assert.IsInstanceOf<JsonDocument<OpenApiDocument>>(validOpenApiDocument);
         }
     }
