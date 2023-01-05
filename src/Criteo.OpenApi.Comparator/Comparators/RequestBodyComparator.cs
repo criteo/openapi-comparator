@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Criteo.OpenApi.Comparator.Comparators.Extensions;
+﻿using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
@@ -13,65 +12,61 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _contentComparator = contentComparator;
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
+        internal void Compare(ComparisonContext context,
             OpenApiRequestBody oldRequestBody, OpenApiRequestBody newRequestBody)
         {
             context.Direction = DataDirection.Request;
 
             if (oldRequestBody == null && newRequestBody == null)
-                return context.Messages;
+                return;
 
             if (oldRequestBody == null)
             {
                 context.LogBreakingChange(ComparisonRules.AddedRequestBody);
-                return context.Messages;
+                return;
             }
 
             if (newRequestBody == null)
             {
                 context.LogBreakingChange(ComparisonRules.RemovedRequestBody);
-                return context.Messages;
+                return;
             }
 
             if (!string.IsNullOrWhiteSpace(oldRequestBody.Reference?.ReferenceV3))
             {
                 oldRequestBody = oldRequestBody.Reference.Resolve(context.OldOpenApiDocument.Components.RequestBodies);
                 if (oldRequestBody == null)
-                    return context.Messages;
+                    return;
             }
 
             if (!string.IsNullOrWhiteSpace(newRequestBody.Reference?.ReferenceV3))
             {
                 newRequestBody = newRequestBody.Reference.Resolve(context.NewOpenApiDocument.Components.RequestBodies);
                 if (newRequestBody == null)
-                    return context.Messages;
+                    return;
             }
 
             CompareRequired(context, oldRequestBody.Required, newRequestBody.Required);
 
             _contentComparator.Compare(context, oldRequestBody.Content, newRequestBody.Content);
-
-            return context.Messages;
         }
 
-        private static IEnumerable<ComparisonMessage> CompareRequired(ComparisonContext context,
+        private static void CompareRequired(ComparisonContext context,
             bool oldRequired, bool newRequired)
         {
-            if (oldRequired != newRequired)
+            if (oldRequired == newRequired) 
+                return;
+            
+            context.PushProperty("required");
+            if (newRequired)
             {
-                context.PushProperty("required");
-                if (newRequired)
-                {
-                    context.LogBreakingChange(ComparisonRules.RequiredStatusChange, oldRequired, newRequired);
-                }
-                else
-                {
-                    context.LogInfo(ComparisonRules.RequiredStatusChange, oldRequired, newRequired);
-                }
-                context.Pop();
+                context.LogBreakingChange(ComparisonRules.RequiredStatusChange, oldRequired, newRequired);
             }
-
-            return context.Messages;
+            else
+            {
+                context.LogInfo(ComparisonRules.RequiredStatusChange, oldRequired, newRequired);
+            }
+            context.Pop();
         }
     }
 }

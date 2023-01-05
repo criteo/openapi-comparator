@@ -25,9 +25,9 @@ namespace Criteo.OpenApi.Comparator
             var context = new ComparisonContext(oldOpenApiDocument, newOpenApiDocument);
 
             var comparator = new OpenApiDocumentComparator();
-            var comparisonMessages = comparator.Compare(context, oldOpenApiDocument.Typed, newOpenApiDocument.Typed);
+            comparator.Compare(context, oldOpenApiDocument.Typed, newOpenApiDocument.Typed);
 
-            return comparisonMessages;
+            return context.Messages;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _schemaComparator = schemaComparator;
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
+        internal void Compare(ComparisonContext context,
             IDictionary<string, OpenApiMediaType> oldContent, IDictionary<string, OpenApiMediaType> newContent)
         {
             oldContent = oldContent ?? new Dictionary<string, OpenApiMediaType>();
@@ -56,8 +56,6 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
 
             context.Pop();
-
-            return context.Messages;
         }
 
         private void CompareMediaType(

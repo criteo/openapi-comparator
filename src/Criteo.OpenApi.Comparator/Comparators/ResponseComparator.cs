@@ -17,7 +17,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _contentComparator = contentComparator;
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
+        internal void Compare(ComparisonContext context,
             OpenApiResponse oldResponse, OpenApiResponse newResponse)
         {
             if (oldResponse == null)
@@ -32,14 +32,14 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 oldResponse = oldResponse.Reference.Resolve(context.OldOpenApiDocument.Components.Responses);
                 if (oldResponse == null)
-                    return context.Messages;
+                    return;
             }
 
             if (!string.IsNullOrWhiteSpace(newResponse.Reference?.ReferenceV3))
             {
                 newResponse = newResponse.Reference.Resolve(context.NewOpenApiDocument.Components.Responses);
                 if (newResponse == null)
-                    return context.Messages;
+                    return;
             }
 
             CompareHeaders(context, oldResponse.Headers, newResponse.Headers);
@@ -49,8 +49,6 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _contentComparator.Compare(context, oldResponse.Content, newResponse.Content);
 
             context.Direction = DataDirection.None;
-
-            return context.Messages;
         }
 
         private void CompareHeaders(ComparisonContext context,
