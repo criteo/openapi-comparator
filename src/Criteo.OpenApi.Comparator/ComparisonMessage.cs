@@ -17,12 +17,6 @@ namespace Criteo.OpenApi.Comparator
     {
         private const string DocBaseUrl = "https://github.com/criteo/openapi-comparator/tree/main/documentation/rules/";
 
-        /// <param name="rule">Links a difference to its related comparison rule</param>
-        /// <param name="path">Path of the compared JSON element</param>
-        /// <param name="oldDocument">Old JSON element</param>
-        /// <param name="newDocument">New JSON element</param>
-        /// <param name="severity">Severity of the difference (Info, Error, Warning)</param>
-        /// <param name="formatArguments">List of arguments inserted in the string message as dynamic arguments</param>
         internal ComparisonMessage(
             ComparisonRule rule,
             ObjectPath path,
@@ -50,6 +44,9 @@ namespace Criteo.OpenApi.Comparator
         /// Info, Error, Warning
         public Severity Severity { get; }
 
+        /// <summary>
+        /// Explicit description of the change.
+        /// </summary>
         public string Message { get; }
 
         /// <summary>
@@ -64,7 +61,7 @@ namespace Criteo.OpenApi.Comparator
 
         /// <summary>
         /// A JToken from the old document that contains such information as location.
-        /// If there are null nodes in the path, and the it's not an change of addtion, the null nodes should be removed, thus can return its parent token
+        /// If there are null nodes in the path, and the it's not an change of addition, the null nodes should be removed, thus can return its parent token
         /// </summary>
         /// <seealso cref="IJsonLineInfo"/>
         public JToken OldJson() => Mode != MessageType.Addition
@@ -129,6 +126,10 @@ namespace Criteo.OpenApi.Comparator
         /// Converts the currents ComparisonMessage object into a string message
         /// </summary>
         public override string ToString() =>
-            $"code = {Code}, type = {Severity}, message = {Message}, docurl = {DocUrl}, mode = {Mode}";
+            $"code = {Code},\n" +
+            $"type = {Severity},\n" +
+            $"message = {Message},\n" +
+            $"docurl = {DocUrl},\n" +
+            $"mode = {Mode}";
     }
 }
