@@ -22,14 +22,10 @@ namespace Criteo.OpenApi.Comparator
         /// </summary>
         /// <param name="oldOpenApiDocument">an old document of type T.</param>
         /// <param name="newOpenApiDocument">a new document of type T</param>
-        /// <param name="settings">Comparison settings retrieved from command line</param>
-        internal ComparisonContext(JsonDocument<T> oldOpenApiDocument, JsonDocument<T> newOpenApiDocument, Settings.Settings settings = null)
+        internal ComparisonContext(JsonDocument<T> oldOpenApiDocument, JsonDocument<T> newOpenApiDocument)
         {
             _oldOpenApiDocument = oldOpenApiDocument;
             _newOpenApiDocument = newOpenApiDocument;
-
-            if (settings != null)
-                Strict = settings.Strict;
         }
 
         /// <summary>
@@ -41,7 +37,7 @@ namespace Criteo.OpenApi.Comparator
         internal T NewOpenApiDocument => _newOpenApiDocument.Typed;
 
         /// <summary>
-        /// If true, then checking should be strict, in other words, breaking changes are errors instead of warnings.
+        /// If true, then breaking changes are errors instead of warnings.
         /// </summary>
         internal bool Strict { get; set; }
 
@@ -62,7 +58,7 @@ namespace Criteo.OpenApi.Comparator
 
         internal void Pop() => _path.Pop();
 
-        private Stack<ObjectPath> _path = new Stack<ObjectPath>(new[] { ObjectPath.Empty });
+        private readonly Stack<ObjectPath> _path = new Stack<ObjectPath>(new[] { ObjectPath.Empty });
 
         internal void LogInfo(ComparisonRule rule, params object[] formatArguments) =>
             _messages.Add(new ComparisonMessage(
