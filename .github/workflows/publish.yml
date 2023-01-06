@@ -1,4 +1,4 @@
-name: Package publication
+name: Packages publication
 on:
   release:
     types: [created]
@@ -11,7 +11,7 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 3.1.x
-      - name: Publish NuGet
+      - name: Publish Criteo.OpenApi.Comparator to NuGet
         id: publish_nuget
         uses: brandedoutcast/publish-nuget@v2
         with:
@@ -21,4 +21,15 @@ jobs:
           TAG_FORMAT: v*
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           PACKAGE_NAME: Criteo.OpenApi.Comparator
+          INCLUDE_SYMBOLS: true
+      - name: Publish Criteo.OpenApi.Comparator.Cli to NuGet
+        id: publish_nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/Criteo.OpenApi.Comparator.Cli/Criteo.OpenApi.Comparator.Cli.csproj
+          BUILD_CONFIGURATION: Release
+          TAG_COMMIT: true
+          TAG_FORMAT: v*
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          PACKAGE_NAME: Criteo.OpenApi.Comparator.Cli
           INCLUDE_SYMBOLS: true
