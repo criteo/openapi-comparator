@@ -30,6 +30,6 @@ jobs:
           BUILD_CONFIGURATION: Release
           TAG_COMMIT: true
           TAG_FORMAT: v*
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          NUGET_KEY: ${{secrets.NUGET_API_KEY_CLI}}
           PACKAGE_NAME: Criteo.OpenApi.Comparator.Cli
           INCLUDE_SYMBOLS: true
