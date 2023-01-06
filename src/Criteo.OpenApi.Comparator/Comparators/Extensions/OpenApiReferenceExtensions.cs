@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Criteo Technology. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
+
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OpenApi.Models;
 

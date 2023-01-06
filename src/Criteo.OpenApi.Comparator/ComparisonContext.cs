@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Criteo Technology. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
+
+using System;
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Parser;
 using Criteo.OpenApi.Comparator.Logging;
