@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFrameworks>netcoreapp3.1;</TargetFrameworks>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <!-- Disable generation of fake program file done by Microsoft.NET.Test.Sdk in order to replace it with a static (*Demo.)Main method: -->
+        <GenerateProgramFile>false</GenerateProgramFile>
+        <RootNamespace>Criteo.OpenApi.Comparator.Cli</RootNamespace>
+        <!-- Nuget Package definition -->
+        <PackageId>Criteo.OpenApi.Comparator.Cli</PackageId>
+        <Title>Criteo.OpenApi.Comparator.Cli</Title>
+        <Description>OpenApi Specification v3 comparator. Command line tool able to detect API differences between 2 versions of a specification in version 3.</Description>
+        <Authors>Criteo</Authors>
+        <Company>Criteo</Company>
+        <copyright>Criteo</copyright>
+        <Version>0.1.0</Version>
+        <PackageProjectUrl>https://github.com/criteo/openapi-comparator</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/criteo/openapi-comparator</RepositoryUrl>
+        <PackageTags>Criteo, OpenApi, OpenApi-Comparator, OpenApi-Diff, Swagger</PackageTags>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>openapi-compare</ToolCommandName>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="CommandLineParser" Version="2.9.1" />
+        <PackageReference Include="Criteo.OpenApi.Comparator" Version="0.5.1" />
+    </ItemGroup>
+</Project>
