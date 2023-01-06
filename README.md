@@ -1,27 +1,53 @@
 # Open API Comparator
 
-An API change detector.
+An OpenAPI tool to compare OpenAPI Specifications.
 
-## Installation
+## C# Library
 
-The tool is available as a [nuget package](https://www.nuget.org/packages/Criteo.OpenApi.Comparator).
+The tool is available as a [nuget package](https://www.nuget.org/packages/Criteo.OpenApi.Comparator), directly usable into your C# application. 
 
-## Code Sample
+To install it run the command:
+```bash
+dotnet add package Criteo.OpenApi.Comparator
+```
 
+Here is an example of how to use the Comparator:
 ```C#
-var comparator = new OpenApiComparator();
-
-var messages = comparator.Compare(
-    oldSpecName,
-    oldSpec,
-    newSpecName,
-    newSpec
+var differences = OpenApiComparator.Compare(
+    oldOpenApiSpec,
+    newOpenApiSpec
 );
 ```
 
-## Documentation
+## Command line tool
+
+The comparator is also available as a [command line tool](https://www.nuget.org/packages/Criteo.OpenApi.Comparator.Cli/0.1.0). 
+
+To install it, run the command:
+```bash
+dotnet tool install -g Criteo.OpenApi.Comparator.Cli
+```
+
+You can then use the tool through the `openapi-compare` command:
+```bash
+openapi-compare -o new_oas.json -n old_oas.json -f Json
+```
+
+Available options:
+| Option         | Small | Required | Description                                                                                                  |
+|----------------|-------|----------|--------------------------------------------------------------------------------------------------------------|
+| --old          | -o    | true     | Path to old OpenAPI Specification                                                                            |
+| --new          | -n    | true     | Path to new OpenAPI Specification                                                                            |
+| --outputFormat | -f    | false    | Specifies in which format the differences should be displayed (default Json). Possible values: Json \| Text. |
+| --help         | -h    | false    | Log available options                                                                                        |
+
+## Comparison rules
 
 Each comparison rule is documented in the [documentation section](https://github.com/criteo/openapi-comparator/tree/main/documentation).
+
+## Contributing
+
+Any contribution is more than welcomed. For now, no specific rule must be applied to contribute, just create an Issue or a Pull Request and we'll try to handle it ASAP.
 
 ## License
 
