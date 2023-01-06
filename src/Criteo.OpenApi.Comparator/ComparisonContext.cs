@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Parser;
 using Criteo.OpenApi.Comparator.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator
 {
@@ -12,17 +13,17 @@ namespace Criteo.OpenApi.Comparator
     /// Provides context for a comparison, such as the ancestors in the validation tree, the root object
     /// and information about the key or index that locate this object in the parent's list or dictionary
     /// </summary>
-    internal class ComparisonContext<T>
+    internal class ComparisonContext
     {
-        private readonly JsonDocument<T> _newOpenApiDocument;
-        private readonly JsonDocument<T> _oldOpenApiDocument;
+        private readonly JsonDocument<OpenApiDocument> _newOpenApiDocument;
+        private readonly JsonDocument<OpenApiDocument> _oldOpenApiDocument;
 
         /// <summary>
         /// Initializes a top level context for comparisons
         /// </summary>
         /// <param name="oldOpenApiDocument">an old document of type T.</param>
         /// <param name="newOpenApiDocument">a new document of type T</param>
-        internal ComparisonContext(JsonDocument<T> oldOpenApiDocument, JsonDocument<T> newOpenApiDocument)
+        internal ComparisonContext(JsonDocument<OpenApiDocument> oldOpenApiDocument, JsonDocument<OpenApiDocument> newOpenApiDocument)
         {
             _oldOpenApiDocument = oldOpenApiDocument;
             _newOpenApiDocument = newOpenApiDocument;
@@ -31,14 +32,12 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// The original root object in the graph that is being compared
         /// </summary>
-        internal T OldOpenApiDocument => _oldOpenApiDocument.Typed;
+        internal OpenApiDocument OldOpenApiDocument => _oldOpenApiDocument.Typed;
 
         /// Old swagger
-        internal T NewOpenApiDocument => _newOpenApiDocument.Typed;
+        internal OpenApiDocument NewOpenApiDocument => _newOpenApiDocument.Typed;
 
-        /// <summary>
         /// If true, then breaking changes are errors instead of warnings.
-        /// </summary>
         internal bool Strict { get; set; }
 
         /// Request, Response, Both or None

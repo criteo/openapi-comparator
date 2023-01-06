@@ -21,7 +21,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _compareDirections = new Dictionary<OpenApiSchema, DataDirection>();
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext<OpenApiDocument> context,
+        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema,
             bool isSchemaReferenced = true)
@@ -114,7 +114,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             return context.Messages;
         }
 
-        private static void CompareReadOnly(ComparisonContext<OpenApiDocument> context,
+        private static void CompareReadOnly(ComparisonContext context,
             bool oldReadOnly,
             bool newReadOnly)
         {
@@ -130,7 +130,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private static void CompareDiscriminator(ComparisonContext<OpenApiDocument> context,
+        private static void CompareDiscriminator(ComparisonContext context,
             OpenApiDiscriminator oldDiscriminator, OpenApiDiscriminator newDiscriminator)
         {
             if (oldDiscriminator == null && newDiscriminator != null
@@ -142,7 +142,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private static void CompareDefault(ComparisonContext<OpenApiDocument> context,
+        private static void CompareDefault(ComparisonContext context,
             IOpenApiAny oldDefault,
             IOpenApiAny newDefault)
         {
@@ -157,7 +157,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-         private static void CompareConstraints(ComparisonContext<OpenApiDocument> context,
+         private static void CompareConstraints(ComparisonContext context,
              OpenApiSchema oldSchema, OpenApiSchema newSchema)
         {
             if (oldSchema.Maximum.DifferFrom(newSchema.Maximum)
@@ -216,7 +216,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-         private static void CompareConstraint(ComparisonContext<OpenApiDocument> context, decimal? oldConstraint,
+         private static void CompareConstraint(ComparisonContext context, decimal? oldConstraint,
              decimal? newConstraint, string attributeName, bool isLowerBound, bool additionalCondition = false)
          {
              context.PushProperty(attributeName);
@@ -273,7 +273,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 : newConstraint > oldConstraint;
         }
 
-        private static void CompareType(ComparisonContext<OpenApiDocument> context, string oldType, string newType)
+        private static void CompareType(ComparisonContext context, string oldType, string newType)
         {
             if (oldType == null && newType == null)
                 return;
@@ -290,7 +290,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private void CompareItems(ComparisonContext<OpenApiDocument> context,
+        private void CompareItems(ComparisonContext context,
             OpenApiSchema oldItems,
             OpenApiSchema newItems)
         {
@@ -301,7 +301,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private static void CompareEnum(ComparisonContext<OpenApiDocument> context,
+        private static void CompareEnum(ComparisonContext context,
             ICollection<IOpenApiAny> oldEnum,
             ICollection<IOpenApiAny> newEnum,
             OpenApiObject enumExtension)
@@ -360,7 +360,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             return isEnumModelAsString;
         }
 
-        private static void CompareFormat(ComparisonContext<OpenApiDocument> context,
+        private static void CompareFormat(ComparisonContext context,
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema)
         {
@@ -373,7 +373,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private static bool IsFormatChangeAllowed(ComparisonContext<OpenApiDocument> context,
+        private static bool IsFormatChangeAllowed(ComparisonContext context,
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema)
         {
@@ -388,7 +388,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 || context.Direction == DataDirection.Response && formatChangedFromInt64ToInt32;
         }
 
-        private static void CompareAllOf(ComparisonContext<OpenApiDocument> context,
+        private static void CompareAllOf(ComparisonContext context,
             IList<OpenApiSchema> oldAllOf, IList<OpenApiSchema> newAllOf)
         {
             if (oldAllOf == null && newAllOf == null)
@@ -417,7 +417,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private void CompareProperties(ComparisonContext<OpenApiDocument> context,
+        private void CompareProperties(ComparisonContext context,
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema,
             bool isSchemaReferenced)
@@ -435,7 +435,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private static void CompareRemovedProperties(ComparisonContext<OpenApiDocument> context,
+        private static void CompareRemovedProperties(ComparisonContext context,
             OpenApiSchema oldSchema, OpenApiSchema newSchema)
         {
             if (oldSchema.Properties == null)
@@ -452,7 +452,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private static void CompareAddedProperties(ComparisonContext<OpenApiDocument> context,
+        private static void CompareAddedProperties(ComparisonContext context,
             OpenApiSchema oldSchema, OpenApiSchema newSchema, bool isSchemaReferenced)
         {
             if (newSchema.Properties == null)
@@ -488,7 +488,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private void CompareCommonProperties(ComparisonContext<OpenApiDocument> context,
+        private void CompareCommonProperties(ComparisonContext context,
             OpenApiSchema oldSchema, OpenApiSchema newSchema)
         {
             if (oldSchema.Properties == null || newSchema.Properties == null)
@@ -504,7 +504,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
-        private void CompareAdditionalProperties(ComparisonContext<OpenApiDocument> context,
+        private void CompareAdditionalProperties(ComparisonContext context,
             OpenApiSchema oldAdditionalProperties, OpenApiSchema newAdditionalProperties)
         {
             context.PushProperty("additionalProperties");
@@ -529,7 +529,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="context">Comparision Context</param>
         /// <param name="oldRequired">A set of old required properties</param>
         /// <param name="newRequired">A set of new required properties</param>
-        private static void CompareRequired(ComparisonContext<OpenApiDocument> context,
+        private static void CompareRequired(ComparisonContext context,
             ISet<string> oldRequired,
             ISet<string> newRequired)
         {
