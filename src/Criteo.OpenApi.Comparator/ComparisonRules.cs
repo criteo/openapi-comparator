@@ -1,4 +1,7 @@
-﻿namespace Criteo.OpenApi.Comparator
+﻿// Copyright (c) Criteo Technology. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
+
+namespace Criteo.OpenApi.Comparator
 {
     /// <summary>
     /// Contains all the comparison rules for the implemented rules
