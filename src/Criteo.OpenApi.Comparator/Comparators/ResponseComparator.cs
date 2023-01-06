@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
-    internal class ResponseComparator : ComponentComparator
+    internal class ResponseComparator
     {
         private readonly ContentComparator _contentComparator;
 
@@ -20,11 +19,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         internal void Compare(ComparisonContext context,
             OpenApiResponse oldResponse, OpenApiResponse newResponse)
         {
-            if (oldResponse == null)
-                throw new ArgumentNullException(nameof(oldResponse));
-
-            if (newResponse == null)
-                throw new ArgumentNullException(nameof(newResponse));
+            ComponentComparator<OpenApiResponse>.Compare(context, oldResponse, newResponse);
 
             context.Direction = DataDirection.Response;
 
@@ -43,8 +38,6 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
 
             CompareHeaders(context, oldResponse.Headers, newResponse.Headers);
-
-            base.Compare(context, oldResponse, newResponse);
 
             _contentComparator.Compare(context, oldResponse.Content, newResponse.Content);
 
@@ -68,7 +61,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 }
                 else
                 {
-                    base.Compare(context, oldHeader, header.Value);
+                    ComponentComparator<OpenApiHeader>.Compare(context, oldHeader, header.Value);
                 }
                 context.Pop();
             }
