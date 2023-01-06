@@ -14,7 +14,7 @@
         <Authors>Criteo</Authors>
         <Company>Criteo</Company>
         <copyright>Criteo</copyright>
-        <Version>0.1.0</Version>
+        <Version>0.5.1</Version>
         <PackageProjectUrl>https://github.com/criteo/openapi-comparator</PackageProjectUrl>
         <RepositoryUrl>https://github.com/criteo/openapi-comparator</RepositoryUrl>
         <PackageTags>Criteo, OpenApi, OpenApi-Comparator, OpenApi-Diff, Swagger</PackageTags>
