@@ -22,7 +22,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _visitedParameters = new LinkedList<OpenApiParameter>();
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(
+        internal void Compare(
             ComparisonContext context,
             OpenApiParameter oldParameter,
             OpenApiParameter newParameter)
@@ -44,20 +44,20 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 oldParameter = FindReferencedParameter(oldParameter.Reference, context.OldOpenApiDocument.Components.Parameters);
                 areParametersReferenced = true;
                 if (oldParameter == null)
-                    return context.Messages;
+                    return;
             }
             if (!string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3))
             {
                 newParameter = FindReferencedParameter(newParameter.Reference, context.NewOpenApiDocument.Components.Parameters);
                 areParametersReferenced = true;
                 if (newParameter == null)
-                    return context.Messages;
+                    return;
             }
 
             if (areParametersReferenced)
             {
                 if (_visitedParameters.Contains(oldParameter))
-                    return context.Messages;
+                    return;
 
                 _visitedParameters.AddFirst(oldParameter);
             }
@@ -75,8 +75,6 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _contentComparator.Compare(context, oldParameter.Content, newParameter.Content);
 
             context.Direction = DataDirection.None;
-
-            return context.Messages;
         }
 
         private static void CompareIn(ComparisonContext context,
