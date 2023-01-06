@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
-    internal class ParameterComparator : ComponentComparator
+    internal class ParameterComparator
     {
         private readonly SchemaComparator _schemaComparator;
         private readonly ContentComparator _contentComparator;
@@ -27,15 +26,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
             OpenApiParameter oldParameter,
             OpenApiParameter newParameter)
         {
-            if (oldParameter == null)
-                throw new ArgumentNullException(nameof(oldParameter));
-
-            if (newParameter == null)
-                throw new ArgumentNullException(nameof(newParameter));
+            ComponentComparator<OpenApiParameter>.Compare(context, oldParameter, newParameter);
 
             context.Direction = DataDirection.Request;
-
-            base.Compare(context, oldParameter, newParameter);
 
             var areParametersReferenced = false;
 
