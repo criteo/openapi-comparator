@@ -19,7 +19,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldParameter">The original parameter to compare.</param>
         /// <param name="newParameter">The new parameter to compare.</param>
         /// <returns>A list of messages from the comparison.</returns>
-        protected void Compare(ComparisonContext<OpenApiDocument> context, OpenApiParameter oldParameter, OpenApiParameter newParameter)
+        protected void Compare(ComparisonContext context, OpenApiParameter oldParameter, OpenApiParameter newParameter)
         {
             if (oldParameter == null)
                 throw new ArgumentNullException(nameof(oldParameter));
@@ -37,7 +37,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldResponse">The original response to compare.</param>
         /// <param name="newResponse">The new response to compare.</param>
         /// <returns>A list of messages from the comparison.</returns>
-        protected void Compare(ComparisonContext<OpenApiDocument> context, OpenApiResponse oldResponse, OpenApiResponse newResponse)
+        protected void Compare(ComparisonContext context, OpenApiResponse oldResponse, OpenApiResponse newResponse)
         {
             if (oldResponse == null)
                 throw new ArgumentNullException(nameof(oldResponse));
@@ -55,7 +55,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldHeader">The original header to compare.</param>
         /// <param name="newHeader">The new header to compare.</param>
         /// <returns>A list of messages from the comparison.</returns>
-        protected void Compare(ComparisonContext<OpenApiDocument> context, OpenApiHeader oldHeader, OpenApiHeader newHeader)
+        protected void Compare(ComparisonContext context, OpenApiHeader oldHeader, OpenApiHeader newHeader)
         {
             if (oldHeader == null)
                 throw new ArgumentNullException(nameof(oldHeader));
@@ -66,7 +66,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             CompareReference(context, oldHeader.Reference, newHeader.Reference);
         }
 
-        private static void CompareReference(ComparisonContext<OpenApiDocument> context,
+        private static void CompareReference(ComparisonContext context,
             OpenApiReference oldReference,
             OpenApiReference newReference)
         {
