@@ -17,7 +17,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
-            IDictionary<string, OpenApiMediaType> oldContent, IDictionary<string, OpenApiMediaType> newContent)
+            IDictionary<string, OpenApiMediaType> oldContent, 
+            IDictionary<string, OpenApiMediaType> newContent)
         {
             oldContent = oldContent ?? new Dictionary<string, OpenApiMediaType>();
             newContent = newContent ?? new Dictionary<string, OpenApiMediaType>();

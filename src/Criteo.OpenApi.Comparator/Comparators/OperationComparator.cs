@@ -34,7 +34,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldOperation">The original operation.</param>
         /// <param name="newOperation">The new operation.</param>
         /// <returns>A list of messages from the comparison.</returns>
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
+        internal void Compare(ComparisonContext context,
             OpenApiOperation oldOperation,
             OpenApiOperation newOperation)
         {
@@ -58,8 +58,6 @@ namespace Criteo.OpenApi.Comparator.Comparators
             CompareRequestBody(context, oldOperation.RequestBody, newOperation.RequestBody);
 
             CompareExtensions(context, oldOperation.Extensions, newOperation.Extensions);
-
-            return context.Messages;
         }
 
         /// <summary>

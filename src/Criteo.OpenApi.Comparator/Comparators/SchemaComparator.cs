@@ -21,31 +21,31 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _compareDirections = new Dictionary<OpenApiSchema, DataDirection>();
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
+        internal void Compare(ComparisonContext context,
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema,
             bool isSchemaReferenced = true)
         {
             if (oldSchema == null && newSchema == null)
-                return context.Messages;
+                return;
 
             if (oldSchema == null)
             {
                 context.LogError(ComparisonRules.AddedSchema);
-                return context.Messages;
+                return;
             }
 
             if (newSchema == null)
             {
                 context.LogBreakingChange(ComparisonRules.RemovedDefinition, default(string));
-                return context.Messages;
+                return;
             }
 
             if (newSchema.Reference?.ReferenceV3 != null
                 && !newSchema.Reference.ReferenceV3.Equals(oldSchema.Reference?.ReferenceV3))
             {
                 context.LogBreakingChange(ComparisonRules.ReferenceRedirection);
-                return context.Messages;
+                return;
             }
 
             var areSchemasReferenced = false;
@@ -54,7 +54,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 newSchema = newSchema.Reference.Resolve(context.NewOpenApiDocument.Components.Schemas);
                 areSchemasReferenced = true;
                 if (newSchema == null)
-                    return context.Messages;
+                    return;
             }
 
             if (!string.IsNullOrWhiteSpace(oldSchema.Reference?.ReferenceV3))
@@ -62,7 +62,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 oldSchema = oldSchema.Reference.Resolve(context.OldOpenApiDocument.Components.Schemas);
                 areSchemasReferenced = true;
                 if (oldSchema == null)
-                    return context.Messages;
+                    return;
             }
 
             // Avoid doing the comparison repeatedly by marking for which direction it's already been done.
@@ -75,7 +75,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 // Comparing two referenced schemas in the context of a parameter or response -- did we already do this?
                 if (_compareDirections[newSchema] == context.Direction
                     || _compareDirections[newSchema] == DataDirection.Both)
-                    return new ComparisonMessage[0];
+                    return;
 
                 _compareDirections[newSchema] |= context.Direction;
             }
@@ -83,7 +83,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (areSchemasReferenced)
             {
                 if (_visitedSchemas.Contains(oldSchema))
-                    return context.Messages;
+                    return;
 
                 _visitedSchemas.AddFirst(oldSchema);
             }
@@ -110,8 +110,6 @@ namespace Criteo.OpenApi.Comparator.Comparators
             CompareProperties(context, oldSchema, newSchema, isSchemaReferenced);
 
             CompareRequired(context, oldSchema.Required, newSchema.Required);
-
-            return context.Messages;
         }
 
         private static void CompareReadOnly(ComparisonContext context,

@@ -1,14 +1,13 @@
 // Copyright (c) Criteo Technology. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
-    internal class ParameterComparator : ComponentComparator
+    internal class ParameterComparator
     {
         private readonly SchemaComparator _schemaComparator;
         private readonly ContentComparator _contentComparator;
@@ -22,20 +21,14 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _visitedParameters = new LinkedList<OpenApiParameter>();
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(
+        internal void Compare(
             ComparisonContext context,
             OpenApiParameter oldParameter,
             OpenApiParameter newParameter)
         {
-            if (oldParameter == null)
-                throw new ArgumentNullException(nameof(oldParameter));
-
-            if (newParameter == null)
-                throw new ArgumentNullException(nameof(newParameter));
+            ComponentComparator<OpenApiParameter>.Compare(context, oldParameter, newParameter);
 
             context.Direction = DataDirection.Request;
-
-            base.Compare(context, oldParameter, newParameter);
 
             var areParametersReferenced = false;
 
@@ -44,20 +37,20 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 oldParameter = FindReferencedParameter(oldParameter.Reference, context.OldOpenApiDocument.Components.Parameters);
                 areParametersReferenced = true;
                 if (oldParameter == null)
-                    return context.Messages;
+                    return;
             }
             if (!string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3))
             {
                 newParameter = FindReferencedParameter(newParameter.Reference, context.NewOpenApiDocument.Components.Parameters);
                 areParametersReferenced = true;
                 if (newParameter == null)
-                    return context.Messages;
+                    return;
             }
 
             if (areParametersReferenced)
             {
                 if (_visitedParameters.Contains(oldParameter))
-                    return context.Messages;
+                    return;
 
                 _visitedParameters.AddFirst(oldParameter);
             }
@@ -75,8 +68,6 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _contentComparator.Compare(context, oldParameter.Content, newParameter.Content);
 
             context.Direction = DataDirection.None;
-
-            return context.Messages;
         }
 
         private static void CompareIn(ComparisonContext context,

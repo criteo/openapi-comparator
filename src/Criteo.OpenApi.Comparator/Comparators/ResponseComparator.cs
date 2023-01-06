@@ -1,14 +1,13 @@
 // Copyright (c) Criteo Technology. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
-    internal class ResponseComparator : ComponentComparator
+    internal class ResponseComparator
     {
         private readonly ContentComparator _contentComparator;
 
@@ -17,14 +16,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _contentComparator = contentComparator;
         }
 
-        internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
+        internal void Compare(ComparisonContext context,
             OpenApiResponse oldResponse, OpenApiResponse newResponse)
         {
-            if (oldResponse == null)
-                throw new ArgumentNullException(nameof(oldResponse));
-
-            if (newResponse == null)
-                throw new ArgumentNullException(nameof(newResponse));
+            ComponentComparator<OpenApiResponse>.Compare(context, oldResponse, newResponse);
 
             context.Direction = DataDirection.Response;
 
@@ -32,28 +27,24 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 oldResponse = oldResponse.Reference.Resolve(context.OldOpenApiDocument.Components.Responses);
                 if (oldResponse == null)
-                    return context.Messages;
+                    return;
             }
 
             if (!string.IsNullOrWhiteSpace(newResponse.Reference?.ReferenceV3))
             {
                 newResponse = newResponse.Reference.Resolve(context.NewOpenApiDocument.Components.Responses);
                 if (newResponse == null)
-                    return context.Messages;
+                    return;
             }
 
             CompareHeaders(context, oldResponse.Headers, newResponse.Headers);
 
-            base.Compare(context, oldResponse, newResponse);
-
             _contentComparator.Compare(context, oldResponse.Content, newResponse.Content);
 
             context.Direction = DataDirection.None;
-
-            return context.Messages;
         }
 
-        private void CompareHeaders(ComparisonContext context,
+        private static void CompareHeaders(ComparisonContext context,
             IDictionary<string, OpenApiHeader> oldHeaders,
             IDictionary<string, OpenApiHeader> newHeaders)
         {
@@ -70,7 +61,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 }
                 else
                 {
-                    base.Compare(context, oldHeader, header.Value);
+                    ComponentComparator<OpenApiHeader>.Compare(context, oldHeader, header.Value);
                 }
                 context.Pop();
             }

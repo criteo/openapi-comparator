@@ -16,9 +16,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
     {
         private readonly OperationComparator _operationComparator;
         private readonly SchemaComparator _schemaComparator;
-        private readonly ContentComparator _contentComparator;
         private readonly ParameterComparator _parameterComparator;
-        private readonly RequestBodyComparator _requestBodyComparator;
         private readonly ResponseComparator _responseComparator;
 
         private readonly IDictionary<OpenApiSchema, bool> _isSchemaReferenced = new Dictionary<OpenApiSchema, bool>();
@@ -26,11 +24,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
         internal OpenApiDocumentComparator()
         {
             _schemaComparator = new SchemaComparator();
-            _contentComparator = new ContentComparator(_schemaComparator);
-            _parameterComparator = new ParameterComparator(_schemaComparator, _contentComparator);
-            _requestBodyComparator = new RequestBodyComparator(_contentComparator);
-            _responseComparator = new ResponseComparator(_contentComparator);
-            _operationComparator = new OperationComparator(_parameterComparator, _requestBodyComparator, _responseComparator);
+            var contentComparator = new ContentComparator(_schemaComparator);
+            _parameterComparator = new ParameterComparator(_schemaComparator, contentComparator);
+            var requestBodyComparator = new RequestBodyComparator(contentComparator);
+            _responseComparator = new ResponseComparator(contentComparator);
+            _operationComparator = new OperationComparator(_parameterComparator, requestBodyComparator, _responseComparator);
         }
 
         /// <summary>
