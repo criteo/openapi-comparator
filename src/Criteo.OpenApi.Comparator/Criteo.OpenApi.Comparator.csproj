@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>Latest</LangVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Disable generation of fake program file done by Microsoft.NET.Test.Sdk in order to replace it with a static (*Demo.)Main method: -->
@@ -12,8 +13,8 @@
     <Description>OpenApi Specification v3 comparator. The tool is able to detect API differences between 2 versions of a specification in version 3.</Description>
     <Authors>Criteo</Authors>
     <Company>Criteo</Company>
-    <copyright>Criteo</copyright>
-    <Version>0.6.0</Version>
+    <Copyright>Copyright (c) Criteo Technology. All rights reserved.</Copyright>
+    <Version>0.7.0</Version>
     <PackageProjectUrl>https://github.com/criteo/openapi-comparator</PackageProjectUrl>
     <RepositoryUrl>https://github.com/criteo/openapi-comparator</RepositoryUrl>
     <PackageTags>Criteo, OpenApi, OpenApi-Comparator, OpenApi-Diff, Swagger</PackageTags>
