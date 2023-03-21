@@ -598,5 +598,16 @@ namespace Criteo.OpenApi.Comparator
             Message = "The new version is adding a new schema that was not found in the old version.",
             Type = MessageType.Removal
         };
+        
+        /// <summary>
+        /// OpenApi Specification version 3 specific
+        /// </summary>
+        public static ComparisonRule NullablePropertyChanged = new ComparisonRule()
+        {
+            Id = 2000,
+            Code = nameof(NullablePropertyChanged),
+            Message = "The nullable property has changed from '{0}' to '{1}'.",
+            Type = MessageType.Update
+        };
     }
 }
