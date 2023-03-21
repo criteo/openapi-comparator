@@ -796,6 +796,19 @@ namespace Criteo.OpenApi.Comparator.UTest
                 NewJsonRef = "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema"
             });
         }
+        
+        [Test]
+        public void Compare_OAS_Should_Return_Nullable_Property_Changed_When_Nullable_Property_Is_Changed()
+        {
+            var differences = CompareSpecifications("nullable_property_changed.json");
+            
+            differences.AssertContainsOnly(new ExpectedDifference
+            {
+                Rule = ComparisonRules.NullablePropertyChanged,
+                Severity = Severity.Warning,
+                NewJsonRef = "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/tag/nullable"
+            });
+        }
 
         /// <summary>
         /// Helper method -- load two Open Api Specification documents and invoke the comparison logic.

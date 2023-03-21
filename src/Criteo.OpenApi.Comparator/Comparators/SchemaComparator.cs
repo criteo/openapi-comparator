@@ -110,6 +110,22 @@ namespace Criteo.OpenApi.Comparator.Comparators
             CompareProperties(context, oldSchema, newSchema, isSchemaReferenced);
 
             CompareRequired(context, oldSchema.Required, newSchema.Required);
+            
+            CompareNullable(context, oldSchema.Nullable, newSchema.Nullable);
+        }
+        
+        private static void CompareNullable(ComparisonContext context,
+            bool oldNullable,
+            bool newNullable)
+        {
+            if (oldNullable == newNullable) return;
+            context.PushProperty("nullable");
+            context.LogBreakingChange(
+                ComparisonRules.NullablePropertyChanged,
+                oldNullable.ToString().ToLower(),
+                newNullable.ToString().ToLower()
+            );
+            context.Pop();
         }
 
         private static void CompareReadOnly(ComparisonContext context,
