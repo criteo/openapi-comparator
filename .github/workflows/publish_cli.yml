@@ -24,4 +24,3 @@ jobs:
           TAG_FORMAT: v*
           NUGET_KEY: ${{secrets.NUGET_API_KEY_CLI}}
           PACKAGE_NAME: Criteo.OpenApi.Comparator.Cli
-          INCLUDE_SYMBOLS: true

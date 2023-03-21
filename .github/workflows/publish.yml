@@ -16,7 +16,7 @@ jobs:
             6.x
       - name: Publish Criteo.OpenApi.Comparator to NuGet
         id: publish_package_nuget
-        uses: alirezanet/publish-nuget@v3.0.0
+        uses: brandedoutcast/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: src/Criteo.OpenApi.Comparator/Criteo.OpenApi.Comparator.csproj
           BUILD_CONFIGURATION: Release

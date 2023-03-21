@@ -27,7 +27,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
-        <PackageReference Include="Criteo.OpenApi.Comparator" Version="0.6.0" />
+        <PackageReference Include="Criteo.OpenApi.Comparator" Version="0.7.3" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\Readme.md" Pack="true" PackagePath="\" />
