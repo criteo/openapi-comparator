@@ -95,3 +95,5 @@
 [1047 - RemovedRequestBody](rules/1047.md)
 
 [1048 - AddedSchema](rules/1048.md)
+
+[2000 - NullablePropertyChanged](rules/2000.md)

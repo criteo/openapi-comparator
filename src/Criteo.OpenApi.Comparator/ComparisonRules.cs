@@ -604,7 +604,7 @@ namespace Criteo.OpenApi.Comparator
         /// </summary>
         public static ComparisonRule NullablePropertyChanged = new ComparisonRule()
         {
-            Id = 10000,
+            Id = 2000,
             Code = nameof(NullablePropertyChanged),
             Message = "The nullable property has changed from '{0}' to '{1}'.",
             Type = MessageType.Update
