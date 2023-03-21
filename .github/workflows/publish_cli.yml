@@ -14,14 +14,14 @@ jobs:
             3.x
             5.x
             6.x
-      - name: Publish Criteo.OpenApi.Comparator to NuGet
-        id: publish_package_nuget
+      - name: Publish Criteo.OpenApi.Comparator.Cli to NuGet
+        id: publish_cli_nuget
         uses: brandedoutcast/publish-nuget@v2
         with:
-          PROJECT_FILE_PATH: src/Criteo.OpenApi.Comparator/Criteo.OpenApi.Comparator.csproj
+          PROJECT_FILE_PATH: src/Criteo.OpenApi.Comparator.Cli/Criteo.OpenApi.Comparator.Cli.csproj
           BUILD_CONFIGURATION: Release
           TAG_COMMIT: true
           TAG_FORMAT: v*
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          PACKAGE_NAME: Criteo.OpenApi.Comparator
+          NUGET_KEY: ${{secrets.NUGET_API_KEY_CLI}}
+          PACKAGE_NAME: Criteo.OpenApi.Comparator.Cli
           INCLUDE_SYMBOLS: true
