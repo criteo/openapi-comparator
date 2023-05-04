@@ -45,6 +45,10 @@ Available options:
 
 Each comparison rule is documented in the [documentation section](https://github.com/criteo/openapi-comparator/tree/main/documentation).
 
+## OpenAPI version support
+
+Internally, the comparator uses [microsoft/OpenAPI.NET](https://github.com/microsoft/OpenAPI.NET/) which currently supports OpenAPI 2.0 to 3.0.0.
+
 ## Contributing
 
 Any contribution is more than welcomed. For now, no specific rule must be applied to contribute, just create an Issue or a Pull Request and we'll try to handle it ASAP.
