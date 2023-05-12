@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
 
 namespace Criteo.OpenApi.Comparator.Cli
@@ -45,6 +46,32 @@ namespace Criteo.OpenApi.Comparator.Cli
         }
 
         private static bool TryReadFile(string path, out string fileContent)
+        {
+            bool readOk = TryReadDistantFile(path, out fileContent);
+            if (!readOk)
+            {
+                TryReadLocalFile(path, out fileContent);
+            }
+            return readOk;
+        }
+
+        private static bool TryReadDistantFile(string url, out string fileContent)
+        {
+            try
+            {
+                using WebClient wc = new WebClient();
+                fileContent = wc.DownloadString(url);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"File not found for: {url}.");
+                fileContent = null;
+                return false;
+            }
+        }
+
+        private static bool TryReadLocalFile(string path, out string fileContent)
         {
             try
             {
