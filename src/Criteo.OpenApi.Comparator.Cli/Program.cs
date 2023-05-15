@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 
 namespace Criteo.OpenApi.Comparator.Cli
@@ -59,13 +60,13 @@ namespace Criteo.OpenApi.Comparator.Cli
         {
             try
             {
-                using WebClient wc = new WebClient();
-                fileContent = wc.DownloadString(url);
+                using HttpClient wc = new HttpClient();
+                fileContent = wc.GetStringAsync(url).Result;
                 return true;
             }
             catch (Exception e)
             {
-                Console.WriteLine($"File not found for: {url}.");
+                Console.WriteLine($"File not found for: {url} with the message {e.Message}");
                 fileContent = null;
                 return false;
             }
@@ -78,9 +79,9 @@ namespace Criteo.OpenApi.Comparator.Cli
                 fileContent = File.ReadAllText(path);
                 return true;
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException f)
             {
-                Console.WriteLine($"File not found for: {path}.");
+                Console.WriteLine($"File not found for: {path} with the message {f.Message}");
                 fileContent = null;
                 return false;
             }
