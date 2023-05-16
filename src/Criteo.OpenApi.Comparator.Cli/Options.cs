@@ -13,13 +13,13 @@ namespace Criteo.OpenApi.Comparator.Cli
         /// <summary>
         /// Path to old OpenAPI Specification
         /// </summary>
-        [Option('o', "old", Required = true, HelpText = "Path to old OpenAPI Specification.")]
+        [Option('o', "old", Required = true, HelpText = "Path or URL to old OpenAPI Specification.")]
         public string OldSpec { get; set; }
-        
+
         /// <summary>
         /// Path to new OpenAPI Specification
         /// </summary>
-        [Option('n', "new", Required = true, HelpText = "Path to new OpenAPI Specification.")]
+        [Option('n', "new", Required = true, HelpText = "Path or URL to new OpenAPI Specification.")]
         public string NewSpec { get; set; }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Criteo.OpenApi.Comparator.Cli
         /// Ideal for deserialization
         /// </summary>
         Json = 0,
-        
+
         /// <summary>
         /// Ideal for human reading (<see cref="ComparisonMessage.ToString"/>)
         /// </summary>
