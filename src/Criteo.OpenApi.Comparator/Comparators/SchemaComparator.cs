@@ -547,7 +547,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             ISet<string> oldRequired,
             ISet<string> newRequired)
         {
-            if (newRequired == null)
+            if (newRequired == null && oldRequired == null)
                 return;
 
             if (oldRequired == null)
@@ -556,10 +556,27 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
             }
 
+            if (newRequired == null)
+            {
+                context.LogBreakingChange(ComparisonRules.RemovedRequiredProperty, string.Join(", ", oldRequired));
+                return;
+            }
+
             List<string> addedRequiredProperties = newRequired.Except(oldRequired).ToList();
             if (addedRequiredProperties.Any())
             {
                 context.LogBreakingChange(ComparisonRules.AddedRequiredProperty,
+                    string.Join(", ", addedRequiredProperties));
+            }
+
+            if (context.Direction == DataDirection.Request)
+            {
+                return;
+            }
+            List<string> removedRequiredProperties = oldRequired.Except(newRequired).ToList();
+            if (removedRequiredProperties.Any())
+            {
+                context.LogBreakingChange(ComparisonRules.RemovedRequiredProperty,
                     string.Join(", ", addedRequiredProperties));
             }
         }
