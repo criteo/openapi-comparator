@@ -547,7 +547,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             ISet<string> oldRequired,
             ISet<string> newRequired)
         {
-            if (newRequired == null && oldRequired == null)
+            if (newRequired == null && (oldRequired == null || context.Direction == DataDirection.Request))
                 return;
 
             if (oldRequired == null)
