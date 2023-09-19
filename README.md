@@ -57,4 +57,9 @@ Any contribution is more than welcomed. For now, no specific rule must be applie
 
 OpenApi Comparator is an Open Source software released under the [Apache 2.0 license](https://github.com/criteo/openapi-comparator/blob/main/LICENCE).
 
+## Developper guide
 
+Simply use the dotnet cli. For example, to run the tests:
+```bash
+dotnet test
+```
