@@ -1,0 +1,75 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Removed_required_property",
+        "version": "2.0"
+    },
+    "paths": {
+        "/pets": {
+            "put": {
+                "description": "Update a pet",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PetWrite"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PetRead"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "PetRead": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "petType": {
+                        "type": "string",
+                        "enum": [
+                            "cat",
+                            "dog"
+                        ]
+                    }
+                },
+                "required": [
+                    "petType"
+                ]
+            },
+            "PetWrite": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "petType": {
+                        "type": "string",
+                        "enum": [
+                            "cat",
+                            "dog"
+                        ]
+                    }
+                },
+                "required": [
+                    "petType"
+                ]
+            }
+        }
+    }
+}

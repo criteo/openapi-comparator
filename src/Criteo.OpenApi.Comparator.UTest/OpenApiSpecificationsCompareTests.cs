@@ -810,6 +810,21 @@ namespace Criteo.OpenApi.Comparator.UTest
             });
         }
 
+        [Test]
+        public void CompareOAS_ShouldReturn_RemovedRequiredPropertyDifferences()
+        {
+            var differences = CompareSpecifications("removed_required_property.json");
+
+            var expectedDifference = new ExpectedDifference
+            {
+                Rule = ComparisonRules.RemovedRequiredProperty,
+                Severity = Severity.Warning,
+                NewJsonRef = "#/paths/~1pets/put/responses/200/content/text~1plain/schema"
+            };
+            differences.AssertContains(expectedDifference, 1);
+            differences.AssertContainsOnly(expectedDifference);
+        }
+
         /// <summary>
         /// Helper method -- load two Open Api Specification documents and invoke the comparison logic.
         /// </summary>

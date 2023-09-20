@@ -609,5 +609,16 @@ namespace Criteo.OpenApi.Comparator
             Message = "The nullable property has changed from '{0}' to '{1}'.",
             Type = MessageType.Update
         };
+
+        /// <summary>
+        /// OpenApi Specification version 3 specific
+        /// </summary>
+        public static ComparisonRule RemovedRequiredProperty = new ComparisonRule()
+        {
+            Id = 2001,
+            Code = nameof(RemovedRequiredProperty),
+            Message = "The required property '{0}' was removed in the new version.",
+            Type = MessageType.Removal
+        };
     }
 }
