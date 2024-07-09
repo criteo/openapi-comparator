@@ -70,9 +70,6 @@
         "schemas": {
             "Pet": {
                 "type": "object",
-                "required": [
-                    "name"
-                ],
                 "discriminator": {
                     "propertyName": "petType"
                 },
