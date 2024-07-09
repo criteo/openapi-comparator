@@ -28,14 +28,14 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldNotReturn_Differences()
         {
-            var differences = CompareSpecifications("valid_oas.json");
+            var differences = CompareSpecifications("valid_oas");
             Assert.That(differences, Is.Empty);
         }
 
         [Test]
         public void CompareOAS_ShouldNotReturn_Warnings_When_NoVersionChanged()
         {
-            var differences = CompareSpecifications("no_version_change.json");
+            var differences = CompareSpecifications("no_version_change");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -48,7 +48,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_VersionReversedDifferences()
         {
-            var differences = CompareSpecifications("version_reversed.json");
+            var differences = CompareSpecifications("version_reversed");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -61,7 +61,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedPathDifferences()
         {
-            var differences = CompareSpecifications("removed_path.json");
+            var differences = CompareSpecifications("removed_path");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -80,7 +80,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedPathDifferences()
         {
-            var differences =  CompareSpecifications("added_path.json");
+            var differences =  CompareSpecifications("added_path");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -93,7 +93,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedOperationDifferences()
         {
-            var differences = CompareSpecifications("removed_operation.json");
+            var differences = CompareSpecifications("removed_operation");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -106,7 +106,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedOperationDifferences()
         {
-            var differences = CompareSpecifications("added_operation.json");
+            var differences = CompareSpecifications("added_operation");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -119,7 +119,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ModifiedOperationIdDifferences()
         {
-            var differences = CompareSpecifications("modified_operation_id.json");
+            var differences = CompareSpecifications("modified_operation_id");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -133,7 +133,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedResponseCodeDifferences()
         {
-            var differences = CompareSpecifications("added_response_code.json");
+            var differences = CompareSpecifications("added_response_code");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -146,7 +146,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedResponseCodeDifferences()
         {
-            var differences = CompareSpecifications("removed_response_code.json");
+            var differences = CompareSpecifications("removed_response_code");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -159,7 +159,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedHeaderDifferences()
         {
-            var differences = CompareSpecifications("added_header.json");
+            var differences = CompareSpecifications("added_header");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -172,7 +172,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedHeaderDifferences()
         {
-            var differences = CompareSpecifications("removed_header.json");
+            var differences = CompareSpecifications("removed_header");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -185,7 +185,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_LongRunningOperationDifferences()
         {
-            var differences = CompareSpecifications("long_running_operation.json");
+            var differences = CompareSpecifications("long_running_operation");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -202,7 +202,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedSchemaDifferences()
         {
-            var differences = CompareSpecifications("removed_schema.json");
+            var differences = CompareSpecifications("removed_schema");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -215,7 +215,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedClientParameterDifferences()
         {
-            var differences = CompareSpecifications("removed_client_parameter.json");
+            var differences = CompareSpecifications("removed_client_parameter");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -228,7 +228,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedRequiredParameterDifferences()
         {
-            var differences = CompareSpecifications("removed_required_parameter.json");
+            var differences = CompareSpecifications("removed_required_parameter");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -241,7 +241,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedRequiredParameterDifferences()
         {
-            var differences = CompareSpecifications("added_required_parameter.json");
+            var differences = CompareSpecifications("added_required_parameter");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -254,7 +254,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ParameterInHasChangedDifferences()
         {
-            var differences = CompareSpecifications("parameter_in_has_changed.json");
+            var differences = CompareSpecifications("parameter_in_has_changed");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -267,7 +267,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ConstantStatusHasChangedDifferences()
         {
-            var differences = CompareSpecifications("constant_status_has_changed.json");
+            var differences = CompareSpecifications("constant_status_has_changed");
 
             // If the number of values in an enum increases, then a ConstraintIsWeaker message will be raised as well
             differences.AssertContains(new ExpectedDifference
@@ -295,7 +295,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ReferenceRedirectionDifferences()
         {
-            var differences = CompareSpecifications("reference_redirection.json");
+            var differences = CompareSpecifications("reference_redirection");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -308,7 +308,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedEnumValueDifferences()
         {
-            var differences = CompareSpecifications("removed_enum_value.json");
+            var differences = CompareSpecifications("removed_enum_value");
 
             differences.AssertContains(new ExpectedDifference
             {
@@ -326,7 +326,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedEnumValueDifferences()
         {
-            var differences = CompareSpecifications("added_enum_value.json");
+            var differences = CompareSpecifications("added_enum_value");
 
             differences.AssertContains(new ExpectedDifference
             {
@@ -344,7 +344,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedAdditionalPropertiesDifferences()
         {
-            var differences = CompareSpecifications("added_additional_properties.json");
+            var differences = CompareSpecifications("added_additional_properties");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -357,7 +357,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedAdditionalPropertiesDifferences()
         {
-            var differences = CompareSpecifications("removed_additional_properties.json");
+            var differences = CompareSpecifications("removed_additional_properties");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -376,7 +376,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_TypeFormatChangedDifferences()
         {
-            var differences = CompareSpecifications("type_format_changed.json");
+            var differences = CompareSpecifications("type_format_changed");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -389,7 +389,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RequiredStatusChangedDifferences()
         {
-            var differences = CompareSpecifications("required_status_changed.json");
+            var differences = CompareSpecifications("required_status_changed");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -405,7 +405,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_TypeChangedDifferences()
         {
-            var differences = CompareSpecifications("type_changed.json");
+            var differences = CompareSpecifications("type_changed");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -418,7 +418,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_DefaultValueChangedDifferences()
         {
-            var differences = CompareSpecifications("default_value_changed.json");
+            var differences = CompareSpecifications("default_value_changed");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -431,7 +431,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ReadonlyPropertyChangedDifferences()
         {
-            var differences = CompareSpecifications("readonly_property_changed.json");
+            var differences = CompareSpecifications("readonly_property_changed");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -444,7 +444,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_DifferentDiscriminatorDifferences()
         {
-            var differences = CompareSpecifications("different_discriminator.json");
+            var differences = CompareSpecifications("different_discriminator");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -457,7 +457,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedPropertyDifferences()
         {
-            var differences = CompareSpecifications("removed_property.json");
+            var differences = CompareSpecifications("removed_property");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -470,7 +470,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedRequiredPropertyDifferences()
         {
-            var differences = CompareSpecifications("added_required_property.json");
+            var differences = CompareSpecifications("added_required_property");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -483,7 +483,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedOptionalParameterDifferences()
         {
-            var differences = CompareSpecifications("added_optional_parameter.json");
+            var differences = CompareSpecifications("added_optional_parameter");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -496,7 +496,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedOptionalPropertyDifferences()
         {
-            var differences = CompareSpecifications("added_optional_property.json");
+            var differences = CompareSpecifications("added_optional_property");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -509,7 +509,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ChangedParameterOrderDifferences()
         {
-            var differences = CompareSpecifications("changed_parameter_order.json");
+            var differences = CompareSpecifications("changed_parameter_order");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -522,7 +522,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedPropertyInResponseDifferences()
         {
-            var differences = CompareSpecifications("added_property_in_response.json");
+            var differences = CompareSpecifications("added_property_in_response");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -535,7 +535,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedReadOnlyPropertyInResponseDifferences()
         {
-            var differences = CompareSpecifications("added_readOnly_property_in_response.json");
+            var differences = CompareSpecifications("added_readOnly_property_in_response");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -548,7 +548,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ConstraintChangedDifferences()
         {
-            var differences = CompareSpecifications("constraint_changed.json");
+            var differences = CompareSpecifications("constraint_changed");
 
             differences.AssertContains(new ExpectedDifference
             {
@@ -571,7 +571,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ConstraintIsStrongerDifferences()
         {
-            var differences = CompareSpecifications("constraint_is_stronger.json");
+            var differences = CompareSpecifications("constraint_is_stronger");
 
             differences.AssertContains(new ExpectedDifference
             {
@@ -589,7 +589,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ConstraintIsWeakerDifferences()
         {
-            var differences = CompareSpecifications("constraint_is_weaker.json");
+            var differences = CompareSpecifications("constraint_is_weaker");
 
             differences.AssertContains(new ExpectedDifference
             {
@@ -607,7 +607,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_DifferentAllOfDifferences()
         {
-            var differences = CompareSpecifications("different_allOf.json");
+            var differences = CompareSpecifications("different_allOf");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -620,7 +620,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_OneMessagePerRule_When_RecursiveModel()
         {
-            var differences = CompareSpecifications("recursive_model.json");
+            var differences = CompareSpecifications("recursive_model");
 
             differences.AssertContains(new ExpectedDifference
             {
@@ -638,7 +638,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RequestBodyFormatNowSupportedDifferences()
         {
-            var differences = CompareSpecifications("request_body_format_now_supported.json");
+            var differences = CompareSpecifications("request_body_format_now_supported");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -651,7 +651,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ResponseBodyFormatNowSupportedDifferences()
         {
-            var differences = CompareSpecifications("response_body_format_now_supported.json");
+            var differences = CompareSpecifications("response_body_format_now_supported");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -664,7 +664,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RequestBodyFormatNoLongerSupportedDifferences()
         {
-            var differences = CompareSpecifications("request_body_format_no_longer_supported.json");
+            var differences = CompareSpecifications("request_body_format_no_longer_supported");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -677,7 +677,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ServerNoLongerSupportedDifferences()
         {
-            var differences = CompareSpecifications("server_no_longer_supported.json");
+            var differences = CompareSpecifications("server_no_longer_supported");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -690,7 +690,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_ParameterStyleChangedDifferences()
         {
-            var differences = CompareSpecifications("parameter_style_changed.json");
+            var differences = CompareSpecifications("parameter_style_changed");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -707,7 +707,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedOptionalPropertyDifferences_When_ValidPolymorphicSchema()
         {
-            var differences = CompareSpecifications("polymorphic_schema.json");
+            var differences = CompareSpecifications("polymorphic_schema");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -723,7 +723,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_Differences_When_XMsPathsExtension()
         {
-            var differences = CompareSpecifications("x-ms-paths.json");
+            var differences = CompareSpecifications("x-ms-paths");
 
             differences.AssertContains(new ExpectedDifference
             {
@@ -748,7 +748,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_AddedRequestBodyDifferences()
         {
-            var differences = CompareSpecifications("added_request_body.json");
+            var differences = CompareSpecifications("added_request_body");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -761,7 +761,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void CompareOAS_ShouldReturn_RemovedRequestBodyDifferences()
         {
-            var differences = CompareSpecifications("removed_request_body.json");
+            var differences = CompareSpecifications("removed_request_body");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -770,11 +770,11 @@ namespace Criteo.OpenApi.Comparator.UTest
                 OldJsonRef = "#/paths/~1pets/post/requestBody"
             });
         }
-        
+
         [Test]
         public void Compare_OAS_Should_Return_Removed_Schema_When_Schema_Is_Removed_In_Response()
         {
-            var differences = CompareSpecifications("removed_schema_in_response.json");
+            var differences = CompareSpecifications("removed_schema_in_response");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -783,11 +783,11 @@ namespace Criteo.OpenApi.Comparator.UTest
                 OldJsonRef = "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema"
             });
         }
-        
+
         [Test]
         public void Compare_OAS_Should_Return_Added_Schema_When_Schema_Is_Added_In_Response()
         {
-            var differences = CompareSpecifications("added_schema_in_response.json");
+            var differences = CompareSpecifications("added_schema_in_response");
 
             differences.AssertContainsOnly(new ExpectedDifference
             {
@@ -796,12 +796,12 @@ namespace Criteo.OpenApi.Comparator.UTest
                 NewJsonRef = "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema"
             });
         }
-        
+
         [Test]
         public void Compare_OAS_Should_Return_Nullable_Property_Changed_When_Nullable_Property_Is_Changed()
         {
-            var differences = CompareSpecifications("nullable_property_changed.json");
-            
+            var differences = CompareSpecifications("nullable_property_changed");
+
             differences.AssertContainsOnly(new ExpectedDifference
             {
                 Rule = ComparisonRules.NullablePropertyChanged,
@@ -821,8 +821,8 @@ namespace Criteo.OpenApi.Comparator.UTest
             var baseDirectory = Directory.GetParent(typeof(OpenApiSpecificationsCompareTests).GetTypeInfo().Assembly.Location)
                 .ToString();
 
-            var oldFileName = Path.Combine(baseDirectory, "Resource", "old", oasName);
-            var newFileName = Path.Combine(baseDirectory, "Resource", "new", oasName);
+            var oldFileName = Path.Combine(baseDirectory, "Resource", "old", oasName + ".json");
+            var newFileName = Path.Combine(baseDirectory, "Resource", "new", oasName + ".yaml");
 
             var differences = OpenApiComparator.Compare(
                 File.ReadAllText(oldFileName),

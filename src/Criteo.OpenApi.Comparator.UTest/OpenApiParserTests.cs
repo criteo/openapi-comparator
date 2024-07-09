@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using Criteo.OpenApi.Comparator.Parser;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
+using Microsoft.OpenApi.Readers.Exceptions;
 using NUnit.Framework;
 
 namespace Criteo.OpenApi.Comparator.UTest
@@ -29,16 +29,16 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string fileName = "invalid_json_file.txt";
             var documentAsString = ReadOpenApiFile(fileName);
-            Assert.Throws<JsonReaderException>(() => OpenApiParser.Parse(documentAsString));
+            Assert.Throws<OpenApiUnsupportedSpecVersionException>(() => OpenApiParser.Parse(documentAsString));
         }
 
         /// <summary>
         /// Verifies that a valid JsonDocument object is parsed when input is a valid OpenApi
         /// </summary>
-        [Test]
-        public void OpenApiParser_Should_Return_Valid_OpenApi_Document_Object()
+        [TestCase("openapi_specification.json")]
+        [TestCase("openapi_specification.yaml")]
+        public void OpenApiParser_Should_Return_Valid_OpenApi_Document_Object(string fileName)
         {
-            const string fileName = "openapi_specification.json";
             var documentAsString = ReadOpenApiFile(fileName);
             var validOpenApiDocument = OpenApiParser.Parse(documentAsString);
             Assert.IsInstanceOf<JsonDocument<OpenApiDocument>>(validOpenApiDocument);

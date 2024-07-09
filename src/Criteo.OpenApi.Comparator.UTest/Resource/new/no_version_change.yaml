@@ -1,0 +1,5 @@
+openapi: 3.0.1
+info:
+  title: version_check_02
+  version: "1.0"
+paths: {}

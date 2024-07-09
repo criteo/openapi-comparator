@@ -1,0 +1,73 @@
+openapi: 3.0
+info:
+  title: recursive_model
+  version: "2.0"
+servers:
+  - url: http:localhost:8000
+paths:
+  /api/Operations:
+    post:
+      tag:
+        - Operations
+      operationId: Operations_Post
+      parameters:
+        - name: accountName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/CreateParam'
+          description: Create Param.
+      responses:
+        "200":
+          description: OK
+        default:
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+components:
+  schemas:
+    CloudError:
+      description: Error from a REST request.
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+      x-ms-external: true
+    CloudErrorBody:
+      description: Body of an error from a REST request.
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          readOnly: true
+        target:
+          type: string
+        details:
+          description: Inner errors.
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+    CreateParam:
+      description: Create Param a REST request.
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CreateParamBody'
+      x-ms-external: true
+    CreateParamBody:
+      description: Create Param Body a REST request.
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          description: Inner errors.
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateParam'
