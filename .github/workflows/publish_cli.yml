@@ -10,10 +10,9 @@ jobs:
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: | 
-            3.x
-            5.x
+          dotnet-version: |
             6.x
+            8.x
       - name: Publish Criteo.OpenApi.Comparator.Cli to NuGet
         id: publish_cli_nuget
         uses: brandedoutcast/publish-nuget@v2
