@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp3;net5;net6;</TargetFrameworks>
+        <TargetFrameworks>net6;net8;</TargetFrameworks>
         <LangVersion>Latest</LangVersion>
         <OutputType>Exe</OutputType>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
