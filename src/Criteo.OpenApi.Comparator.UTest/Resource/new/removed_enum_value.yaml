@@ -1,0 +1,54 @@
+openapi: 3.0
+info:
+  title: removed_definition
+  version: "2.0"
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/Parameters:
+    put:
+      tags:
+        - Parameters
+      operationId: Parameters_Put
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - name: skipParam
+          in: query
+          description: max records to skip
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pet'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+components:
+  schemas:
+    Pet:
+      type: object
+      discriminator:
+        propertyName: petType
+      properties:
+        name:
+          type: string
+        petType:
+          type: string
+          enum:
+            - cat
+            - dot
+      required:
+        - name
+        - petType
+  parameters:
+    limitParam:
+      name: limitParam
+      in: query
+      description: max records to return
+      required: true
+      schema:
+        type: string
+        enum:
+          - clueless
+          - adventurous

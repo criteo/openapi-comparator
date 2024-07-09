@@ -1,0 +1,43 @@
+openapi: 3.0
+info:
+  title: removed_definition
+  version: "2.0"
+servers:
+  - url: http://localhost:8000
+  - url: https://localhost:8000
+paths:
+  /api/Parameters:
+    put:
+      tags:
+        - Parameters
+      operationId: Parameters_Put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Database'
+    get:
+      tags:
+        - Parameters
+      operationId: Parameters_Get
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Database'
+components:
+  schemas:
+    Database:
+      description: Database schema
+      properties:
+        a:
+          type: string
+          readOnly: true
+          description: |-
+            This is a system generated property.
+            The _rid value is empty for this operation.
+        b:
+          type: integer
+          readOnly: true
+          default: 0
+          description: This property shows the number of databases returned.

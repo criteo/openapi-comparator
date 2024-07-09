@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: removed_definition
+  version: "2.0"
+servers:
+  - url: http://localhost:8000
+  - url: https://localhost:8000
+paths:
+  /pets:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    maximum: 400
+                  constrainsItems:
+                    type: string
+                    enum:
+                      - item1
+                      - item3
+components:
+  schemas:
+    limitParam:
+      type: object
+      properties:
+        minLimit:
+          type: integer
+          maximum: 400
+        maxLimit:
+          type: integer
+        exclusiveMin:
+          type: integer
+          minimum: 500
+        maxTextSize:
+          type: string
+          maxLength: 150
+        minTextSize:
+          type: string
+          minLength: 200
+        accessKey:
+          type: string
+        redirectUrl:
+          type: array
+          minItems: 200
+          maxItems: 400
+          items:
+            type: string
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/limitParam'
