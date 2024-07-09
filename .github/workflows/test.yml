@@ -8,7 +8,9 @@ jobs:
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 6.x
+          dotnet-version: |
+            6.x
+            8.x
       - name: Install dependencies
         run: dotnet restore ./src/Criteo.OpenApi.Comparator.UTest
       - name: Build
