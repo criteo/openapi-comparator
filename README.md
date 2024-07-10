@@ -4,7 +4,7 @@ An OpenAPI tool to compare OpenAPI Specifications.
 
 ## C# Library
 
-The tool is available as a [nuget package](https://www.nuget.org/packages/Criteo.OpenApi.Comparator), directly usable into your C# application. 
+The tool is available as a [nuget package](https://www.nuget.org/packages/Criteo.OpenApi.Comparator), directly usable into your C# application.
 
 To install it run the command:
 ```bash
@@ -21,7 +21,7 @@ var differences = OpenApiComparator.Compare(
 
 ## Command line tool
 
-The comparator is also available as a [command line tool](https://www.nuget.org/packages/Criteo.OpenApi.Comparator.Cli/0.1.0). 
+The comparator is also available as a [command line tool](https://www.nuget.org/packages/Criteo.OpenApi.Comparator.Cli/0.1.0).
 
 To install it, run the command:
 ```bash
@@ -34,12 +34,13 @@ openapi-compare -o new_oas.json -n old_oas.json -f Json
 ```
 
 Available options:
-| Option         | Small | Required | Description                                                                                                  |
-|----------------|-------|----------|--------------------------------------------------------------------------------------------------------------|
-| --old          | -o    | true     | Path to old OpenAPI Specification                                                                            |
-| --new          | -n    | true     | Path to new OpenAPI Specification                                                                            |
-| --outputFormat | -f    | false    | Specifies in which format the differences should be displayed (default Json). Possible values: Json \| Text. |
-| --help         | -h    | false    | Log available options                                                                                        |
+| Option         | Small | Required | Description                                                                                                   |
+|----------------|-------|----------|---------------------------------------------------------------------------------------------------------------|
+| --old          | -o    | true     | Path or URL to old OpenAPI Specification.                                                                     |
+| --new          | -n    | true     | Path or URL to new OpenAPI Specification.                                                                     |
+| --outputFormat | -f    | false    | (Default: Json) Specifies in which format the differences should be displayed. Possible values: Json \| Text. |
+| --strict       | -s    | false    | (Default: false) Enable strict mode: breaking changes are errors instead of warnings.                         |
+| --help         | -h    | false    | Log available options                                                                                         |
 
 ## Comparison rules
 
