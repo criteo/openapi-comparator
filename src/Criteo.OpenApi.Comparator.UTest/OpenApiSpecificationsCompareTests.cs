@@ -315,12 +315,12 @@ namespace Criteo.OpenApi.Comparator.UTest
                 Rule = ComparisonRules.RemovedEnumValue,
                 Severity = Severity.Warning,
                 OldJsonRef = "#/paths/~1api~1Parameters/put/parameters/0/schema/enum"
-            }, 2);
+            }, 3);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonRules.ConstraintIsStronger,
                 Severity = Severity.Info,
-            }, 2);
+            }, 3);
         }
 
         [Test]
@@ -333,12 +333,12 @@ namespace Criteo.OpenApi.Comparator.UTest
                 Rule = ComparisonRules.AddedEnumValue,
                 Severity = Severity.Warning,
                 NewJsonRef = "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/properties/petType/enum"
-            }, 1);
+            }, 2);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonRules.ConstraintIsWeaker,
                 Severity = Severity.Info,
-            }, 2);
+            }, 4);
         }
 
         [Test]
@@ -627,12 +627,12 @@ namespace Criteo.OpenApi.Comparator.UTest
                 Rule = ComparisonRules.RemovedProperty,
                 Severity = Severity.Warning,
                 OldJsonRef = "#/paths/~1api~1Operations/post/parameters/0/schema/properties/error/properties/target"
-            }, 1);
+            }, 2);
             differences.AssertContains(new ExpectedDifference
             {
                 Rule = ComparisonRules.ReadonlyPropertyChanged,
                 Severity = Severity.Warning,
-            }, 1);
+            }, 2);
         }
 
         [Test]
@@ -859,7 +859,7 @@ namespace Criteo.OpenApi.Comparator.UTest
             }
         }
 
-        private static void ValidateDifferences(IEnumerable<ComparisonMessage> differences)
+        internal static void ValidateDifferences(IEnumerable<ComparisonMessage> differences)
         {
             foreach (var message in differences)
             {

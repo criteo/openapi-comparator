@@ -9,6 +9,8 @@ using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator
 {
+    internal delegate void LogAction(ComparisonRule rule, params object[] formatArguments);
+
     /// <summary>
     /// Provides context for a comparison, such as the ancestors in the validation tree, the root object
     /// and information about the key or index that locate this object in the parent's list or dictionary
@@ -66,6 +68,16 @@ namespace Criteo.OpenApi.Comparator
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
                 Severity.Info,
+                formatArguments
+            ));
+
+        internal void LogWarning(ComparisonRule rule, params object[] formatArguments) =>
+            _messages.Add(new ComparisonMessage(
+                rule,
+                Path,
+                _oldOpenApiDocument,
+                _newOpenApiDocument,
+                Severity.Warning,
                 formatArguments
             ));
 

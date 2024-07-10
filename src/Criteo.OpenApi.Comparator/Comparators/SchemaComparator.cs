@@ -65,24 +65,21 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     return;
             }
 
-            // Avoid doing the comparison repeatedly by marking for which direction it's already been done.
             if (context.Direction != DataDirection.None)
             {
-                if (!_compareDirections.ContainsKey(newSchema))
-                {
-                    _compareDirections[newSchema] = DataDirection.None;
-                }
-                // Comparing two referenced schemas in the context of a parameter or response -- did we already do this?
-                if (_compareDirections[newSchema] == context.Direction
-                    || _compareDirections[newSchema] == DataDirection.Both)
+                _compareDirections.TryGetValue(newSchema, out var savedDirection);
+
+                // If this direction has already been checked, skip it
+                if (context.Direction == savedDirection || savedDirection == DataDirection.Both)
                     return;
 
-                _compareDirections[newSchema] |= context.Direction;
+                context.Direction |= savedDirection;
+                _compareDirections[newSchema] = context.Direction;
             }
 
             if (areSchemasReferenced)
             {
-                if (_visitedSchemas.Contains(oldSchema))
+                if (_visitedSchemas.Contains(oldSchema) && context.Direction != DataDirection.Both)
                     return;
 
                 _visitedSchemas.AddFirst(oldSchema);
@@ -110,10 +107,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
             CompareProperties(context, oldSchema, newSchema, isSchemaReferenced);
 
             CompareRequired(context, oldSchema.Required, newSchema.Required);
-            
+
             CompareNullable(context, oldSchema.Nullable, newSchema.Nullable);
         }
-        
+
         private static void CompareNullable(ComparisonContext context,
             bool oldNullable,
             bool newNullable)
@@ -337,19 +334,16 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 var addedEnums = newEnum.Where(newEnumElement => oldEnum.All(newEnumElement.DifferFrom)).ToList();
                 relaxes = addedEnums.Any();
 
-                if (context.Direction == DataDirection.Request && constrains)
+                if (constrains)
                 {
-                    context.LogBreakingChange(ComparisonRules.RemovedEnumValue,
-                            string.Join(", ", removedEnums));
+                    LogAction logger = context.Direction == DataDirection.Response ? context.LogWarning : context.LogBreakingChange;
+                    logger(ComparisonRules.RemovedEnumValue, string.Join(", ", removedEnums));
                 }
 
-                if (context.Direction == DataDirection.Response && relaxes)
+                if (relaxes && !IsEnumModelAsString(enumExtension))
                 {
-                    if (!IsEnumModelAsString(enumExtension))
-                    {
-                        context.LogBreakingChange(ComparisonRules.AddedEnumValue,
-                            string.Join(", ", addedEnums));
-                    }
+                    LogAction logger = context.Direction == DataDirection.Request ? context.LogWarning : context.LogBreakingChange;
+                    logger(ComparisonRules.AddedEnumValue, string.Join(", ", addedEnums));
                 }
             }
 
