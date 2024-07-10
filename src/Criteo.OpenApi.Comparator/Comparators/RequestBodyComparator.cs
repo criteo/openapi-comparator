@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Criteo Technology. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
-using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Microsoft.OpenApi.Models;
 
@@ -53,6 +52,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
             CompareRequired(context, oldRequestBody.Required, newRequestBody.Required);
 
             _contentComparator.Compare(context, oldRequestBody.Content, newRequestBody.Content);
+
+            context.Direction = DataDirection.None;
         }
 
         private static void CompareRequired(ComparisonContext context,

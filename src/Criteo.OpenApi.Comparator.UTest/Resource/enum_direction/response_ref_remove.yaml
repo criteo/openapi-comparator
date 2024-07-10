@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  title: My API
+  version: 0.2.0
+paths:
+  /order/{path}:
+    post:
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/RequestOnlyEnum"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                foo:
+                  $ref: "#/components/schemas/RequestResponseEnum"
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  foo:
+                    $ref: "#/components/schemas/RequestResponseEnum"
+                  bar:
+                    $ref: "#/components/schemas/ResponseOnlyEnum"
+components:
+  schemas:
+    RequestOnlyEnum:
+      type: string
+      enum:
+        - abc
+        - def
+    ResponseOnlyEnum:
+      type: string
+      enum:
+        - jkl
+    RequestResponseEnum:
+      type: string
+      enum:
+        - mno
+        - pqr
