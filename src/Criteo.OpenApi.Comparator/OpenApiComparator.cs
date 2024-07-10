@@ -17,12 +17,13 @@ namespace Criteo.OpenApi.Comparator
         /// </summary>
         /// <param name="oldOpenApiSpec">The content of the old OpenAPI Specification</param>
         /// <param name="newOpenApiSpec">The content of the new OpenAPI Specification</param>
-        public static IEnumerable<ComparisonMessage> Compare(string oldOpenApiSpec, string newOpenApiSpec)
+        /// <param name="strict">If true, then breaking changes are errors instead of warnings.</param>
+        public static IEnumerable<ComparisonMessage> Compare(string oldOpenApiSpec, string newOpenApiSpec, bool strict = false)
         {
             var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec);
             var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec);
 
-            var context = new ComparisonContext(oldOpenApiDocument, newOpenApiDocument);
+            var context = new ComparisonContext(oldOpenApiDocument, newOpenApiDocument) { Strict = strict };
 
             var comparator = new OpenApiDocumentComparator();
             var comparisonMessages = comparator.Compare(context, oldOpenApiDocument.Typed, newOpenApiDocument.Typed);

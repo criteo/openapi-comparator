@@ -38,7 +38,8 @@ namespace Criteo.OpenApi.Comparator.Cli
                 return 1;
             }
 
-            var differences = OpenApiComparator.Compare(oldOpenApiSpecification, newOpenApiSpecification);
+            var differences = OpenApiComparator.Compare(
+                oldOpenApiSpecification, newOpenApiSpecification, options.StrictMode);
 
             DisplayOutput(differences, options.OutputFormat);
 
