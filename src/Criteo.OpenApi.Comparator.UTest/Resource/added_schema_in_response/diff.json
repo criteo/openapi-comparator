@@ -1,0 +1,11 @@
+[
+  {
+    "Severity": "Error",
+    "Message": "The new version is adding a new schema that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema",
+    "Id": 1048,
+    "Code": "AddedSchema",
+    "Mode": "Removal"
+  }
+]

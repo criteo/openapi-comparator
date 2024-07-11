@@ -1,0 +1,29 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "Parameter \u0027pageParam\u0027 has a different style value in the new version.",
+    "OldJsonRef": "#/paths/~1pets/get/parameters/0/style",
+    "NewJsonRef": "#/paths/~1pets/get/parameters/0/style",
+    "Id": 10281,
+    "Code": "ParameterStyleChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "Parameter \u0027PetId\u0027 has a different style value in the new version.",
+    "OldJsonRef": "#/paths/~1pets~1{id}/parameters/0/style",
+    "NewJsonRef": "#/paths/~1pets~1{id}/parameters/0/style",
+    "Id": 10281,
+    "Code": "ParameterStyleChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "Parameter \u0027PetParameter\u0027 has a different style value in the new version.",
+    "OldJsonRef": "#/paths/~1pets~1{id}/post/parameters/0/style",
+    "NewJsonRef": "#/paths/~1pets~1{id}/post/parameters/0/style",
+    "Id": 10281,
+    "Code": "ParameterStyleChanged",
+    "Mode": "Update"
+  }
+]

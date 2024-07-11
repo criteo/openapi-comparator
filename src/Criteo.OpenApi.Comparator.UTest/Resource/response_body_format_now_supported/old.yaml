@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  title: Petstore API
+  version: "1.0"
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Pet'
+  /pets/{id}:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        "404":
+          $ref: '#/components/responses/ErrorResponse'
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        name:
+          type: string
+        petType:
+          type: string
+          enum:
+            - cat
+            - dog
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+  responses:
+    ErrorResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

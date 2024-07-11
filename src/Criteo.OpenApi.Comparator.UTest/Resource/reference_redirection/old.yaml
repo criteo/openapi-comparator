@@ -1,0 +1,63 @@
+openapi: 3.0
+info:
+  title: removed_definition
+  version: "1.0"
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/Parameters:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        "400":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dog'
+components:
+  schemas:
+    Pet:
+      type: object
+      discriminator:
+        propertyName: petType
+      properties:
+        name:
+          type: string
+        petType:
+          type: string
+      required:
+        - name
+        - petType
+    Dog:
+      type: object
+      properties:
+        breed:
+          type: string
+      required:
+        - name
+        - petType
+    Cat:
+      description: A representation of a cat. Note that `Cat` will be used as the discriminator value.
+      allOf:
+        - $ref: '#/components/schemas/Pet'
+        - type: object
+          properties:
+            huntingSkill:
+              type: string
+              description: The measured skill for hunting
+              default: lazy
+              enum:
+                - clueless
+                - lazy
+                - adventurous
+                - aggressive
+          required:
+            - huntingSkill

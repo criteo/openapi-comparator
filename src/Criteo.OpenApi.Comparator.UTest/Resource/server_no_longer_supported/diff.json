@@ -1,0 +1,20 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The new version does not support the server with url \u0027https://staging.gigantic-server.com/v1\u0027 anymore",
+    "OldJsonRef": "#/servers/1",
+    "NewJsonRef": null,
+    "Id": 10021,
+    "Code": "ServerNoLongerSupported",
+    "Mode": "Removal"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version does not support the server with url \u0027https://api.gigantic-server.com/v1\u0027 anymore",
+    "OldJsonRef": "#/servers/2",
+    "NewJsonRef": null,
+    "Id": 10021,
+    "Code": "ServerNoLongerSupported",
+    "Mode": "Removal"
+  }
+]

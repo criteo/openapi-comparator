@@ -1,0 +1,11 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The new version is missing a definition that was found in the old version. Was \u0027Pet\u0027 removed or renamed?",
+    "OldJsonRef": "#/schemas/Pet",
+    "NewJsonRef": "#/schemas/Pet",
+    "Id": 1006,
+    "Code": "RemovedDefinition",
+    "Mode": "Removal"
+  }
+]

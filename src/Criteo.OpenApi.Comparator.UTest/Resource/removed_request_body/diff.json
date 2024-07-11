@@ -1,0 +1,11 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The new version is removing a requestBody that was found in the old version.",
+    "OldJsonRef": "#/paths/~1pets/post/requestBody",
+    "NewJsonRef": "#/paths/~1pets/post/requestBody",
+    "Id": 1047,
+    "Code": "RemovedRequestBody",
+    "Mode": "Removal"
+  }
+]

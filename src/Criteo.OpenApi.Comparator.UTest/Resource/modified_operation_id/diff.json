@@ -1,0 +1,29 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The operation id has been changed from \u0027Paths_Get\u0027 to \u0027Paths_List\u0027. This will impact generated code.",
+    "OldJsonRef": "#/paths/~1api~1Paths/get/operationId",
+    "NewJsonRef": "#/paths/~1api~1Paths/get/operationId",
+    "Id": 1008,
+    "Code": "ModifiedOperationId",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The operation id has been changed from \u0027\u0027 to \u0027Operations_Get\u0027. This will impact generated code.",
+    "OldJsonRef": "#/paths/~1api~1Operations/get/operationId",
+    "NewJsonRef": "#/paths/~1api~1Operations/get/operationId",
+    "Id": 1008,
+    "Code": "ModifiedOperationId",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The operation id has been changed from \u0027Operations_Post\u0027 to \u0027\u0027. This will impact generated code.",
+    "OldJsonRef": "#/paths/~1api~1Operations/post/operationId",
+    "NewJsonRef": "#/paths/~1api~1Operations/post/operationId",
+    "Id": 1008,
+    "Code": "ModifiedOperationId",
+    "Mode": "Update"
+  }
+]

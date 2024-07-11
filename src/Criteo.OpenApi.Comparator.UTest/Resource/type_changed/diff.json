@@ -1,0 +1,38 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a different type \u0027string\u0027 than the previous one \u0027integer\u0027.",
+    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/name/type",
+    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/name/type",
+    "Id": 1026,
+    "Code": "TypeChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a different type \u0027string\u0027 than the previous one \u0027integer\u0027.",
+    "OldJsonRef": "#/paths/~1pets/get/responses/default/content/application~1json/schema/type",
+    "NewJsonRef": "#/paths/~1pets/get/responses/default/content/application~1json/schema/type",
+    "Id": 1026,
+    "Code": "TypeChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a different type \u0027string\u0027 than the previous one \u0027integer\u0027.",
+    "OldJsonRef": "#/schemas/Pet/properties/name/type",
+    "NewJsonRef": "#/schemas/Pet/properties/name/type",
+    "Id": 1026,
+    "Code": "TypeChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a different type \u0027string\u0027 than the previous one \u0027integer\u0027.",
+    "OldJsonRef": "#/schemas/UnreferencedSchema/type",
+    "NewJsonRef": "#/schemas/UnreferencedSchema/type",
+    "Id": 1026,
+    "Code": "TypeChanged",
+    "Mode": "Update"
+  }
+]
