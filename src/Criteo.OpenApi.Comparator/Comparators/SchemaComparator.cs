@@ -1,4 +1,4 @@
-﻿// Copyright (c) Criteo Technology. All rights reserved.
+// Copyright (c) Criteo Technology. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
 using System.Collections.Generic;
@@ -45,7 +45,6 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 && !newSchema.Reference.ReferenceV3.Equals(oldSchema.Reference?.ReferenceV3))
             {
                 context.LogBreakingChange(ComparisonRules.ReferenceRedirection);
-                return;
             }
 
             var areSchemasReferenced = false;
