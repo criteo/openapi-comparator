@@ -10,6 +10,51 @@
   },
   {
     "Severity": "Warning",
+    "Message": "The new version has a different discriminator than the previous one.",
+    "OldJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/discriminator",
+    "NewJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/discriminator",
+    "Id": 1030,
+    "Code": "DifferentDiscriminator",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a different type \u0027\u0027 than the previous one \u0027object\u0027.",
+    "OldJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/type",
+    "NewJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/type",
+    "Id": 1026,
+    "Code": "TypeChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a different \u0027allOf\u0027 property than the previous one.",
+    "OldJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/allOf",
+    "NewJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/allOf",
+    "Id": 1032,
+    "Code": "DifferentAllOf",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version is missing a property found in the old version. Was \u0027name\u0027 renamed or removed?",
+    "OldJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/properties/name",
+    "NewJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/properties/name",
+    "Id": 1033,
+    "Code": "RemovedProperty",
+    "Mode": "Removal"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version is missing a property found in the old version. Was \u0027petType\u0027 renamed or removed?",
+    "OldJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/properties/petType",
+    "NewJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items/properties/petType",
+    "Id": 1033,
+    "Code": "RemovedProperty",
+    "Mode": "Removal"
+  },
+  {
+    "Severity": "Warning",
     "Message": "The \u0027$ref\u0027 property points to different models in the old and new versions.",
     "OldJsonRef": "#/paths/~1api~1Parameters/get/responses/400/content/application~1json/schema/items",
     "NewJsonRef": "#/paths/~1api~1Parameters/get/responses/400/content/application~1json/schema/items",
