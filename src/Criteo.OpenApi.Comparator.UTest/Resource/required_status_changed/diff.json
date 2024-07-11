@@ -1,0 +1,29 @@
+[
+  {
+    "Severity": "Info",
+    "Message": "The \u0027required\u0027 status changed from the old version(\u0027True\u0027) to the new version(\u0027False\u0027).",
+    "OldJsonRef": "#/paths/~1pets/get/parameters/0/required",
+    "NewJsonRef": "#/paths/~1pets/get/parameters/0/required",
+    "Id": 1025,
+    "Code": "RequiredStatusChange",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Info",
+    "Message": "The \u0027required\u0027 status changed from the old version(\u0027True\u0027) to the new version(\u0027False\u0027).",
+    "OldJsonRef": "#/paths/~1pets/get/parameters/1/required",
+    "NewJsonRef": "#/paths/~1pets/get/parameters/1/required",
+    "Id": 1025,
+    "Code": "RequiredStatusChange",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The \u0027required\u0027 status changed from the old version(\u0027False\u0027) to the new version(\u0027True\u0027).",
+    "OldJsonRef": "#/paths/~1pets/get/requestBody/required",
+    "NewJsonRef": "#/paths/~1pets/get/requestBody/required",
+    "Id": 1025,
+    "Code": "RequiredStatusChange",
+    "Mode": "Update"
+  }
+]

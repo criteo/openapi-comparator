@@ -1,0 +1,20 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The \u0027$ref\u0027 property points to different models in the old and new versions.",
+    "OldJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items",
+    "NewJsonRef": "#/paths/~1api~1Parameters/get/responses/200/content/application~1json/schema/items",
+    "Id": 1017,
+    "Code": "ReferenceRedirection",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The \u0027$ref\u0027 property points to different models in the old and new versions.",
+    "OldJsonRef": "#/paths/~1api~1Parameters/get/responses/400/content/application~1json/schema/items",
+    "NewJsonRef": "#/paths/~1api~1Parameters/get/responses/400/content/application~1json/schema/items",
+    "Id": 1017,
+    "Code": "ReferenceRedirection",
+    "Mode": "Update"
+  }
+]

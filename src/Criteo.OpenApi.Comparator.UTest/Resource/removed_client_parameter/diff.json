@@ -1,0 +1,11 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The new version is missing a client parameter that was found in the old version. Was \u0027limitParam\u0027 removed or renamed?",
+    "OldJsonRef": "#/parameters/limitParam",
+    "NewJsonRef": "#/parameters/limitParam",
+    "Id": 1007,
+    "Code": "RemovedClientParameter",
+    "Mode": "Removal"
+  }
+]

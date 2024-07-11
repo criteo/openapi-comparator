@@ -1,0 +1,20 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The new version is missing a path that was found in the old version. Was path \u0027/api/Parameters/{a}\u0027 removed or restructured?",
+    "OldJsonRef": "#/paths/~1api~1Parameters~1{a}",
+    "NewJsonRef": null,
+    "Id": 1005,
+    "Code": "RemovedPath",
+    "Mode": "Removal"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version is missing a path that was found in the old version. Was path \u0027/api/Responses\u0027 removed or restructured?",
+    "OldJsonRef": "#/paths/~1api~1Responses",
+    "NewJsonRef": null,
+    "Id": 1005,
+    "Code": "RemovedPath",
+    "Mode": "Removal"
+  }
+]

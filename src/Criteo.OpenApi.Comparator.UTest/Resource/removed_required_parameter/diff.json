@@ -1,0 +1,11 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The required parameter \u0027limitParam\u0027 was removed in the new version.",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/1",
+    "NewJsonRef": null,
+    "Id": 1009,
+    "Code": "RemovedRequiredParameter",
+    "Mode": "Removal"
+  }
+]

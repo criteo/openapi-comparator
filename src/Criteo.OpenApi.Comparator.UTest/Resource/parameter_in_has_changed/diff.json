@@ -1,0 +1,20 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "How the parameter is passed has changed -- it used to be \u0027query\u0027, now it is \u0027header\u0027.",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/0/in",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/0/in",
+    "Id": 1015,
+    "Code": "ParameterInHasChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "How the parameter is passed has changed -- it used to be \u0027query\u0027, now it is \u0027header\u0027.",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/in",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/in",
+    "Id": 1015,
+    "Code": "ParameterInHasChanged",
+    "Mode": "Update"
+  }
+]

@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: Petstore API
+  version: "2.0"
+paths:
+  /pets:
+    post:
+      description: Post multiple pets
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                type: integer
+  /pets/{id}:
+    post:
+      description: Post one pet according to its id
+      requestBody:
+        $ref: '#/components/requestBodies/PetBody'
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                type: integer
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        name:
+          type: string
+        petType:
+          type: string
+          enum:
+            - cat
+            - dog
+  requestBodies:
+    PetBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schema/Pet'
+        application/xml:
+          schema:
+            type: string
