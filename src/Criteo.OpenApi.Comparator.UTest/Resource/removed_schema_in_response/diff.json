@@ -4,6 +4,8 @@
     "Message": "The new version is missing a definition that was found in the old version. Was \u0027\u0027 removed or renamed?",
     "OldJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema",
     "NewJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema",
+    "OldJsonPath": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema",
+    "NewJsonPath": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema",
     "Id": 1006,
     "Code": "RemovedDefinition",
     "Mode": "Removal"

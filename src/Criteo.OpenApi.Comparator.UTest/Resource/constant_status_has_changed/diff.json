@@ -2,8 +2,10 @@
   {
     "Severity": "Warning",
     "Message": "The \u0027constant\u0027 status changed from the old version to the new.",
-    "OldJsonRef": "#/components/parameters/limitParam/enum",
-    "NewJsonRef": "#/components/parameters/limitParam/enum",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/enum",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/enum",
+    "OldJsonPath": "#/components/parameters/limitParam/enum",
+    "NewJsonPath": "#/components/parameters/limitParam/enum",
     "Id": 1016,
     "Code": "ConstantStatusHasChanged",
     "Mode": "Update"
@@ -11,8 +13,10 @@
   {
     "Severity": "Warning",
     "Message": "The new version is adding enum value(s) \u0027Microsoft.OpenApi.Any.OpenApiString, Microsoft.OpenApi.Any.OpenApiString\u0027 from the old version.",
-    "OldJsonRef": "#/components/parameters/limitParam/schema/enum",
-    "NewJsonRef": "#/components/parameters/limitParam/schema/enum",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/schema/enum",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/schema/enum",
+    "OldJsonPath": "#/components/parameters/limitParam/schema/enum",
+    "NewJsonPath": "#/components/parameters/limitParam/schema/enum",
     "Id": 1020,
     "Code": "AddedEnumValue",
     "Mode": "Addition"
@@ -20,8 +24,10 @@
   {
     "Severity": "Info",
     "Message": "The new version has a less constraining \u0027enum\u0027 value than the previous one.",
-    "OldJsonRef": "#/components/parameters/limitParam/schema/enum",
-    "NewJsonRef": "#/components/parameters/limitParam/schema/enum",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/schema/enum",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/schema/enum",
+    "OldJsonPath": "#/components/parameters/limitParam/schema/enum",
+    "NewJsonPath": "#/components/parameters/limitParam/schema/enum",
     "Id": 1037,
     "Code": "ConstraintIsWeaker",
     "Mode": "Update"

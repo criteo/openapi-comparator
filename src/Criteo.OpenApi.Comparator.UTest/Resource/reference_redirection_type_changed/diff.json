@@ -4,6 +4,8 @@
     "Message": "The \u0027$ref\u0027 property points to different models in the old and new versions.",
     "OldJsonRef": "#/paths/~1orders/get/responses/200/content/application~1json/schema/items",
     "NewJsonRef": "#/paths/~1orders/get/responses/200/content/application~1json/schema/items",
+    "OldJsonPath": "#/paths/~1orders/get/responses/200/content/application~1json/schema/items",
+    "NewJsonPath": "#/paths/~1orders/get/responses/200/content/application~1json/schema/items",
     "Id": 1017,
     "Code": "ReferenceRedirection",
     "Mode": "Update"
@@ -11,8 +13,10 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a different type \u0027string\u0027 than the previous one \u0027integer\u0027.",
-    "OldJsonRef": "#/components/schemas/Order/properties/id/type",
-    "NewJsonRef": "#/components/schemas/Cart/properties/id/type",
+    "OldJsonRef": "#/paths/~1orders/get/responses/200/content/application~1json/schema/items/properties/id/type",
+    "NewJsonRef": "#/paths/~1orders/get/responses/200/content/application~1json/schema/items/properties/id/type",
+    "OldJsonPath": "#/components/schemas/Order/properties/id/type",
+    "NewJsonPath": "#/components/schemas/Cart/properties/id/type",
     "Id": 1026,
     "Code": "TypeChanged",
     "Mode": "Update"
@@ -22,6 +26,8 @@
     "Message": "The new version is missing a definition that was found in the old version. Was \u0027Order\u0027 removed or renamed?",
     "OldJsonRef": "#/components/schemas/Order",
     "NewJsonRef": "#/components/schemas/Order",
+    "OldJsonPath": "#/components/schemas/Order",
+    "NewJsonPath": "#/components/schemas/Order",
     "Id": 1006,
     "Code": "RemovedDefinition",
     "Mode": "Removal"

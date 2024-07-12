@@ -4,6 +4,8 @@
     "Message": "The new version adds a response code \u0027200\u0027.",
     "OldJsonRef": "#/paths/~1api~1Operations/post/responses/200",
     "NewJsonRef": "#/paths/~1api~1Operations/post/responses/200",
+    "OldJsonPath": "#/paths/~1api~1Operations/post/responses/200",
+    "NewJsonPath": "#/paths/~1api~1Operations/post/responses/200",
     "Id": 1011,
     "Code": "AddingResponseCode",
     "Mode": "Addition"
@@ -13,6 +15,8 @@
     "Message": "The new version adds a response code \u0027202\u0027.",
     "OldJsonRef": "#/paths/~1api~1Responses/get/responses/202",
     "NewJsonRef": "#/paths/~1api~1Responses/get/responses/202",
+    "OldJsonPath": "#/paths/~1api~1Responses/get/responses/202",
+    "NewJsonPath": "#/paths/~1api~1Responses/get/responses/202",
     "Id": 1011,
     "Code": "AddingResponseCode",
     "Mode": "Addition"

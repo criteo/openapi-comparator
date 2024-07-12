@@ -4,6 +4,8 @@
     "Message": "The new version is removing enum value(s) \u0027Microsoft.OpenApi.Any.OpenApiString\u0027 from the old version.",
     "OldJsonRef": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "NewJsonRef": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
+    "OldJsonPath": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
+    "NewJsonPath": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "Id": 1019,
     "Code": "RemovedEnumValue",
     "Mode": "Removal"
@@ -13,6 +15,8 @@
     "Message": "The new version has a more constraining \u0027enum\u0027 value than the previous one.",
     "OldJsonRef": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "NewJsonRef": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
+    "OldJsonPath": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
+    "NewJsonPath": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "Id": 1024,
     "Code": "ConstraintIsStronger",
     "Mode": "Update"

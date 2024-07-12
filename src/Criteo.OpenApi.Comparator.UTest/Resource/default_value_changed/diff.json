@@ -2,8 +2,10 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a different default value than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/name/default",
-    "NewJsonRef": "#/components/schemas/Pet/properties/name/default",
+    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/name/default",
+    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/name/default",
+    "OldJsonPath": "#/components/schemas/Pet/properties/name/default",
+    "NewJsonPath": "#/components/schemas/Pet/properties/name/default",
     "Id": 1027,
     "Code": "DefaultValueChanged",
     "Mode": "Update"
@@ -13,6 +15,8 @@
     "Message": "The new version has a different default value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/responses/default/content/application~1json/schema/default",
     "NewJsonRef": "#/paths/~1pets/get/responses/default/content/application~1json/schema/default",
+    "OldJsonPath": "#/paths/~1pets/get/responses/default/content/application~1json/schema/default",
+    "NewJsonPath": "#/paths/~1pets/get/responses/default/content/application~1json/schema/default",
     "Id": 1027,
     "Code": "DefaultValueChanged",
     "Mode": "Update"
@@ -22,6 +26,8 @@
     "Message": "The new version has a different default value than the previous one.",
     "OldJsonRef": "#/components/schemas/Pet/properties/name/default",
     "NewJsonRef": "#/components/schemas/Pet/properties/name/default",
+    "OldJsonPath": "#/components/schemas/Pet/properties/name/default",
+    "NewJsonPath": "#/components/schemas/Pet/properties/name/default",
     "Id": 1027,
     "Code": "DefaultValueChanged",
     "Mode": "Update"

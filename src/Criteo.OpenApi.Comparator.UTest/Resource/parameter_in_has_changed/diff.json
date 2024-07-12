@@ -2,8 +2,10 @@
   {
     "Severity": "Warning",
     "Message": "How the parameter is passed has changed -- it used to be \u0027query\u0027, now it is \u0027header\u0027.",
-    "OldJsonRef": "#/components/parameters/skipParam/in",
-    "NewJsonRef": "#/components/parameters/skipParam/in",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/0/in",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/0/in",
+    "OldJsonPath": "#/components/parameters/skipParam/in",
+    "NewJsonPath": "#/components/parameters/skipParam/in",
     "Id": 1015,
     "Code": "ParameterInHasChanged",
     "Mode": "Update"
@@ -11,8 +13,10 @@
   {
     "Severity": "Warning",
     "Message": "How the parameter is passed has changed -- it used to be \u0027query\u0027, now it is \u0027header\u0027.",
-    "OldJsonRef": "#/components/parameters/limitParam/in",
-    "NewJsonRef": "#/components/parameters/limitParam/in",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/in",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/in",
+    "OldJsonPath": "#/components/parameters/limitParam/in",
+    "NewJsonPath": "#/components/parameters/limitParam/in",
     "Id": 1015,
     "Code": "ParameterInHasChanged",
     "Mode": "Update"

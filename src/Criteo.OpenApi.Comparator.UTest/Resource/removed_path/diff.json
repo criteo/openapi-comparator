@@ -4,6 +4,8 @@
     "Message": "The new version is missing a path that was found in the old version. Was path \u0027/api/Parameters/{a}\u0027 removed or restructured?",
     "OldJsonRef": "#/paths/~1api~1Parameters~1{a}",
     "NewJsonRef": null,
+    "OldJsonPath": "#/paths/~1api~1Parameters~1{a}",
+    "NewJsonPath": null,
     "Id": 1005,
     "Code": "RemovedPath",
     "Mode": "Removal"
@@ -13,6 +15,8 @@
     "Message": "The new version is missing a path that was found in the old version. Was path \u0027/api/Responses\u0027 removed or restructured?",
     "OldJsonRef": "#/paths/~1api~1Responses",
     "NewJsonRef": null,
+    "OldJsonPath": "#/paths/~1api~1Responses",
+    "NewJsonPath": null,
     "Id": 1005,
     "Code": "RemovedPath",
     "Mode": "Removal"

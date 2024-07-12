@@ -4,6 +4,8 @@
     "Message": "The new version is adding a path that was not found in the old version.",
     "OldJsonRef": null,
     "NewJsonRef": "#/paths/~1api~1Paths",
+    "OldJsonPath": null,
+    "NewJsonPath": "#/paths/~1api~1Paths",
     "Id": 1038,
     "Code": "AddedPath",
     "Mode": "Addition"

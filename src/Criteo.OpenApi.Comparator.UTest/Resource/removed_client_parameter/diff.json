@@ -4,6 +4,8 @@
     "Message": "The new version is missing a client parameter that was found in the old version. Was \u0027limitParam\u0027 removed or renamed?",
     "OldJsonRef": "#/components/parameters/limitParam",
     "NewJsonRef": "#/components/parameters/limitParam",
+    "OldJsonPath": "#/components/parameters/limitParam",
+    "NewJsonPath": "#/components/parameters/limitParam",
     "Id": 1007,
     "Code": "RemovedClientParameter",
     "Mode": "Removal"

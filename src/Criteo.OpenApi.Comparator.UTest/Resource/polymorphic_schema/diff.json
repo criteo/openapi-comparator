@@ -4,6 +4,8 @@
     "Message": "The new version has a new optional property \u0027breed\u0027 that was not found in the old version.",
     "OldJsonRef": "#/components/schemas/Dog/properties/breed",
     "NewJsonRef": "#/components/schemas/Dog/properties/breed",
+    "OldJsonPath": "#/components/schemas/Dog/properties/breed",
+    "NewJsonPath": "#/components/schemas/Dog/properties/breed",
     "Id": 1045,
     "Code": "AddedOptionalProperty",
     "Mode": "Addition"

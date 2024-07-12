@@ -4,6 +4,8 @@
     "Message": "The order of parameter \u0027skipParam\u0027 was changed. ",
     "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters",
     "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters",
+    "OldJsonPath": "#/paths/~1api~1Parameters/put/parameters",
+    "NewJsonPath": "#/paths/~1api~1Parameters/put/parameters",
     "Id": 1042,
     "Code": "ChangedParameterOrder",
     "Mode": "Update"
@@ -13,6 +15,8 @@
     "Message": "The order of parameter \u0027limitParam\u0027 was changed. ",
     "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters",
     "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters",
+    "OldJsonPath": "#/paths/~1api~1Parameters/put/parameters",
+    "NewJsonPath": "#/paths/~1api~1Parameters/put/parameters",
     "Id": 1042,
     "Code": "ChangedParameterOrder",
     "Mode": "Update"

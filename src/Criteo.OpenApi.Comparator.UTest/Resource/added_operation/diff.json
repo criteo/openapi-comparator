@@ -4,6 +4,8 @@
     "Message": "The new version is adding an operation that was not found in the old version.",
     "OldJsonRef": "#/paths/~1api~1Paths/post",
     "NewJsonRef": "#/paths/~1api~1Paths/post",
+    "OldJsonPath": "#/paths/~1api~1Paths/post",
+    "NewJsonPath": "#/paths/~1api~1Paths/post",
     "Id": 1039,
     "Code": "AddedOperation",
     "Mode": "Addition"
@@ -13,6 +15,8 @@
     "Message": "The new version is adding an operation that was not found in the old version.",
     "OldJsonRef": "#/paths/~1api~1Operations/head",
     "NewJsonRef": "#/paths/~1api~1Operations/head",
+    "OldJsonPath": "#/paths/~1api~1Operations/head",
+    "NewJsonPath": "#/paths/~1api~1Operations/head",
     "Id": 1039,
     "Code": "AddedOperation",
     "Mode": "Addition"

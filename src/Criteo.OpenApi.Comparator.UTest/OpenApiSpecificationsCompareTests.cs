@@ -75,6 +75,8 @@ public class OpenApiSpecificationsCompareTests
             && message.Message == model.Message
             && message.OldJsonRef == model.OldJsonRef
             && message.NewJsonRef == model.NewJsonRef
+            && message.OldJsonPath == model.OldJsonPath
+            && message.NewJsonPath == model.NewJsonPath
             && message.Id == model.Id
             && message.Code == model.Code
             && message.Mode == model.Mode;
@@ -87,6 +89,8 @@ internal class ComparisonMessageModel
     public string Message { get; set; }
     public string OldJsonRef { get; set; }
     public string NewJsonRef { get; set; }
+    public string OldJsonPath { get; set; }
+    public string NewJsonPath { get; set; }
     public int Id { get; set; }
     public string Code { get; set; }
     public MessageType Mode { get; set; }

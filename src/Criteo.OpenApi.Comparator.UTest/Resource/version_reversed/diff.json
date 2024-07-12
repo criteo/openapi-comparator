@@ -4,6 +4,8 @@
     "Message": "The new version has a lower value than the old: System.String[] -\u003E System.String[]",
     "OldJsonRef": "#/info/version",
     "NewJsonRef": "#/info/version",
+    "OldJsonPath": "#/info/version",
+    "NewJsonPath": "#/info/version",
     "Id": 1000,
     "Code": "VersionsReversed",
     "Mode": "Update"

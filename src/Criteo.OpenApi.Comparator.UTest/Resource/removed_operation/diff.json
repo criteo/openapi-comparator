@@ -4,6 +4,8 @@
     "Message": "The new version is missing an operation that was found in the old version. Was operationId \u0027Operations_Post\u0027 removed or restructured?",
     "OldJsonRef": "#/paths/~1api~1Operations/post",
     "NewJsonRef": "#/paths/~1api~1Operations/post",
+    "OldJsonPath": "#/paths/~1api~1Operations/post",
+    "NewJsonPath": "#/paths/~1api~1Operations/post",
     "Id": 1035,
     "Code": "RemovedOperation",
     "Mode": "Removal"
