@@ -2,8 +2,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a different discriminator than the previous one.",
-    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/discriminator",
-    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/discriminator",
+    "OldJsonRef": "#/components/schemas/Pet/discriminator",
+    "NewJsonRef": "#/components/schemas/Pet/discriminator",
     "Id": 1030,
     "Code": "DifferentDiscriminator",
     "Mode": "Update"
@@ -29,8 +29,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a different discriminator than the previous one.",
-    "OldJsonRef": "#/schemas/Pet/discriminator",
-    "NewJsonRef": "#/schemas/Pet/discriminator",
+    "OldJsonRef": "#/components/schemas/Pet/discriminator",
+    "NewJsonRef": "#/components/schemas/Pet/discriminator",
     "Id": 1030,
     "Code": "DifferentDiscriminator",
     "Mode": "Update"

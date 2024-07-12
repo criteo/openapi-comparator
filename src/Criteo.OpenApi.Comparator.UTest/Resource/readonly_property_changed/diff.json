@@ -2,8 +2,8 @@
   {
     "Severity": "Warning",
     "Message": "The read only property has changed from \u0027false\u0027 to \u0027true\u0027.",
-    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/name/readOnly",
-    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/name/readOnly",
+    "OldJsonRef": "#/components/schemas/Pet/properties/name/readOnly",
+    "NewJsonRef": "#/components/schemas/Pet/properties/name/readOnly",
     "Id": 1029,
     "Code": "ReadonlyPropertyChanged",
     "Mode": "Update"
@@ -20,8 +20,8 @@
   {
     "Severity": "Warning",
     "Message": "The read only property has changed from \u0027false\u0027 to \u0027true\u0027.",
-    "OldJsonRef": "#/schemas/Pet/properties/name/readOnly",
-    "NewJsonRef": "#/schemas/Pet/properties/name/readOnly",
+    "OldJsonRef": "#/components/schemas/Pet/properties/name/readOnly",
+    "NewJsonRef": "#/components/schemas/Pet/properties/name/readOnly",
     "Id": 1029,
     "Code": "ReadonlyPropertyChanged",
     "Mode": "Update"

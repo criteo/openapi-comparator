@@ -11,8 +11,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a different type \u0027string\u0027 than the previous one \u0027integer\u0027.",
-    "OldJsonRef": "#/paths/~1orders/get/responses/200/content/application~1json/schema/items/properties/id/type",
-    "NewJsonRef": "#/paths/~1orders/get/responses/200/content/application~1json/schema/items/properties/id/type",
+    "OldJsonRef": "#/components/schemas/Order/properties/id/type",
+    "NewJsonRef": "#/components/schemas/Cart/properties/id/type",
     "Id": 1026,
     "Code": "TypeChanged",
     "Mode": "Update"
@@ -20,8 +20,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version is missing a definition that was found in the old version. Was \u0027Order\u0027 removed or renamed?",
-    "OldJsonRef": "#/schemas/Order",
-    "NewJsonRef": "#/schemas/Order",
+    "OldJsonRef": "#/components/schemas/Order",
+    "NewJsonRef": "#/components/schemas/Order",
     "Id": 1006,
     "Code": "RemovedDefinition",
     "Mode": "Removal"

@@ -20,8 +20,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a different type \u0027string\u0027 than the previous one \u0027integer\u0027.",
-    "OldJsonRef": "#/schemas/Cat/properties/sleepTime/type",
-    "NewJsonRef": "#/schemas/Cat/properties/sleepTime/type",
+    "OldJsonRef": "#/components/schemas/Cat/properties/sleepTime/type",
+    "NewJsonRef": "#/components/schemas/Cat/properties/sleepTime/type",
     "Id": 1026,
     "Code": "TypeChanged",
     "Mode": "Update"

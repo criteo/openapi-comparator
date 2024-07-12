@@ -29,6 +29,7 @@ public class OpenApiSpecificationsCompareTests
 {
     private static readonly JsonSerializerOptions serializerOptions = new()
     {
+        WriteIndented = true,
         Converters = { new JsonStringEnumConverter() }
     };
 
@@ -43,11 +44,13 @@ public class OpenApiSpecificationsCompareTests
         var differences = OpenApiComparator
             .Compare(File.ReadAllText(oldFileName), File.ReadAllText(newFileName));
 
+        var expectedDifferencesText = File.ReadAllText(diffFileName);
         var expectedDifferences = JsonSerializer
-            .Deserialize<ComparisonMessageModel[]>(File.ReadAllText(diffFileName), serializerOptions);
+            .Deserialize<ComparisonMessageModel[]>(expectedDifferencesText, serializerOptions);
 
         Assert.That(differences,
-            Is.EquivalentTo(expectedDifferences).Using<ComparisonMessage, ComparisonMessageModel>(Comparer));
+            Is.EquivalentTo(expectedDifferences).Using<ComparisonMessage, ComparisonMessageModel>(Comparer),
+            $"Expected differences:\n{expectedDifferencesText}\nActual differences:\n{JsonSerializer.Serialize(differences, serializerOptions)}");
     }
 
     private static IEnumerable<string> TestCases()

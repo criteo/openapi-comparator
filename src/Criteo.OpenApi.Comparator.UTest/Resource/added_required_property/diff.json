@@ -20,8 +20,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version has new required property \u0027petType\u0027 that was not found in the old version.",
-    "OldJsonRef": "#/schemas/Pet",
-    "NewJsonRef": "#/schemas/Pet",
+    "OldJsonRef": "#/components/schemas/Pet",
+    "NewJsonRef": "#/components/schemas/Pet",
     "Id": 1034,
     "Code": "AddedRequiredProperty",
     "Mode": "Addition"

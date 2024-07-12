@@ -20,8 +20,8 @@
   {
     "Severity": "Warning",
     "Message": "Parameter \u0027PetParameter\u0027 has a different style value in the new version.",
-    "OldJsonRef": "#/paths/~1pets~1{id}/post/parameters/0/style",
-    "NewJsonRef": "#/paths/~1pets~1{id}/post/parameters/0/style",
+    "OldJsonRef": "#/components/parameters/PetParameter/style",
+    "NewJsonRef": "#/components/parameters/PetParameter/style",
     "Id": 10281,
     "Code": "ParameterStyleChanged",
     "Mode": "Update"
