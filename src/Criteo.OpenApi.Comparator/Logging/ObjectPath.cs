@@ -146,15 +146,17 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// https://tools.ietf.org/html/draft-ietf-appsawg-json-pointer-04
         /// </summary>
         /// <param name="jsonDocument"></param>
+        /// <param name="resolveReferences"></param>
         /// <returns>The json path of the json document</returns>
-        internal string JsonPointer(IJsonDocument jsonDocument)
+        internal string JsonPointer(IJsonDocument jsonDocument, bool resolveReferences = false)
         {
             string path = null;
             foreach (var (_, reference, name) in CompletePath(jsonDocument.Token))
             {
                 if (name == null)
                     return null;
-                path = reference ?? path;
+                if (resolveReferences)
+                    path = reference ?? path;
                 var escapedName = name.Replace("~", "~0").Replace("/", "~1");
                 path = path != null ? $"{path}/{escapedName}" : escapedName;
             }

@@ -2,8 +2,10 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a different \u0027allOf\u0027 property than the previous one.",
-    "OldJsonRef": "#/components/parameters/petParam/schema/allOf",
-    "NewJsonRef": "#/components/parameters/petParam/schema/allOf",
+    "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/allOf",
+    "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/allOf",
+    "OldJsonPath": "#/components/parameters/petParam/schema/allOf",
+    "NewJsonPath": "#/components/parameters/petParam/schema/allOf",
     "Id": 1032,
     "Code": "DifferentAllOf",
     "Mode": "Update"
@@ -13,6 +15,8 @@
     "Message": "The new version has a different \u0027allOf\u0027 property than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/allOf",
     "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/allOf",
+    "OldJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/allOf",
+    "NewJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/allOf",
     "Id": 1032,
     "Code": "DifferentAllOf",
     "Mode": "Update"
@@ -22,6 +26,8 @@
     "Message": "The new version has a different \u0027allOf\u0027 property than the previous one.",
     "OldJsonRef": "#/components/schemas/Cat/allOf",
     "NewJsonRef": "#/components/schemas/Cat/allOf",
+    "OldJsonPath": "#/components/schemas/Cat/allOf",
+    "NewJsonPath": "#/components/schemas/Cat/allOf",
     "Id": 1032,
     "Code": "DifferentAllOf",
     "Mode": "Update"

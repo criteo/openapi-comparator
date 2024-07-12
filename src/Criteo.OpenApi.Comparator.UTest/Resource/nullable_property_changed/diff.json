@@ -2,8 +2,10 @@
   {
     "Severity": "Warning",
     "Message": "The nullable property has changed from \u0027true\u0027 to \u0027false\u0027.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/tag/nullable",
-    "NewJsonRef": "#/components/schemas/Pet/properties/tag/nullable",
+    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/tag/nullable",
+    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/tag/nullable",
+    "OldJsonPath": "#/components/schemas/Pet/properties/tag/nullable",
+    "NewJsonPath": "#/components/schemas/Pet/properties/tag/nullable",
     "Id": 2000,
     "Code": "NullablePropertyChanged",
     "Mode": "Update"
@@ -13,6 +15,8 @@
     "Message": "The nullable property has changed from \u0027true\u0027 to \u0027false\u0027.",
     "OldJsonRef": "#/components/schemas/Pet/properties/tag/nullable",
     "NewJsonRef": "#/components/schemas/Pet/properties/tag/nullable",
+    "OldJsonPath": "#/components/schemas/Pet/properties/tag/nullable",
+    "NewJsonPath": "#/components/schemas/Pet/properties/tag/nullable",
     "Id": 2000,
     "Code": "NullablePropertyChanged",
     "Mode": "Update"

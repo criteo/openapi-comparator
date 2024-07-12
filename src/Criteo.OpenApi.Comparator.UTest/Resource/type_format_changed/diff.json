@@ -2,8 +2,32 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a different format than the previous one.",
+    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/sleepTime/format",
+    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/sleepTime/format",
+    "OldJsonPath": "#/components/schemas/Pet/properties/sleepTime/format",
+    "NewJsonPath": "#/components/schemas/Pet/properties/sleepTime/format",
+    "Id": 1023,
+    "Code": "TypeFormatChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a different format than the previous one.",
+    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/numberOfEyes/format",
+    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/numberOfEyes/format",
+    "OldJsonPath": "#/components/schemas/Pet/properties/numberOfEyes/format",
+    "NewJsonPath": "#/components/schemas/Pet/properties/numberOfEyes/format",
+    "Id": 1023,
+    "Code": "TypeFormatChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a different format than the previous one.",
     "OldJsonRef": "#/components/schemas/Pet/properties/sleepTime/format",
     "NewJsonRef": "#/components/schemas/Pet/properties/sleepTime/format",
+    "OldJsonPath": "#/components/schemas/Pet/properties/sleepTime/format",
+    "NewJsonPath": "#/components/schemas/Pet/properties/sleepTime/format",
     "Id": 1023,
     "Code": "TypeFormatChanged",
     "Mode": "Update"
@@ -13,24 +37,8 @@
     "Message": "The new version has a different format than the previous one.",
     "OldJsonRef": "#/components/schemas/Pet/properties/numberOfEyes/format",
     "NewJsonRef": "#/components/schemas/Pet/properties/numberOfEyes/format",
-    "Id": 1023,
-    "Code": "TypeFormatChanged",
-    "Mode": "Update"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The new version has a different format than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/sleepTime/format",
-    "NewJsonRef": "#/components/schemas/Pet/properties/sleepTime/format",
-    "Id": 1023,
-    "Code": "TypeFormatChanged",
-    "Mode": "Update"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The new version has a different format than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/numberOfEyes/format",
-    "NewJsonRef": "#/components/schemas/Pet/properties/numberOfEyes/format",
+    "OldJsonPath": "#/components/schemas/Pet/properties/numberOfEyes/format",
+    "NewJsonPath": "#/components/schemas/Pet/properties/numberOfEyes/format",
     "Id": 1023,
     "Code": "TypeFormatChanged",
     "Mode": "Update"

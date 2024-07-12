@@ -2,8 +2,10 @@
   {
     "Severity": "Warning",
     "Message": "The new version is removing enum value(s) \u0027Microsoft.OpenApi.Any.OpenApiString\u0027 from the old version.",
-    "OldJsonRef": "#/components/schemas/ResponseOnlyEnum/enum",
-    "NewJsonRef": "#/components/schemas/ResponseOnlyEnum/enum",
+    "OldJsonRef": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
+    "NewJsonRef": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
+    "OldJsonPath": "#/components/schemas/ResponseOnlyEnum/enum",
+    "NewJsonPath": "#/components/schemas/ResponseOnlyEnum/enum",
     "Id": 1019,
     "Code": "RemovedEnumValue",
     "Mode": "Removal"
@@ -11,8 +13,10 @@
   {
     "Severity": "Info",
     "Message": "The new version has a more constraining \u0027enum\u0027 value than the previous one.",
-    "OldJsonRef": "#/components/schemas/ResponseOnlyEnum/enum",
-    "NewJsonRef": "#/components/schemas/ResponseOnlyEnum/enum",
+    "OldJsonRef": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
+    "NewJsonRef": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
+    "OldJsonPath": "#/components/schemas/ResponseOnlyEnum/enum",
+    "NewJsonPath": "#/components/schemas/ResponseOnlyEnum/enum",
     "Id": 1024,
     "Code": "ConstraintIsStronger",
     "Mode": "Update"

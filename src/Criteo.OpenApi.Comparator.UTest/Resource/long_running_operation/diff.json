@@ -4,6 +4,8 @@
     "Message": "The new version has a different \u0027x-ms-long-running-operation\u0027 value than the previous one.",
     "OldJsonRef": "#/paths/~1api~1Parameters/get/x-ms-long-running-operation",
     "NewJsonRef": "#/paths/~1api~1Parameters/get/x-ms-long-running-operation",
+    "OldJsonPath": "#/paths/~1api~1Parameters/get/x-ms-long-running-operation",
+    "NewJsonPath": "#/paths/~1api~1Parameters/get/x-ms-long-running-operation",
     "Id": 1044,
     "Code": "LongRunningOperationExtensionChanged",
     "Mode": "Update"
@@ -13,6 +15,8 @@
     "Message": "The new version has a different \u0027x-ms-long-running-operation\u0027 value than the previous one.",
     "OldJsonRef": "#/paths/~1api~1Parameters/put/x-ms-long-running-operation",
     "NewJsonRef": "#/paths/~1api~1Parameters/put/x-ms-long-running-operation",
+    "OldJsonPath": "#/paths/~1api~1Parameters/put/x-ms-long-running-operation",
+    "NewJsonPath": "#/paths/~1api~1Parameters/put/x-ms-long-running-operation",
     "Id": 1044,
     "Code": "LongRunningOperationExtensionChanged",
     "Mode": "Update"

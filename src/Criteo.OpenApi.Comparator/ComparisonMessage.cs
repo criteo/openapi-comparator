@@ -81,6 +81,15 @@ namespace Criteo.OpenApi.Comparator
             ? Path.CompletePath(NewDocument.Token).LastOrDefault(t => t.token != null).token
             : Path.CompletePath(NewDocument.Token).LastOrDefault().token;
 
+        /// <summary>
+        /// JSON Pointer of the old resolved JSON reference
+        /// </summary>
+        public string OldJsonPath => Path.JsonPointer(OldDocument, resolveReferences: true);
+
+        /// <summary>
+        /// JSON Pointer of the new resolved JSON reference
+        /// </summary>
+        public string NewJsonPath => Path.JsonPointer(NewDocument, resolveReferences: true);
 
         /// <summary>
         /// The id of the validation message

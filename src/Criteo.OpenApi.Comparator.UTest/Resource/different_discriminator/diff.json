@@ -2,8 +2,10 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a different discriminator than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/discriminator",
-    "NewJsonRef": "#/components/schemas/Pet/discriminator",
+    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/discriminator",
+    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/discriminator",
+    "OldJsonPath": "#/components/schemas/Pet/discriminator",
+    "NewJsonPath": "#/components/schemas/Pet/discriminator",
     "Id": 1030,
     "Code": "DifferentDiscriminator",
     "Mode": "Update"
@@ -13,6 +15,8 @@
     "Message": "The new version has a different discriminator than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/responses/201/content/application~1json/schema/discriminator",
     "NewJsonRef": "#/paths/~1pets/get/responses/201/content/application~1json/schema/discriminator",
+    "OldJsonPath": "#/paths/~1pets/get/responses/201/content/application~1json/schema/discriminator",
+    "NewJsonPath": "#/paths/~1pets/get/responses/201/content/application~1json/schema/discriminator",
     "Id": 1030,
     "Code": "DifferentDiscriminator",
     "Mode": "Update"
@@ -22,6 +26,8 @@
     "Message": "The new version has a different discriminator than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/responses/404/content/application~1json/schema/discriminator",
     "NewJsonRef": "#/paths/~1pets/get/responses/404/content/application~1json/schema/discriminator",
+    "OldJsonPath": "#/paths/~1pets/get/responses/404/content/application~1json/schema/discriminator",
+    "NewJsonPath": "#/paths/~1pets/get/responses/404/content/application~1json/schema/discriminator",
     "Id": 1030,
     "Code": "DifferentDiscriminator",
     "Mode": "Update"
@@ -31,6 +37,8 @@
     "Message": "The new version has a different discriminator than the previous one.",
     "OldJsonRef": "#/components/schemas/Pet/discriminator",
     "NewJsonRef": "#/components/schemas/Pet/discriminator",
+    "OldJsonPath": "#/components/schemas/Pet/discriminator",
+    "NewJsonPath": "#/components/schemas/Pet/discriminator",
     "Id": 1030,
     "Code": "DifferentDiscriminator",
     "Mode": "Update"

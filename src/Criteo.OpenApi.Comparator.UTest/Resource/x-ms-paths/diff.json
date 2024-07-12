@@ -4,6 +4,8 @@
     "Message": "The new version is missing a path that was found in the old version. Was path \u0027/myPath/query-drive?op=file\u0027 removed or restructured?",
     "OldJsonRef": "#/x-ms-paths/~1myPath~1query-drive?op=file",
     "NewJsonRef": "#/x-ms-paths/~1myPath~1query-drive?op=file",
+    "OldJsonPath": "#/x-ms-paths/~1myPath~1query-drive?op=file",
+    "NewJsonPath": "#/x-ms-paths/~1myPath~1query-drive?op=file",
     "Id": 1005,
     "Code": "RemovedPath",
     "Mode": "Removal"
@@ -13,6 +15,8 @@
     "Message": "The \u0027required\u0027 status changed from the old version(\u0027False\u0027) to the new version(\u0027True\u0027).",
     "OldJsonRef": "#/x-ms-paths/~1myPath~1query-drive?op=folder/get/parameters/0/required",
     "NewJsonRef": "#/x-ms-paths/~1myPath~1query-drive?op=folder/get/parameters/0/required",
+    "OldJsonPath": "#/x-ms-paths/~1myPath~1query-drive?op=folder/get/parameters/0/required",
+    "NewJsonPath": "#/x-ms-paths/~1myPath~1query-drive?op=folder/get/parameters/0/required",
     "Id": 1025,
     "Code": "RequiredStatusChange",
     "Mode": "Update"
@@ -22,6 +26,8 @@
     "Message": "The new version has a different type \u0027string\u0027 than the previous one \u0027integer\u0027.",
     "OldJsonRef": "#/components/schemas/Cat/properties/sleepTime/type",
     "NewJsonRef": "#/components/schemas/Cat/properties/sleepTime/type",
+    "OldJsonPath": "#/components/schemas/Cat/properties/sleepTime/type",
+    "NewJsonPath": "#/components/schemas/Cat/properties/sleepTime/type",
     "Id": 1026,
     "Code": "TypeChanged",
     "Mode": "Update"

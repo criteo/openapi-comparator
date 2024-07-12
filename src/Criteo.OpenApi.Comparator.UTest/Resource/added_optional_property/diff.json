@@ -2,8 +2,10 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a new optional property \u0027message\u0027 that was not found in the old version.",
-    "OldJsonRef": "#/components/parameters/skipParam/schema/properties/message",
-    "NewJsonRef": "#/components/parameters/skipParam/schema/properties/message",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/0/schema/properties/message",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/0/schema/properties/message",
+    "OldJsonPath": "#/components/parameters/skipParam/schema/properties/message",
+    "NewJsonPath": "#/components/parameters/skipParam/schema/properties/message",
     "Id": 1045,
     "Code": "AddedOptionalProperty",
     "Mode": "Addition"
@@ -11,8 +13,10 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a new optional property \u0027end\u0027 that was not found in the old version.",
-    "OldJsonRef": "#/components/parameters/limitParam/schema/properties/end",
-    "NewJsonRef": "#/components/parameters/limitParam/schema/properties/end",
+    "OldJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/schema/properties/end",
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/1/schema/properties/end",
+    "OldJsonPath": "#/components/parameters/limitParam/schema/properties/end",
+    "NewJsonPath": "#/components/parameters/limitParam/schema/properties/end",
     "Id": 1045,
     "Code": "AddedOptionalProperty",
     "Mode": "Addition"
