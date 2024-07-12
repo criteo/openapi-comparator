@@ -2,8 +2,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version has a new optional property \u0027breed\u0027 that was not found in the old version.",
-    "OldJsonRef": "#/schemas/Dog/properties/breed",
-    "NewJsonRef": "#/schemas/Dog/properties/breed",
+    "OldJsonRef": "#/components/schemas/Dog/properties/breed",
+    "NewJsonRef": "#/components/schemas/Dog/properties/breed",
     "Id": 1045,
     "Code": "AddedOptionalProperty",
     "Mode": "Addition"

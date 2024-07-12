@@ -56,7 +56,7 @@ namespace Criteo.OpenApi.Comparator.Logging
         {
             for (var index = 0; index < token?.Count(); index++)
             {
-                var tokenElement = FindTokenFromReference(token[index]);
+                var tokenElement = FindTokenFromReference(token[index]).token;
 
                 if (tokenElement?["name"]?.Value<string>() == parameterName)
                     return index.ToString();
@@ -94,43 +94,53 @@ namespace Criteo.OpenApi.Comparator.Logging
                     )
             );
 
-        private static JToken FromObject(JObject jsonObject, string name)
+        private static (JToken token, string reference) FromObject(JObject jsonObject, string name)
         {
             if (name == null)
-                return null;
+                return (null, null);
 
-            var reference = FindTokenFromReference(jsonObject);
-            return reference[name];
+            var (token, reference) = FindTokenFromReference(jsonObject);
+            return (token[name], reference);
         }
 
-        private static JToken FindTokenFromReference(JToken token)
+        private static (JToken token, string reference) FindTokenFromReference(JToken token)
         {
-            var reference = token?["$ref"];
+            var reference = token.Value<string>("$ref");
             if (reference != null)
-                token = ParseRef(reference.Value<string>()).CompletePath(token.Root).Last().token;
-            return token;
+                token = ParseRef(reference).CompletePath(token.Root).Last().token;
+            return (token, reference);
         }
 
-        private static IEnumerable<(JToken token, string name)> CompletePath(IEnumerable<Func<JToken, string>> path, JToken token) =>
-            new[] { (token, "#") }.Concat(path.Select(toJsonRefElement =>
+        private static IEnumerable<(JToken token, string reference, string name)> CompletePath(
+            IEnumerable<Func<JToken, string>> path, JToken token)
+        {
+            yield return (token, null, "#");
+            foreach (var toJsonRefElement in path)
+            {
+                string reference = null;
+                var name = toJsonRefElement(token);
+                switch (token)
                 {
-                    var name = toJsonRefElement(token);
-                    token = token is JArray jsonArray
-                        ? int.TryParse(name, out var i)
-                            ? jsonArray[i]
-                            : null
-                        : token is JObject o
-                            ? FromObject(o, name)
-                            : null;
-                    return (token, name);
-                }));
+                    case JArray jsonArray:
+                        token = int.TryParse(name, out var i) ? jsonArray[i] : null;
+                        break;
+                    case JObject o:
+                        (token, reference) = FromObject(o, name);
+                        break;
+                    default:
+                        token = null;
+                        break;
+                }
+                yield return (token, reference, name);
+            }
+        }
 
         /// <summary>
         /// Returns a sequence of property names, including the "#" string.
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        internal IEnumerable<(JToken token, string name)> CompletePath(JToken t) => CompletePath(Path, t);
+        internal IEnumerable<(JToken token, string reference, string name)> CompletePath(JToken t) => CompletePath(Path, t);
 
         /// <summary>
         /// https://tools.ietf.org/html/draft-ietf-appsawg-json-pointer-04
@@ -139,12 +149,16 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// <returns>The json path of the json document</returns>
         internal string JsonPointer(IJsonDocument jsonDocument)
         {
-            return CompletePath(jsonDocument.Token)
-                .Select(v => v.name?
-                    .Replace("~", "~0")
-                    .Replace("/", "~1")
-                )
-                .Aggregate((a, b) => a == null || b == null ? null : a + "/" + b);
+            string path = null;
+            foreach (var (_, reference, name) in CompletePath(jsonDocument.Token))
+            {
+                if (name == null)
+                    return null;
+                path = reference ?? path;
+                var escapedName = name.Replace("~", "~0").Replace("/", "~1");
+                path = path != null ? $"{path}/{escapedName}" : escapedName;
+            }
+            return path;
         }
     }
 }

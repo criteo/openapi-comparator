@@ -13,10 +13,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Commande"
+                  $ref: "#/components/schemas/Cart"
 components:
   schemas:
-    Commande:
+    Cart:
       type: object
       properties:
         id:

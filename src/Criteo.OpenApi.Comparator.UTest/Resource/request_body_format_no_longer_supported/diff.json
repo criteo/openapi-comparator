@@ -20,8 +20,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version does not support \u0027text/plain\u0027 as a request body format.",
-    "OldJsonRef": "#/paths/~1pets~1{id}/post/requestBody/content/text~1plain",
-    "NewJsonRef": "#/paths/~1pets~1{id}/post/requestBody/content/text~1plain",
+    "OldJsonRef": "#/components/requestBodies/PetBody/content/text~1plain",
+    "NewJsonRef": "#/components/requestBodies/PetBody/content/text~1plain",
     "Id": 1003,
     "Code": "RequestBodyFormatNoLongerSupported",
     "Mode": "Removal"
@@ -29,8 +29,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version does not support \u0027application/xml\u0027 as a request body format.",
-    "OldJsonRef": "#/paths/~1pets~1{id}/post/requestBody/content/application~1xml",
-    "NewJsonRef": "#/paths/~1pets~1{id}/post/requestBody/content/application~1xml",
+    "OldJsonRef": "#/components/requestBodies/PetBody/content/application~1xml",
+    "NewJsonRef": "#/components/requestBodies/PetBody/content/application~1xml",
     "Id": 1003,
     "Code": "RequestBodyFormatNoLongerSupported",
     "Mode": "Removal"

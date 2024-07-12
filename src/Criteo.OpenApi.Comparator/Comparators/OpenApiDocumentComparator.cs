@@ -300,6 +300,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
             TrackSchemasReference(oldDocument);
             TrackSchemasReference(newDocument);
 
+            context.PushProperty("components");
+
             CompareSchemas(context, oldDocument.Components.Schemas, newDocument.Components.Schemas);
 
             CompareParameters(context, oldDocument.Components.Parameters, newDocument.Components.Parameters);

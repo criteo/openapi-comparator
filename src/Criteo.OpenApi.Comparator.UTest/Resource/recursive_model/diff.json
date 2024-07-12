@@ -2,8 +2,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version is missing a property found in the old version. Was \u0027target\u0027 renamed or removed?",
-    "OldJsonRef": "#/paths/~1api~1Operations/post/parameters/0/schema/properties/error/properties/target",
-    "NewJsonRef": "#/paths/~1api~1Operations/post/parameters/0/schema/properties/error/properties/target",
+    "OldJsonRef": "#/components/schemas/CreateParamBody/properties/target",
+    "NewJsonRef": "#/components/schemas/CreateParamBody/properties/target",
     "Id": 1033,
     "Code": "RemovedProperty",
     "Mode": "Removal"
@@ -11,8 +11,8 @@
   {
     "Severity": "Warning",
     "Message": "The read only property has changed from \u0027false\u0027 to \u0027true\u0027.",
-    "OldJsonRef": "#/paths/~1api~1Operations/post/responses/default/content/application~1json/schema/properties/error/properties/message/readOnly",
-    "NewJsonRef": "#/paths/~1api~1Operations/post/responses/default/content/application~1json/schema/properties/error/properties/message/readOnly",
+    "OldJsonRef": "#/components/schemas/CloudErrorBody/properties/message/readOnly",
+    "NewJsonRef": "#/components/schemas/CloudErrorBody/properties/message/readOnly",
     "Id": 1029,
     "Code": "ReadonlyPropertyChanged",
     "Mode": "Update"
@@ -20,8 +20,8 @@
   {
     "Severity": "Warning",
     "Message": "The read only property has changed from \u0027false\u0027 to \u0027true\u0027.",
-    "OldJsonRef": "#/schemas/CloudError/properties/error/properties/message/readOnly",
-    "NewJsonRef": "#/schemas/CloudError/properties/error/properties/message/readOnly",
+    "OldJsonRef": "#/components/schemas/CloudErrorBody/properties/message/readOnly",
+    "NewJsonRef": "#/components/schemas/CloudErrorBody/properties/message/readOnly",
     "Id": 1029,
     "Code": "ReadonlyPropertyChanged",
     "Mode": "Update"
@@ -29,8 +29,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version is missing a property found in the old version. Was \u0027target\u0027 renamed or removed?",
-    "OldJsonRef": "#/schemas/CreateParam/properties/error/properties/target",
-    "NewJsonRef": "#/schemas/CreateParam/properties/error/properties/target",
+    "OldJsonRef": "#/components/schemas/CreateParamBody/properties/target",
+    "NewJsonRef": "#/components/schemas/CreateParamBody/properties/target",
     "Id": 1033,
     "Code": "RemovedProperty",
     "Mode": "Removal"

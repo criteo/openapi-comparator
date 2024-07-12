@@ -11,8 +11,8 @@
   {
     "Severity": "Info",
     "Message": "The \u0027required\u0027 status changed from the old version(\u0027True\u0027) to the new version(\u0027False\u0027).",
-    "OldJsonRef": "#/paths/~1pets/get/parameters/1/required",
-    "NewJsonRef": "#/paths/~1pets/get/parameters/1/required",
+    "OldJsonRef": "#/components/parameters/limit/required",
+    "NewJsonRef": "#/components/parameters/limit/required",
     "Id": 1025,
     "Code": "RequiredStatusChange",
     "Mode": "Update"

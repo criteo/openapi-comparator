@@ -2,8 +2,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version removes the \u0027additionalProperties\u0027 element.",
-    "OldJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/additionalProperties",
-    "NewJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/additionalProperties",
+    "OldJsonRef": "#/components/schemas/Pet/additionalProperties",
+    "NewJsonRef": "#/components/schemas/Pet/additionalProperties",
     "Id": 1022,
     "Code": "RemovedAdditionalProperties",
     "Mode": "Removal"
@@ -11,8 +11,8 @@
   {
     "Severity": "Warning",
     "Message": "The new version removes the \u0027additionalProperties\u0027 element.",
-    "OldJsonRef": "#/schemas/Pet/additionalProperties",
-    "NewJsonRef": "#/schemas/Pet/additionalProperties",
+    "OldJsonRef": "#/components/schemas/Pet/additionalProperties",
+    "NewJsonRef": "#/components/schemas/Pet/additionalProperties",
     "Id": 1022,
     "Code": "RemovedAdditionalProperties",
     "Mode": "Removal"
