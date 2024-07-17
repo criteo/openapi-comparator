@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -120,7 +121,8 @@ namespace Criteo.OpenApi.Comparator.Cli
                 var serializerOptions = new JsonSerializerOptions
                 {
                     WriteIndented = true,
-                    Converters = { new JsonStringEnumConverter() }
+                    Converters = { new JsonStringEnumConverter() },
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 };
                 Console.WriteLine(JsonSerializer.Serialize(differences, serializerOptions));
                 return;

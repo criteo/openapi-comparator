@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using Criteo.OpenApi.Comparator.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
 
 namespace Criteo.OpenApi.Comparator.UTest;
 
@@ -30,7 +31,8 @@ public class OpenApiSpecificationsCompareTests
     private static readonly JsonSerializerOptions serializerOptions = new()
     {
         WriteIndented = true,
-        Converters = { new JsonStringEnumConverter() }
+        Converters = { new JsonStringEnumConverter() },
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
     };
 
     [TestCaseSource(nameof(TestCases))]
