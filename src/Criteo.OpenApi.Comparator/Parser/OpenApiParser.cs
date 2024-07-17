@@ -15,14 +15,15 @@ namespace Criteo.OpenApi.Comparator.Parser
     internal static class OpenApiParser
     {
         /// <param name="openApiDocumentAsString">Swagger as string</param>
-        internal static JsonDocument<OpenApiDocument> Parse(string openApiDocumentAsString)
+        /// <param name="diagnostic"></param>
+        internal static JsonDocument<OpenApiDocument> Parse(string openApiDocumentAsString, out OpenApiDiagnostic diagnostic)
         {
             var openApiReaderSettings = new OpenApiReaderSettings
             {
                 ReferenceResolution = ReferenceResolutionSetting.DoNotResolveReferences
             };
             var openApiReader = new OpenApiStringReader(openApiReaderSettings);
-            var openApiDocument = openApiReader.Read(openApiDocumentAsString, out _);
+            var openApiDocument = openApiReader.Read(openApiDocumentAsString, out diagnostic);
 
             var textWriter = new StringWriter();
             var openApiWriter = new OpenApiJsonWriter(textWriter);

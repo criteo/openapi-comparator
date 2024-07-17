@@ -29,7 +29,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string fileName = "invalid_json_file.txt";
             var documentAsString = ReadOpenApiFile(fileName);
-            Assert.Throws<OpenApiUnsupportedSpecVersionException>(() => OpenApiParser.Parse(documentAsString));
+            Assert.Throws<OpenApiUnsupportedSpecVersionException>(() => OpenApiParser.Parse(documentAsString, out _));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         public void OpenApiParser_Should_Return_Valid_OpenApi_Document_Object(string fileName)
         {
             var documentAsString = ReadOpenApiFile(fileName);
-            var validOpenApiDocument = OpenApiParser.Parse(documentAsString);
+            var validOpenApiDocument = OpenApiParser.Parse(documentAsString, out _);
             Assert.IsInstanceOf<JsonDocument<OpenApiDocument>>(validOpenApiDocument);
         }
     }

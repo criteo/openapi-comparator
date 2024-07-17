@@ -36,12 +36,21 @@ namespace Criteo.OpenApi.Comparator.Cli
 
             if (!oldFileFound || !newFileFound)
             {
-                Console.WriteLine("Exiting.");
+                Console.Error.WriteLine("Exiting.");
                 return 1;
             }
 
             var differences = OpenApiComparator.Compare(
-                oldOpenApiSpecification, newOpenApiSpecification, options.StrictMode);
+                oldOpenApiSpecification, newOpenApiSpecification, out var parsingErrors, options.StrictMode);
+
+            if (parsingErrors.Any())
+            {
+                Console.Error.WriteLine("Errors occurred while parsing the OpenAPI specifications:");
+                foreach (var error in parsingErrors)
+                {
+                    Console.Error.WriteLine(error);
+                }
+            }
 
             DisplayOutput(differences, options.OutputFormat);
 
@@ -66,7 +75,7 @@ namespace Criteo.OpenApi.Comparator.Cli
             }
             catch (UriFormatException)
             {
-                Console.WriteLine($"Failed to interpret the provided URI: {path}.");
+                Console.Error.WriteLine($"Failed to interpret the provided URI: {path}.");
                 fileContent = null;
             }
             return false;
@@ -81,7 +90,7 @@ namespace Criteo.OpenApi.Comparator.Cli
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine($"File not found for: {path}.");
+                Console.Error.WriteLine($"File not found for: {path}.");
                 fileContent = null;
                 return false;
             }
@@ -97,7 +106,7 @@ namespace Criteo.OpenApi.Comparator.Cli
             }
             catch (HttpRequestException exception)
             {
-                Console.WriteLine($"Http request failed on {path}: {exception.Message}");
+                Console.Error.WriteLine($"Http request failed on {path}: {exception.Message}");
             }
             catch (AggregateException exception)
             {
@@ -108,7 +117,7 @@ namespace Criteo.OpenApi.Comparator.Cli
                     stringWriter.Write($"- {innerException.GetType()}: {exception.Message}");
                     return true;
                 });
-                Console.WriteLine(stringWriter.ToString());
+                Console.Error.WriteLine(stringWriter.ToString());
             }
             fileContent = null;
             return false;
