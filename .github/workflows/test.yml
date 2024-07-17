@@ -1,19 +1,47 @@
 name: Continuous Integration
-on: [push]
+
+on:
+  push:
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: |
             6.x
             8.x
-      - name: Install dependencies
-        run: dotnet restore ./src/Criteo.OpenApi.Comparator.UTest
       - name: Build
-        run: dotnet build ./src/Criteo.OpenApi.Comparator.UTest --configuration Release --no-restore
+        run: dotnet build
       - name: Test
-        run: dotnet test ./src/Criteo.OpenApi.Comparator.UTest --no-restore --verbosity minimal
+        run: dotnet test --no-build
+      - name: Run CLI with absolute paths
+        run: >
+          dotnet run
+          --no-build
+          --project src/Criteo.OpenApi.Comparator.Cli/Criteo.OpenApi.Comparator.Cli.csproj
+          --framework net8
+          -o $PWD/src/Criteo.OpenApi.Comparator.UTest/Resource/reference_redirection_type_changed/old.yaml
+          -n $PWD/src/Criteo.OpenApi.Comparator.UTest/Resource/reference_redirection_type_changed/new.yaml
+        if: always()
+      - name: Run CLI with relative paths
+        run: >
+          dotnet run
+          --no-build
+          --project src/Criteo.OpenApi.Comparator.Cli/Criteo.OpenApi.Comparator.Cli.csproj
+          --framework net8
+          -o src/Criteo.OpenApi.Comparator.UTest/Resource/reference_redirection_type_changed/old.yaml
+          -n src/Criteo.OpenApi.Comparator.UTest/Resource/reference_redirection_type_changed/new.yaml
+        if: always()
+      - name: Run CLI with URLs
+        run: >
+          dotnet run
+          --no-build
+          --project src/Criteo.OpenApi.Comparator.Cli/Criteo.OpenApi.Comparator.Cli.csproj
+          --framework net8
+          -o https://raw.githubusercontent.com/criteo/openapi-comparator/main/src/Criteo.OpenApi.Comparator.UTest/Resource/reference_redirection_type_changed/old.yaml
+          -n https://raw.githubusercontent.com/criteo/openapi-comparator/main/src/Criteo.OpenApi.Comparator.UTest/Resource/reference_redirection_type_changed/new.yaml
+        if: always()
