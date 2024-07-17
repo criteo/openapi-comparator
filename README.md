@@ -34,13 +34,13 @@ openapi-compare -o new_oas.json -n old_oas.json -f Json
 ```
 
 Available options:
-| Option         | Small | Required | Description                                                                                                   |
-|----------------|-------|----------|---------------------------------------------------------------------------------------------------------------|
-| --old          | -o    | true     | Path or URL to old OpenAPI Specification.                                                                     |
-| --new          | -n    | true     | Path or URL to new OpenAPI Specification.                                                                     |
-| --outputFormat | -f    | false    | (Default: Json) Specifies in which format the differences should be displayed. Possible values: Json \| Text. |
-| --strict       | -s    | false    | (Default: false) Enable strict mode: breaking changes are errors instead of warnings.                         |
-| --help         | -h    | false    | Log available options                                                                                         |
+| Option           | Small   | Required | Description                                                                                                         |
+|------------------|---------|----------|---------------------------------------------------------------------------------------------------------------------|
+| `--old`          | `-o`    | `true`   | Path or URL to old OpenAPI Specification.                                                                           |
+| `--new`          | `-n`    | `true`   | Path or URL to new OpenAPI Specification.                                                                           |
+| `--outputFormat` | `-f`    | `false`  | (Default: `Json`) Specifies in which format the differences should be displayed. Possible values: `Json` \| `Text`. |
+| `--strict`       | `-s`    | `false`  | (Default: `false`) Enable strict mode: breaking changes are errors instead of warnings.                             |
+| `--help`         | `-h`    | `false`  | Log available options                                                                                               |
 
 ## Comparison rules
 
