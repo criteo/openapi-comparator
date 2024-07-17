@@ -1,25 +1,31 @@
 name: Packages publication
+
 on:
   release:
     types: [created]
+
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          - Criteo.OpenApi.Comparator
+          - Criteo.OpenApi.Comparator.Cli
     steps:
       - uses: actions/checkout@v3
-      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: |
             6.x
             8.x
-      - name: Publish Criteo.OpenApi.Comparator to NuGet
-        id: publish_package_nuget
+      - name: Publish ${{ matrix.package }} to NuGet
         uses: brandedoutcast/publish-nuget@v2
         with:
-          PROJECT_FILE_PATH: src/Criteo.OpenApi.Comparator/Criteo.OpenApi.Comparator.csproj
+          PROJECT_FILE_PATH: src/${{ matrix.package }}/${{ matrix.package }}.csproj
           BUILD_CONFIGURATION: Release
           TAG_COMMIT: true
           TAG_FORMAT: v*
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          PACKAGE_NAME: Criteo.OpenApi.Comparator
+          PACKAGE_NAME: ${{ matrix.package }}
