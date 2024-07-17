@@ -51,7 +51,9 @@ namespace Criteo.OpenApi.Comparator.Cli
         {
             try
             {
-                var uri = new Uri(path);
+                // In case `path` is detected as an absolute or remote URI, `System.Uri` will ignore the `cwdUri`.
+                var cwdUri = new Uri(Directory.GetCurrentDirectory());
+                var uri = new Uri(cwdUri, path);
                 if (uri.IsFile)
                 {
                     return TryReadLocalFile(path, out fileContent);
