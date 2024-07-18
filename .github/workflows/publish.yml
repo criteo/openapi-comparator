@@ -7,11 +7,6 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package:
-          - Criteo.OpenApi.Comparator
-          - Criteo.OpenApi.Comparator.Cli
     steps:
       - uses: actions/checkout@v3
       - name: Setup .NET Core SDK
@@ -20,12 +15,12 @@ jobs:
           dotnet-version: |
             6.x
             8.x
-      - name: Publish ${{ matrix.package }} to NuGet
-        uses: brandedoutcast/publish-nuget@v2
+      - name: Pack
+        run: dotnet pack -o ./artifacts
+      - name: Publish
+        run: dotnet nuget push ./artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          PROJECT_FILE_PATH: src/${{ matrix.package }}/${{ matrix.package }}.csproj
-          BUILD_CONFIGURATION: Release
-          TAG_COMMIT: true
-          TAG_FORMAT: v*
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          PACKAGE_NAME: ${{ matrix.package }}
+          name: nuget-packages
+          path: ./artifacts/*.nupkg
