@@ -40,21 +40,30 @@ namespace Criteo.OpenApi.Comparator.Cli
                 return 1;
             }
 
-            var differences = OpenApiComparator.Compare(
-                oldOpenApiSpecification, newOpenApiSpecification, out var parsingErrors, options.StrictMode);
-
-            if (parsingErrors.Any())
+            IEnumerable<ParsingError> parsingErrors = null;
+            try
             {
-                Console.Error.WriteLine("Errors occurred while parsing the OpenAPI specifications:");
-                foreach (var error in parsingErrors)
+                var differences = OpenApiComparator.Compare(
+                    oldOpenApiSpecification, newOpenApiSpecification, out parsingErrors, options.StrictMode);
+                DisplayOutput(differences, options.OutputFormat);
+                return 0;
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"An error occurred while comparing the OpenAPI specifications: {e}");
+                return 1;
+            }
+            finally
+            {
+                if (parsingErrors.Any())
                 {
-                    Console.Error.WriteLine(error);
+                    Console.Error.WriteLine("Errors occurred while parsing the OpenAPI specifications:");
+                    foreach (var error in parsingErrors)
+                    {
+                        Console.Error.WriteLine(error);
+                    }
                 }
             }
-
-            DisplayOutput(differences, options.OutputFormat);
-
-            return 0;
         }
 
         private static bool TryReadFile(string path, out string fileContent)
