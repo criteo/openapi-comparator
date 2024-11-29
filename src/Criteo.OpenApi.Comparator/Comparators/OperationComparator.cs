@@ -288,7 +288,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (!candidateParameters.Any())
                 return null;
 
-            if(candidateParameters.Count == 0)
+            if(candidateParameters.Count == 1)
                 return candidateParameters[0];
 
             return GetClosestFunctionally(key, candidateParameters);
