@@ -1,0 +1,27 @@
+openapi: "3.0.2"
+info:
+  title: "Api"
+  version: "1.0.0"
+paths:
+  /example:
+    get:
+      parameters:
+        - name: "access_token"
+          in: "header"
+          required: false
+          schema:
+            anyOf:
+              - type: "string"
+              - type: "null"
+            title: "Access Token"
+        - name: "access_token"
+          in: "query"
+          required: false
+          schema:
+            anyOf:
+              - type: "string"
+              - type: "null"
+            title: "Access Token"
+      responses:
+        "200":
+          description: "Successful Response"
