@@ -127,7 +127,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         {
             foreach (var oldParameter in oldParameters)
             {
-                var newParameter = FindParameter(oldParameter.Name, newParameters, context.NewOpenApiDocument.Components?.Parameters);
+                var newParameter = FindParameter(oldParameter, newParameters, context.NewOpenApiDocument.Components?.Parameters);
 
                 // we should use PushItemByName instead of PushProperty because Swagger `parameters` is
                 // an array of parameters.
@@ -163,7 +163,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             foreach (var newParameter in newParameters)
             {
                 OpenApiParameter oldParameter = FindParameter(
-                    newParameter.Name,
+                    newParameter,
                     oldParameters,
                     context.OldOpenApiDocument.Components?.Parameters
                 );
@@ -257,30 +257,75 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <summary>
         /// Finds parameter name in the list of operation parameters or global parameters
         /// </summary>
-        /// <param name="name">name of the parameter to search</param>
+        /// <param name="key">The parameter used as a key. It is expected that this parameter comes from the opposite
+        /// file. The parameter that has the same name and is most similar to this parameter will be returned</param>
         /// <param name="operationParameters">list of operation parameters to search</param>
         /// <param name="documentParameters">Dictionary of global parameters to search</param>
         /// <returns>Swagger Parameter if found; otherwise null</returns>
         private static OpenApiParameter FindParameter(
-            string name,
+            OpenApiParameter key,
             IEnumerable<OpenApiParameter> operationParameters,
             IDictionary<string, OpenApiParameter> documentParameters)
         {
+            string name = key.Name;
             if (name == null || operationParameters == null)
                 return null;
 
+            var candidateParameters = new List<OpenApiParameter>();
             foreach (var parameter in operationParameters)
             {
                 if (name.Equals(parameter.Name))
-                    return parameter;
+                    candidateParameters.Add(parameter);
+                else
+                {
+                    var referencedParameter = parameter.Reference.Resolve(documentParameters);
 
-                var referencedParameter = parameter.Reference.Resolve(documentParameters);
-
-                if (referencedParameter != null && name.Equals(referencedParameter.Name))
-                    return referencedParameter;
+                    if (referencedParameter != null && name.Equals(referencedParameter.Name))
+                        candidateParameters.Add(referencedParameter);
+                }
             }
 
-            return null;
+            if (!candidateParameters.Any())
+                return null;
+
+            if(candidateParameters.Count == 1)
+                return candidateParameters[0];
+
+            return GetClosestFunctionally(key, candidateParameters);
+        }
+
+        /// <summary>
+        /// Determines the most similar parameter to the key parameter based on functional similarity.
+        /// </summary>
+        /// <param name="key">The parameter to score against for functional similarity</param>
+        /// <param name="candidateParameters">The candidates. One of these will be selected as the most similar</param>
+        /// <returns>The most similar parameter functionally to the key parameter</returns>
+        private static OpenApiParameter GetClosestFunctionally(OpenApiParameter key, List<OpenApiParameter> candidateParameters)
+        {
+            OpenApiParameter bestMatch = null;
+            var bestMatchScore = 0;
+
+            foreach (var candidate in candidateParameters)
+            {
+                var score = 0;
+
+                score += key.Reference == candidate.Reference ? 1 : 0;
+                score += key.In == candidate.In ? 1 : 0;
+                score += key.Required == candidate.Required ? 1 : 0;
+                score += key.Deprecated == candidate.Deprecated ? 1 : 0;
+                score += key.AllowEmptyValue == candidate.AllowEmptyValue ? 1 : 0;
+                score += key.Style == candidate.Style ? 1 : 0;
+                score += key.Explode == candidate.Explode ? 1 : 0;
+                score += key.AllowReserved == candidate.AllowReserved ? 1 : 0;
+
+                if (score <= bestMatchScore)
+                    continue;
+                
+                bestMatch = candidate;
+                bestMatchScore = score;
+            }
+
+            return bestMatch;
         }
     }
 }
