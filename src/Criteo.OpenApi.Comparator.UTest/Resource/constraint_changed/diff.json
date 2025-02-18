@@ -23,7 +23,7 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version is removing enum value(s) \u0027Microsoft.OpenApi.Any.OpenApiString\u0027 from the old version.",
+    "Message": "The new version is removing enum value(s) \u0027item3\u0027 from the old version.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "OldJsonPath": "#/components/schemas/limitParam/properties/constrainsItems/enum",
@@ -34,7 +34,7 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version is adding enum value(s) \u0027Microsoft.OpenApi.Any.OpenApiString\u0027 from the old version.",
+    "Message": "The new version is adding enum value(s) \u0027item4\u0027 from the old version.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "OldJsonPath": "#/components/schemas/limitParam/properties/constrainsItems/enum",

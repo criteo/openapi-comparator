@@ -1,7 +1,7 @@
 [
   {
     "Severity": "Warning",
-    "Message": "The new version is adding enum value(s) \u0027Microsoft.OpenApi.Any.OpenApiString\u0027 from the old version.",
+    "Message": "The new version is adding enum value(s) \u0027zzzzzz\u0027 from the old version.",
     "OldJsonRef": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/foo/enum",
     "NewJsonRef": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/foo/enum",
     "OldJsonPath": "#/components/schemas/RequestResponseEnum/enum",
@@ -23,7 +23,7 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version is adding enum value(s) \u0027Microsoft.OpenApi.Any.OpenApiString\u0027 from the old version.",
+    "Message": "The new version is adding enum value(s) \u0027zzzzzz\u0027 from the old version.",
     "OldJsonRef": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "NewJsonRef": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "OldJsonPath": "#/components/schemas/RequestResponseEnum/enum",

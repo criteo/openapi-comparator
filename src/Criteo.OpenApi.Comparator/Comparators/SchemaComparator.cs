@@ -336,13 +336,13 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 if (constrains)
                 {
                     LogAction logger = context.Direction == DataDirection.Response ? context.LogWarning : context.LogBreakingChange;
-                    logger(ComparisonRules.RemovedEnumValue, string.Join(", ", removedEnums));
+                    logger(ComparisonRules.RemovedEnumValue, string.Join(", ", removedEnums.Select(e => e.StringValue())));
                 }
 
                 if (relaxes && !IsEnumModelAsString(enumExtension))
                 {
                     LogAction logger = context.Direction == DataDirection.Request ? context.LogWarning : context.LogBreakingChange;
-                    logger(ComparisonRules.AddedEnumValue, string.Join(", ", addedEnums));
+                    logger(ComparisonRules.AddedEnumValue, string.Join(", ", addedEnums.Select(e => e.StringValue())));
                 }
             }
 
