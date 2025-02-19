@@ -136,13 +136,7 @@ namespace Criteo.OpenApi.Comparator.Cli
         {
             if (outputFormat == OutputFormat.Json)
             {
-                var serializerOptions = new JsonSerializerOptions
-                {
-                    WriteIndented = true,
-                    Converters = { new JsonStringEnumConverter() },
-                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                };
-                Console.WriteLine(JsonSerializer.Serialize(differences, serializerOptions));
+                Console.WriteLine(JsonSerializer.Serialize(differences, SerializationOptions));
                 return;
             }
 
@@ -154,5 +148,12 @@ namespace Criteo.OpenApi.Comparator.Cli
                 }
             }
         }
+
+        private static readonly JsonSerializerOptions SerializationOptions = new()
+        {
+            WriteIndented = true,
+            Converters = { new JsonStringEnumConverter() },
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        };
     }
 }

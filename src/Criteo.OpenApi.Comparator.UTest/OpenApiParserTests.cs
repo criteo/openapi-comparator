@@ -41,7 +41,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             var documentAsString = ReadOpenApiFile(fileName);
             var validOpenApiDocument = OpenApiParser.Parse(documentAsString, out _);
-            Assert.IsInstanceOf<JsonDocument<OpenApiDocument>>(validOpenApiDocument);
+            Assert.That(validOpenApiDocument, Is.InstanceOf<JsonDocument<OpenApiDocument>>());
         }
     }
 }
