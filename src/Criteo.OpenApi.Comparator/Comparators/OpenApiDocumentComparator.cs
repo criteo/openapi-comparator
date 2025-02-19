@@ -113,7 +113,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                     if (oldMajor > newMajor)
                     {
-                        context.LogError(ComparisonRules.VersionsReversed, oldVersionAsList, newVersionAsList);
+                        context.LogError(ComparisonRules.VersionsReversed, oldVersion, newVersion);
                     }
                 }
 
@@ -128,7 +128,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                         if (oldMinor > newMinor)
                         {
-                            context.LogError(ComparisonRules.VersionsReversed, oldVersionAsList, newVersionAsList);
+                            context.LogError(ComparisonRules.VersionsReversed, oldVersion, newVersion);
                         }
                     }
                 }

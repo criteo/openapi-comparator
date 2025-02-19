@@ -1,7 +1,7 @@
 [
   {
     "Severity": "Error",
-    "Message": "The new version has a lower value than the old: System.String[] -\u003E System.String[]",
+    "Message": "The new version has a lower value than the old: 2.0 -> 1.0",
     "OldJsonRef": "#/info/version",
     "NewJsonRef": "#/info/version",
     "OldJsonPath": "#/info/version",
