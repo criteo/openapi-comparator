@@ -15,7 +15,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string oldString = "string";
             const string newString = "string";
-            Assert.IsFalse(oldString.DifferFrom(newString));
+            Assert.That(oldString.DifferFrom(newString), Is.False);
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string oldString = null;
             const string newString = null;
-            Assert.IsFalse(oldString.DifferFrom(newString));
+            Assert.That(oldString.DifferFrom(newString), Is.False);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string oldString = null;
             const string newString = "string";
-            Assert.IsTrue(oldString.DifferFrom(newString));
+            Assert.That(oldString.DifferFrom(newString), Is.True);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string oldString = "string";
             const string newString = null;
-            Assert.IsTrue(oldString.DifferFrom(newString));
+            Assert.That(oldString.DifferFrom(newString), Is.True);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             int? oldInteger = 8;
             int? newInteger = 8;
-            Assert.IsFalse(oldInteger.DifferFrom(newInteger));
+            Assert.That(oldInteger.DifferFrom(newInteger), Is.False);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             int? oldInteger = null;
             int? newInteger = null;
-            Assert.IsFalse(oldInteger.DifferFrom(newInteger));
+            Assert.That(oldInteger.DifferFrom(newInteger), Is.False);
         }
 
         [Test]
@@ -63,14 +63,14 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             int? oldInteger = null;
             int? newInteger = 8;
-            Assert.IsTrue(oldInteger.DifferFrom(newInteger));
+            Assert.That(oldInteger.DifferFrom(newInteger), Is.True);
         }
 
         [Test]
         public void DifferFrom_ShouldReturn_true_When_NullNewInteger()
         {
             int? oldInteger = 8;
-            Assert.IsTrue(oldInteger.DifferFrom(null));
+            Assert.That(oldInteger.DifferFrom(null), Is.True);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             var oldInteger = new OpenApiInteger(8);
             var newInteger = new OpenApiInteger(8);
-            Assert.IsFalse(oldInteger.DifferFrom(newInteger));
+            Assert.That(oldInteger.DifferFrom(newInteger), Is.False);
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             var oldInteger = new OpenApiInteger(8);
             var newInteger = new OpenApiInteger(1);
-            Assert.IsTrue(oldInteger.DifferFrom(newInteger));
+            Assert.That(oldInteger.DifferFrom(newInteger), Is.True);
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             var oldBoolean = new OpenApiBoolean(false);
             var newBoolean = new OpenApiBoolean(false);
-            Assert.IsFalse(oldBoolean.DifferFrom(newBoolean));
+            Assert.That(oldBoolean.DifferFrom(newBoolean), Is.False);
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             var oldBoolean = new OpenApiBoolean(false);
             var newBoolean = new OpenApiBoolean(true);
-            Assert.IsTrue(oldBoolean.DifferFrom(newBoolean));
+            Assert.That(oldBoolean.DifferFrom(newBoolean), Is.True);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             var oldString = new OpenApiString("string");
             var newString = new OpenApiString("string");
-            Assert.IsFalse(oldString.DifferFrom(newString));
+            Assert.That(oldString.DifferFrom(newString), Is.False);
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             var oldString = new OpenApiString("oldString");
             var newString = new OpenApiString("newString");
-            Assert.IsTrue(oldString.DifferFrom(newString));
+            Assert.That(oldString.DifferFrom(newString), Is.True);
         }
     }
 }
