@@ -2,16 +2,11 @@ name: Packages publication
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
-  publish:
+  create:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package:
-          - Criteo.OpenApi.Comparator
-          - Criteo.OpenApi.Comparator.Cli
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET Core SDK
@@ -20,13 +15,34 @@ jobs:
           dotnet-version: |
             6.x
             8.x
-      - name: Pack ${{ matrix.package }}
-        run: dotnet pack ./src/${{ matrix.package }}/.csproj -o ./artifacts 
-      - name: Publish ${{ matrix.package }} to NuGet
-        run: dotnet nuget push ./artifacts/${{ matrix.package }}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+      - name: Build
+        run: dotnet build -c Release
+      - name: Pack
+        run: dotnet pack -c Release -o ./artifacts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ${{ matrix.package }}
-          path: ./artifacts/${{ matrix.package }}.nupkg
+          name: nuget_packages
+          path: ./artifacts/*.nupkg
           if-no-files-found: error
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+            - Criteo.OpenApi.Comparator
+            - Criteo.OpenApi.Comparator.Cli
+    needs: [create]
+    steps:
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: nuget_packages
+          path: ./artifacts/*.nupkg
+      - name: Publish ${{ matrix.package }} to NuGet
+        run: dotnet nuget push ./artifacts/${{ matrix.package }}*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+      
+        
+      
+            
