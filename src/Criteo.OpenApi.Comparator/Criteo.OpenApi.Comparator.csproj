@@ -21,6 +21,7 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <EnablePackageValidation>true</EnablePackageValidation>
     <!-- Mandatory so that the build archive is published to Nexus -->
   </PropertyGroup>
   <ItemGroup>
