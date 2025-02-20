@@ -21,6 +21,7 @@ components:
       in: query
       description: number of items to skip
       required: true
+      style: simple
       schema:
         type: integer
         format: int32
@@ -29,6 +30,7 @@ components:
       in: query
       description: max records to return
       required: true
+      style: simple
       schema:
         type: integer
         format: int32
