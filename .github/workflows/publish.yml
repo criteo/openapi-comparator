@@ -3,7 +3,6 @@ name: Packages publication
 on:
   release:
     types: [published]
-  workflow_dispatch:
 
 env:
   nuget_directory: ${{ github.workspace}}/artifacts
@@ -24,6 +23,8 @@ jobs:
         run: dotnet build -c Release
       - name: Pack
         run: dotnet pack -c Release -o ${{ env.nuget_directory }}
+      - name: Display created package files
+        run: ls -R ${{ env.nuget_directory }}  
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -40,7 +41,7 @@ jobs:
         with:
           name: nuget_packages
           path: ${{ env.nuget_directory }}
-      - name: Display package files
+      - name: Display prepared package files
         run: ls -R ${{ env.nuget_directory }}
       - name: Publish all packages to NuGet
         run: dotnet nuget push ${{ env.nuget_directory }}/*.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
