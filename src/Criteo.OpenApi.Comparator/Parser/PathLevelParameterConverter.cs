@@ -116,7 +116,7 @@ namespace Criteo.OpenApi.Comparator.Parser
             {
                 var operation = (JProperty) jToken;
 
-                if (operation.Name.StartsWith("x-", StringComparison.InvariantCultureIgnoreCase)) continue;
+                if (operation.Name?.StartsWith("x-", StringComparison.InvariantCultureIgnoreCase)) continue;
 
                 result[operation.Name] = JsonConvert.DeserializeObject<OpenApiOperation>(
                     operation.Value.ToString(),
