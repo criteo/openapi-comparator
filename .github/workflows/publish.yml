@@ -40,11 +40,10 @@ jobs:
         with:
           name: nuget_packages
           path: ${{ env.nuget_directory }}
+      - name: Display package files
+        run: ls -R ${{ env.nuget_directory }}
       - name: Publish all packages to NuGet
-        run: |
-          foreach($file in (Get-ChildItem "${{ env.nuget_directory }}" -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-          }
+        run: dotnet nuget push ${{ env.nuget_directory }}/*.nupkg --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
       
         
       
