@@ -3,6 +3,7 @@ name: Packages publication
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 env:
   nuget_directory: ${{ github.workspace}}/artifacts
