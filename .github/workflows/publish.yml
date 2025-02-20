@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+env:
+  nuget_directory: ${{ github.workspace}}/artifacts
+
+
 jobs:
   create:
     runs-on: ubuntu-latest
@@ -18,20 +22,15 @@ jobs:
       - name: Build
         run: dotnet build -c Release
       - name: Pack
-        run: dotnet pack -c Release -o ./artifacts
+        run: dotnet pack -c Release -o ${{ env.nuget_directory }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: nuget_packages
-          path: ./artifacts/*.nupkg
+          path: ${{ env.nuget_directory }}/*.nupkg
           if-no-files-found: error
   publish:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package:
-            - Criteo.OpenApi.Comparator
-            - Criteo.OpenApi.Comparator.Cli
     needs: [create]
     steps:
       - name: Setup .NET Core SDK
@@ -39,9 +38,12 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: nuget_packages
-          path: ./artifacts/*.nupkg
-      - name: Publish ${{ matrix.package }} to NuGet
-        run: dotnet nuget push ./artifacts/${{ matrix.package }}*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+          path: ${{ env.nuget_directory }}
+      - name: Publish all packages to NuGet
+        run: |
+          foreach($file in (Get-ChildItem "${{ env.nuget_directory }}" -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          }
       
         
       
