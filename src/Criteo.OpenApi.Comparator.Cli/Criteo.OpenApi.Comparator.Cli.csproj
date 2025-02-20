@@ -3,7 +3,7 @@
     <TargetFrameworks>net6;net8;</TargetFrameworks>
     <LangVersion>Latest</LangVersion>
     <OutputType>Exe</OutputType>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Disable generation of fake program file done by Microsoft.NET.Test.Sdk in order to replace it with a static (*Demo.)Main method: -->
     <GenerateProgramFile>false</GenerateProgramFile>
@@ -15,7 +15,7 @@
     <Authors>Criteo</Authors>
     <Company>Criteo</Company>
     <Copyright>Copyright (c) Criteo Technology. All rights reserved.</Copyright>
-    <Version>0.8.1</Version>
+    <Version>0.8.2</Version>
     <PackageProjectUrl>https://github.com/criteo/openapi-comparator</PackageProjectUrl>
     <RepositoryUrl>https://github.com/criteo/openapi-comparator</RepositoryUrl>
     <PackageTags>Criteo, OpenApi, OpenApi-Comparator, OpenApi-Diff, Swagger</PackageTags>
