@@ -45,7 +45,7 @@ namespace Criteo.OpenApi.Comparator
         /// Request, Response, Both or None
         private readonly DisposableDataDirection _direction = new();
 
-        internal DataDirection Direction => _direction.Direction;
+        internal DataDirection Direction { get => _direction.Direction; set => _direction.Direction = value; }
 
         internal IDisposable WithDirection(DataDirection direction)
         {
