@@ -28,46 +28,45 @@ namespace Criteo.OpenApi.Comparator.Comparators
         {
             ComponentComparator<OpenApiParameter>.Compare(context, oldParameter, newParameter);
 
-            context.Direction = DataDirection.Request;
-
-            var areParametersReferenced = false;
-
-            if (!string.IsNullOrWhiteSpace(oldParameter.Reference?.ReferenceV3))
+            using (context.WithDirection(DataDirection.Request))
             {
-                oldParameter = FindReferencedParameter(oldParameter.Reference, context.OldOpenApiDocument.Components.Parameters);
-                areParametersReferenced = true;
-                if (oldParameter == null)
-                    return;
+                var areParametersReferenced = false;
+
+                if (!string.IsNullOrWhiteSpace(oldParameter.Reference?.ReferenceV3))
+                {
+                    oldParameter = FindReferencedParameter(oldParameter.Reference, context.OldOpenApiDocument.Components.Parameters);
+                    areParametersReferenced = true;
+                    if (oldParameter == null)
+                        return;
+                }
+                if (!string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3))
+                {
+                    newParameter = FindReferencedParameter(newParameter.Reference, context.NewOpenApiDocument.Components.Parameters);
+                    areParametersReferenced = true;
+                    if (newParameter == null)
+                        return;
+                }
+
+                if (areParametersReferenced)
+                {
+                    if (_visitedParameters.Contains(oldParameter))
+                        return;
+
+                    _visitedParameters.AddFirst(oldParameter);
+                }
+
+                CompareIn(context, oldParameter.In, newParameter.In);
+
+                CompareConstantStatus(context, oldParameter, newParameter);
+
+                CompareRequiredStatus(context, oldParameter, newParameter);
+
+                CompareStyle(context, oldParameter, newParameter);
+
+                CompareSchema(context, oldParameter.Schema, newParameter.Schema);
+
+                _contentComparator.Compare(context, oldParameter.Content, newParameter.Content);
             }
-            if (!string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3))
-            {
-                newParameter = FindReferencedParameter(newParameter.Reference, context.NewOpenApiDocument.Components.Parameters);
-                areParametersReferenced = true;
-                if (newParameter == null)
-                    return;
-            }
-
-            if (areParametersReferenced)
-            {
-                if (_visitedParameters.Contains(oldParameter))
-                    return;
-
-                _visitedParameters.AddFirst(oldParameter);
-            }
-
-            CompareIn(context, oldParameter.In, newParameter.In);
-
-            CompareConstantStatus(context, oldParameter, newParameter);
-
-            CompareRequiredStatus(context, oldParameter, newParameter);
-
-            CompareStyle(context, oldParameter, newParameter);
-
-            CompareSchema(context, oldParameter.Schema, newParameter.Schema);
-
-            _contentComparator.Compare(context, oldParameter.Content, newParameter.Content);
-
-            context.Direction = DataDirection.None;
         }
 
         private static void CompareIn(ComparisonContext context,

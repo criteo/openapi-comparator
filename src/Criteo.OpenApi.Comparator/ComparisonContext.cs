@@ -43,7 +43,15 @@ namespace Criteo.OpenApi.Comparator
         internal bool Strict { get; set; }
 
         /// Request, Response, Both or None
-        internal DataDirection Direction { get; set; } = DataDirection.None;
+        private readonly DisposableDataDirection _direction = new();
+
+        internal DataDirection Direction => _direction.Direction;
+
+        internal IDisposable WithDirection(DataDirection direction)
+        {
+            _direction.Direction = direction;
+            return _direction;
+        }
 
         private ObjectPath Path => _path.Peek();
 
@@ -115,6 +123,13 @@ namespace Criteo.OpenApi.Comparator
         }
 
         private readonly IList<ComparisonMessage> _messages = new List<ComparisonMessage>();
+    }
+
+    internal class DisposableDataDirection : IDisposable
+    {
+        public DataDirection Direction { get; set; }
+
+        public void Dispose() => Direction = DataDirection.None;
     }
 
     /// <summary>

@@ -21,27 +21,26 @@ namespace Criteo.OpenApi.Comparator.Comparators
         {
             ComponentComparator<OpenApiResponse>.Compare(context, oldResponse, newResponse);
 
-            context.Direction = DataDirection.Response;
-
-            if (!string.IsNullOrWhiteSpace(oldResponse.Reference?.ReferenceV3))
+            using (context.WithDirection(DataDirection.Response))
             {
-                oldResponse = oldResponse.Reference.Resolve(context.OldOpenApiDocument.Components.Responses);
-                if (oldResponse == null)
-                    return;
+                if (!string.IsNullOrWhiteSpace(oldResponse.Reference?.ReferenceV3))
+                {
+                    oldResponse = oldResponse.Reference.Resolve(context.OldOpenApiDocument.Components.Responses);
+                    if (oldResponse == null)
+                        return;
+                }
+
+                if (!string.IsNullOrWhiteSpace(newResponse.Reference?.ReferenceV3))
+                {
+                    newResponse = newResponse.Reference.Resolve(context.NewOpenApiDocument.Components.Responses);
+                    if (newResponse == null)
+                        return;
+                }
+
+                CompareHeaders(context, oldResponse.Headers, newResponse.Headers);
+
+                _contentComparator.Compare(context, oldResponse.Content, newResponse.Content);
             }
-
-            if (!string.IsNullOrWhiteSpace(newResponse.Reference?.ReferenceV3))
-            {
-                newResponse = newResponse.Reference.Resolve(context.NewOpenApiDocument.Components.Responses);
-                if (newResponse == null)
-                    return;
-            }
-
-            CompareHeaders(context, oldResponse.Headers, newResponse.Headers);
-
-            _contentComparator.Compare(context, oldResponse.Content, newResponse.Content);
-
-            context.Direction = DataDirection.None;
         }
 
         private static void CompareHeaders(ComparisonContext context,

@@ -18,42 +18,42 @@ namespace Criteo.OpenApi.Comparator.Comparators
         internal void Compare(ComparisonContext context,
             OpenApiRequestBody oldRequestBody, OpenApiRequestBody newRequestBody)
         {
-            context.Direction = DataDirection.Request;
-
-            if (oldRequestBody == null && newRequestBody == null)
-                return;
-
-            if (oldRequestBody == null)
+            using (context.WithDirection(DataDirection.Request))
             {
-                context.LogBreakingChange(ComparisonRules.AddedRequestBody);
-                return;
-            }
 
-            if (newRequestBody == null)
-            {
-                context.LogBreakingChange(ComparisonRules.RemovedRequestBody);
-                return;
-            }
+                if (oldRequestBody == null && newRequestBody == null)
+                    return;
 
-            if (!string.IsNullOrWhiteSpace(oldRequestBody.Reference?.ReferenceV3))
-            {
-                oldRequestBody = oldRequestBody.Reference.Resolve(context.OldOpenApiDocument.Components.RequestBodies);
                 if (oldRequestBody == null)
+                {
+                    context.LogBreakingChange(ComparisonRules.AddedRequestBody);
                     return;
-            }
+                }
 
-            if (!string.IsNullOrWhiteSpace(newRequestBody.Reference?.ReferenceV3))
-            {
-                newRequestBody = newRequestBody.Reference.Resolve(context.NewOpenApiDocument.Components.RequestBodies);
                 if (newRequestBody == null)
+                {
+                    context.LogBreakingChange(ComparisonRules.RemovedRequestBody);
                     return;
+                }
+
+                if (!string.IsNullOrWhiteSpace(oldRequestBody.Reference?.ReferenceV3))
+                {
+                    oldRequestBody = oldRequestBody.Reference.Resolve(context.OldOpenApiDocument.Components.RequestBodies);
+                    if (oldRequestBody == null)
+                        return;
+                }
+
+                if (!string.IsNullOrWhiteSpace(newRequestBody.Reference?.ReferenceV3))
+                {
+                    newRequestBody = newRequestBody.Reference.Resolve(context.NewOpenApiDocument.Components.RequestBodies);
+                    if (newRequestBody == null)
+                        return;
+                }
+
+                CompareRequired(context, oldRequestBody.Required, newRequestBody.Required);
+
+                _contentComparator.Compare(context, oldRequestBody.Content, newRequestBody.Content);
             }
-
-            CompareRequired(context, oldRequestBody.Required, newRequestBody.Required);
-
-            _contentComparator.Compare(context, oldRequestBody.Content, newRequestBody.Content);
-
-            context.Direction = DataDirection.None;
         }
 
         private static void CompareRequired(ComparisonContext context,

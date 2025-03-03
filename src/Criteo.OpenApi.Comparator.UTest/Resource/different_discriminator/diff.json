@@ -31,16 +31,5 @@
     "Id": 1030,
     "Code": "DifferentDiscriminator",
     "Mode": "Update"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The new version has a different discriminator than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/discriminator",
-    "NewJsonRef": "#/components/schemas/Pet/discriminator",
-    "OldJsonPath": "#/components/schemas/Pet/discriminator",
-    "NewJsonPath": "#/components/schemas/Pet/discriminator",
-    "Id": 1030,
-    "Code": "DifferentDiscriminator",
-    "Mode": "Update"
   }
 ]

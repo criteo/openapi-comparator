@@ -20,27 +20,5 @@
     "Id": 1023,
     "Code": "TypeFormatChanged",
     "Mode": "Update"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The new version has a different format than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/sleepTime/format",
-    "NewJsonRef": "#/components/schemas/Pet/properties/sleepTime/format",
-    "OldJsonPath": "#/components/schemas/Pet/properties/sleepTime/format",
-    "NewJsonPath": "#/components/schemas/Pet/properties/sleepTime/format",
-    "Id": 1023,
-    "Code": "TypeFormatChanged",
-    "Mode": "Update"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The new version has a different format than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/numberOfEyes/format",
-    "NewJsonRef": "#/components/schemas/Pet/properties/numberOfEyes/format",
-    "OldJsonPath": "#/components/schemas/Pet/properties/numberOfEyes/format",
-    "NewJsonPath": "#/components/schemas/Pet/properties/numberOfEyes/format",
-    "Id": 1023,
-    "Code": "TypeFormatChanged",
-    "Mode": "Update"
   }
 ]
