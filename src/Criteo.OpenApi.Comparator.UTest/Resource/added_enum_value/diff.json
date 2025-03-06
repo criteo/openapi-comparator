@@ -1,7 +1,7 @@
 [
   {
     "Severity": "Warning",
-    "Message": "The new version is adding enum value(s) \u0027bird\u0027 from the old version.",
+    "Message": "The new version is adding enum value(s) 'bird' from the old version.",
     "OldJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/properties/petType/enum",
     "NewJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/properties/petType/enum",
     "OldJsonPath": "#/components/schemas/Pet/properties/petType/enum",
@@ -12,7 +12,7 @@
   },
   {
     "Severity": "Info",
-    "Message": "The new version has a less constraining \u0027enum\u0027 value than the previous one.",
+    "Message": "The new version has a less constraining 'enum' value than the previous one.",
     "OldJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/properties/petType/enum",
     "NewJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/properties/petType/enum",
     "OldJsonPath": "#/components/schemas/Pet/properties/petType/enum",
@@ -23,42 +23,9 @@
   },
   {
     "Severity": "Info",
-    "Message": "The new version has a less constraining \u0027enum\u0027 value than the previous one.",
+    "Message": "The new version has a less constraining 'enum' value than the previous one.",
     "OldJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/properties/accountType/enum",
     "NewJsonRef": "#/paths/~1api~1Parameters/put/responses/200/content/application~1json/schema/properties/accountType/enum",
-    "OldJsonPath": "#/components/schemas/Pet/properties/accountType/enum",
-    "NewJsonPath": "#/components/schemas/Pet/properties/accountType/enum",
-    "Id": 1037,
-    "Code": "ConstraintIsWeaker",
-    "Mode": "Update"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The new version is adding enum value(s) \u0027bird\u0027 from the old version.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/petType/enum",
-    "NewJsonRef": "#/components/schemas/Pet/properties/petType/enum",
-    "OldJsonPath": "#/components/schemas/Pet/properties/petType/enum",
-    "NewJsonPath": "#/components/schemas/Pet/properties/petType/enum",
-    "Id": 1020,
-    "Code": "AddedEnumValue",
-    "Mode": "Addition"
-  },
-  {
-    "Severity": "Info",
-    "Message": "The new version has a less constraining \u0027enum\u0027 value than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/petType/enum",
-    "NewJsonRef": "#/components/schemas/Pet/properties/petType/enum",
-    "OldJsonPath": "#/components/schemas/Pet/properties/petType/enum",
-    "NewJsonPath": "#/components/schemas/Pet/properties/petType/enum",
-    "Id": 1037,
-    "Code": "ConstraintIsWeaker",
-    "Mode": "Update"
-  },
-  {
-    "Severity": "Info",
-    "Message": "The new version has a less constraining \u0027enum\u0027 value than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/accountType/enum",
-    "NewJsonRef": "#/components/schemas/Pet/properties/accountType/enum",
     "OldJsonPath": "#/components/schemas/Pet/properties/accountType/enum",
     "NewJsonPath": "#/components/schemas/Pet/properties/accountType/enum",
     "Id": 1037,

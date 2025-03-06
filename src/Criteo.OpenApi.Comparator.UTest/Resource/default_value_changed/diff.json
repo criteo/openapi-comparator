@@ -20,16 +20,5 @@
     "Id": 1027,
     "Code": "DefaultValueChanged",
     "Mode": "Update"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The new version has a different default value than the previous one.",
-    "OldJsonRef": "#/components/schemas/Pet/properties/name/default",
-    "NewJsonRef": "#/components/schemas/Pet/properties/name/default",
-    "OldJsonPath": "#/components/schemas/Pet/properties/name/default",
-    "NewJsonPath": "#/components/schemas/Pet/properties/name/default",
-    "Id": 1027,
-    "Code": "DefaultValueChanged",
-    "Mode": "Update"
   }
 ]

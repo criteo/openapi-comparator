@@ -1,7 +1,7 @@
 [
   {
     "Severity": "Warning",
-    "Message": "The new version has new required property \u0027petType\u0027 that was not found in the old version.",
+    "Message": "The new version has new required property 'petType' that was not found in the old version.",
     "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items",
     "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items",
     "OldJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items",
@@ -12,22 +12,11 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version has new required property \u0027message\u0027 that was not found in the old version.",
+    "Message": "The new version has new required property 'message' that was not found in the old version.",
     "OldJsonRef": "#/paths/~1pets/get/responses/404/content/application~1json/schema",
     "NewJsonRef": "#/paths/~1pets/get/responses/404/content/application~1json/schema",
     "OldJsonPath": "#/paths/~1pets/get/responses/404/content/application~1json/schema",
     "NewJsonPath": "#/paths/~1pets/get/responses/404/content/application~1json/schema",
-    "Id": 1034,
-    "Code": "AddedRequiredProperty",
-    "Mode": "Addition"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The new version has new required property \u0027petType\u0027 that was not found in the old version.",
-    "OldJsonRef": "#/components/schemas/Pet",
-    "NewJsonRef": "#/components/schemas/Pet",
-    "OldJsonPath": "#/components/schemas/Pet",
-    "NewJsonPath": "#/components/schemas/Pet",
     "Id": 1034,
     "Code": "AddedRequiredProperty",
     "Mode": "Addition"

@@ -1,0 +1,35 @@
+[
+  {
+    "Severity": "Info",
+    "Message": "The versions have not changed.",
+    "OldJsonRef": "#/info/version",
+    "NewJsonRef": "#/info/version",
+    "OldJsonPath": "#/info/version",
+    "NewJsonPath": "#/info/version",
+    "Id": 1001,
+    "Code": "NoVersionChange",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a new property 'testHiddenNotNullableProperty' in response that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema/properties/testHiddenNotNullableProperty",
+    "NewJsonRef": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema/properties/testHiddenNotNullableProperty",
+    "OldJsonPath": "#/components/schemas/ContentModel/properties/testHiddenNotNullableProperty",
+    "NewJsonPath": "#/components/schemas/ContentModel/properties/testHiddenNotNullableProperty",
+    "Id": 1041,
+    "Code": "AddedPropertyInResponse",
+    "Mode": "Addition"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has new required property 'testHiddenNotNullableProperty' that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema",
+    "NewJsonRef": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema",
+    "OldJsonPath": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema",
+    "NewJsonPath": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema",
+    "Id": 1034,
+    "Code": "AddedRequiredProperty",
+    "Mode": "Addition"
+  }
+]

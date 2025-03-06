@@ -1,7 +1,7 @@
 [
   {
     "Severity": "Warning",
-    "Message": "The new version is missing a property found in the old version. Was \u0027target\u0027 renamed or removed?",
+    "Message": "The new version is missing a property found in the old version. Was 'target' renamed or removed?",
     "OldJsonRef": "#/paths/~1api~1Operations/post/parameters/0/schema/properties/error/properties/target",
     "NewJsonRef": "#/paths/~1api~1Operations/post/parameters/0/schema/properties/error/properties/target",
     "OldJsonPath": "#/components/schemas/CreateParamBody/properties/target",
@@ -12,7 +12,7 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The read only property has changed from \u0027false\u0027 to \u0027true\u0027.",
+    "Message": "The read only property has changed from 'false' to 'true'.",
     "OldJsonRef": "#/paths/~1api~1Operations/post/responses/default/content/application~1json/schema/properties/error/properties/message/readOnly",
     "NewJsonRef": "#/paths/~1api~1Operations/post/responses/default/content/application~1json/schema/properties/error/properties/message/readOnly",
     "OldJsonPath": "#/components/schemas/CloudErrorBody/properties/message/readOnly",
@@ -20,27 +20,5 @@
     "Id": 1029,
     "Code": "ReadonlyPropertyChanged",
     "Mode": "Update"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The read only property has changed from \u0027false\u0027 to \u0027true\u0027.",
-    "OldJsonRef": "#/components/schemas/CloudError/properties/error/properties/message/readOnly",
-    "NewJsonRef": "#/components/schemas/CloudError/properties/error/properties/message/readOnly",
-    "OldJsonPath": "#/components/schemas/CloudErrorBody/properties/message/readOnly",
-    "NewJsonPath": "#/components/schemas/CloudErrorBody/properties/message/readOnly",
-    "Id": 1029,
-    "Code": "ReadonlyPropertyChanged",
-    "Mode": "Update"
-  },
-  {
-    "Severity": "Warning",
-    "Message": "The new version is missing a property found in the old version. Was \u0027target\u0027 renamed or removed?",
-    "OldJsonRef": "#/components/schemas/CreateParam/properties/error/properties/target",
-    "NewJsonRef": "#/components/schemas/CreateParam/properties/error/properties/target",
-    "OldJsonPath": "#/components/schemas/CreateParamBody/properties/target",
-    "NewJsonPath": "#/components/schemas/CreateParamBody/properties/target",
-    "Id": 1033,
-    "Code": "RemovedProperty",
-    "Mode": "Removal"
   }
 ]
