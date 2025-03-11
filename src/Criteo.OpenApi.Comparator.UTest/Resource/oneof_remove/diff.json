@@ -1,0 +1,101 @@
+[
+  {
+    "Severity": "Info",
+    "Message": "The versions have not changed.",
+    "OldJsonRef": "#/info/version",
+    "NewJsonRef": "#/info/version",
+    "OldJsonPath": "#/info/version",
+    "NewJsonPath": "#/info/version",
+    "Id": 1001,
+    "Code": "NoVersionChange",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The '$ref' property points to different models in the old and new versions.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket",
+    "OldJsonPath": "#/components/schemas/TicketResponse/properties/ticket",
+    "NewJsonPath": "#/components/schemas/TicketResponse/properties/ticket",
+    "Id": 1017,
+    "Code": "ReferenceRedirection",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different type 'object' than the previous one ''.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/type",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/type",
+    "OldJsonPath": "#/components/schemas/TicketResponse/properties/ticket/type",
+    "NewJsonPath": "#/components/schemas/TicketObject/type",
+    "Id": 1026,
+    "Code": "TypeChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different 'oneOf' property than the previous one.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/oneOf",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/oneOf",
+    "OldJsonPath": "#/components/schemas/TicketResponse/properties/ticket/oneOf",
+    "NewJsonPath": "#/components/schemas/TicketObject/oneOf",
+    "Id": 10321,
+    "Code": "DifferentOneOf",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a new property 'allow_attachments' in response that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/properties/allow_attachments",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/properties/allow_attachments",
+    "OldJsonPath": "#/components/schemas/TicketResponse/properties/ticket/properties/allow_attachments",
+    "NewJsonPath": "#/components/schemas/TicketObject/properties/allow_attachments",
+    "Id": 1041,
+    "Code": "AddedPropertyInResponse",
+    "Mode": "Addition"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The '$ref' property points to different models in the old and new versions.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema",
+    "OldJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema",
+    "NewJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema",
+    "Id": 1017,
+    "Code": "ReferenceRedirection",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different type 'object' than the previous one ''.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/type",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/type",
+    "OldJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/type",
+    "NewJsonPath": "#/components/schemas/TicketPostRequest/type",
+    "Id": 1026,
+    "Code": "TypeChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different 'oneOf' property than the previous one.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "OldJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "NewJsonPath": "#/components/schemas/TicketPostRequest/oneOf",
+    "Id": 10321,
+    "Code": "DifferentOneOf",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has new required property 'email' that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema",
+    "OldJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema",
+    "NewJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema",
+    "Id": 1034,
+    "Code": "AddedRequiredProperty",
+    "Mode": "Addition"
+  }
+]

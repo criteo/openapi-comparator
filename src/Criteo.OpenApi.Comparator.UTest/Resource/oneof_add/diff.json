@@ -1,0 +1,79 @@
+[
+  {
+    "Severity": "Info",
+    "Message": "The versions have not changed.",
+    "OldJsonRef": "#/info/version",
+    "NewJsonRef": "#/info/version",
+    "OldJsonPath": "#/info/version",
+    "NewJsonPath": "#/info/version",
+    "Id": 1001,
+    "Code": "NoVersionChange",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different type '' than the previous one 'object'.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/type",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/type",
+    "OldJsonPath": "#/components/schemas/TicketObject/type",
+    "NewJsonPath": "#/components/schemas/TicketResponse/properties/ticket/type",
+    "Id": 1026,
+    "Code": "TypeChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different 'oneOf' property than the previous one.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/oneOf",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/oneOf",
+    "OldJsonPath": "#/components/schemas/TicketObject/oneOf",
+    "NewJsonPath": "#/components/schemas/TicketResponse/properties/ticket/oneOf",
+    "Id": 10321,
+    "Code": "DifferentOneOf",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version is missing a property found in the old version. Was 'allow_attachments' renamed or removed?",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/properties/allow_attachments",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/properties/allow_attachments",
+    "OldJsonPath": "#/components/schemas/TicketObject/properties/allow_attachments",
+    "NewJsonPath": "#/components/schemas/TicketResponse/properties/ticket/properties/allow_attachments",
+    "Id": 1033,
+    "Code": "RemovedProperty",
+    "Mode": "Removal"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different type '' than the previous one 'object'.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/type",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/type",
+    "OldJsonPath": "#/components/schemas/TicketPostRequest/type",
+    "NewJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/type",
+    "Id": 1026,
+    "Code": "TypeChanged",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different 'oneOf' property than the previous one.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "OldJsonPath": "#/components/schemas/TicketPostRequest/oneOf",
+    "NewJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "Id": 10321,
+    "Code": "DifferentOneOf",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version is missing a property found in the old version. Was 'email' renamed or removed?",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/properties/email",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/properties/email",
+    "OldJsonPath": "#/components/schemas/TicketPostRequest/properties/email",
+    "NewJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/properties/email",
+    "Id": 1033,
+    "Code": "RemovedProperty",
+    "Mode": "Removal"
+  }
+]
