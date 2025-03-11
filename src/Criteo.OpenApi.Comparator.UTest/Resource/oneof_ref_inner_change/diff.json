@@ -1,0 +1,24 @@
+[
+  {
+    "Severity": "Info",
+    "Message": "The versions have not changed.",
+    "OldJsonRef": "#/info/version",
+    "NewJsonRef": "#/info/version",
+    "OldJsonPath": "#/info/version",
+    "NewJsonPath": "#/info/version",
+    "Id": 1001,
+    "Code": "NoVersionChange",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has new required property 'testNullableProperty' that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf/0",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf/0",
+    "OldJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf/0",
+    "NewJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf/0",
+    "Id": 1034,
+    "Code": "AddedRequiredProperty",
+    "Mode": "Addition"
+  }
+]

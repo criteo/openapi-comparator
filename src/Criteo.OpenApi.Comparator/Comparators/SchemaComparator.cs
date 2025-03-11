@@ -103,6 +103,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             CompareAllOf(context, oldSchema.AllOf, newSchema.AllOf);
 
+            CompareOneOf(context, oldSchema.OneOf, newSchema.OneOf);
+
             CompareProperties(context, oldSchema, newSchema, isSchemaReferenced);
 
             CompareRequired(context, oldSchema.Required, newSchema.Required);
@@ -421,6 +423,47 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 context.LogBreakingChange(ComparisonRules.DifferentAllOf);
             }
+            context.Pop();
+        }
+
+        private void CompareOneOf(
+            ComparisonContext context, IList<OpenApiSchema> oldOneOf, IList<OpenApiSchema> newOneOf)
+        {
+            if (oldOneOf == null && newOneOf == null)
+                return;
+
+            context.PushProperty("oneOf");
+            if (oldOneOf == null || newOneOf == null)
+            {
+                context.LogBreakingChange(ComparisonRules.DifferentOneOf);
+                context.Pop();
+                return;
+            }
+
+            var newOneOfReferences = newOneOf.Where(schema => schema.Reference != null)
+                .Select(schema => schema.Reference.ReferenceV3).ToList();
+            var oldOneOfReferences = oldOneOf.Where(schema => schema.Reference != null)
+                .Select(schema => schema.Reference.ReferenceV3).ToList();
+
+            var differenceCount = newOneOfReferences.Except(oldOneOfReferences).Count();
+            differenceCount += oldOneOfReferences.Except(newOneOfReferences).Count();
+
+            if (differenceCount > 0)
+            {
+                context.LogBreakingChange(ComparisonRules.DifferentOneOf);
+            }
+
+            var commonReferences = oldOneOfReferences
+                .Select((value, index) => (value, index, newIndex: newOneOfReferences.FindIndex(v => v == value)))
+                .Where(tuple => tuple.newIndex != -1);
+
+            foreach (var (reference, index, newIndex) in commonReferences)
+            {
+                context.PushProperty(index.ToString());
+                Compare(context, oldOneOf[index], newOneOf[newIndex]);
+                context.Pop();
+            }
+
             context.Pop();
         }
 

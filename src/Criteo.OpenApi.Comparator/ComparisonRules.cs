@@ -420,6 +420,18 @@ namespace Criteo.OpenApi.Comparator
             Type = MessageType.Update
         };
 
+
+        /// <summary>
+        /// OpenApi Specification version 3 specific
+        /// </summary>
+        public static ComparisonRule DifferentOneOf = new ComparisonRule
+        {
+            Id = 10321,
+            Code = nameof(DifferentOneOf),
+            Message = "The new version has a different 'oneOf' property than the previous one.",
+            Type = MessageType.Update
+        };
+
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1033.md
         /// </summary>
@@ -587,7 +599,7 @@ namespace Criteo.OpenApi.Comparator
             Message = "The new version is removing a requestBody that was found in the old version.",
             Type = MessageType.Removal
         };
-        
+
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1048.md
         /// </summary>
@@ -598,7 +610,7 @@ namespace Criteo.OpenApi.Comparator
             Message = "The new version is adding a new schema that was not found in the old version.",
             Type = MessageType.Removal
         };
-        
+
         /// <summary>
         /// OpenApi Specification version 3 specific
         /// </summary>

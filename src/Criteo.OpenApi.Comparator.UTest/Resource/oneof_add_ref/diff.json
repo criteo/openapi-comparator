@@ -1,0 +1,35 @@
+[
+  {
+    "Severity": "Info",
+    "Message": "The versions have not changed.",
+    "OldJsonRef": "#/info/version",
+    "NewJsonRef": "#/info/version",
+    "OldJsonPath": "#/info/version",
+    "NewJsonPath": "#/info/version",
+    "Id": 1001,
+    "Code": "NoVersionChange",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different 'oneOf' property than the previous one.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/oneOf",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/oneOf",
+    "OldJsonPath": "#/components/schemas/TicketResponse/properties/ticket/oneOf",
+    "NewJsonPath": "#/components/schemas/TicketResponse/properties/ticket/oneOf",
+    "Id": 10321,
+    "Code": "DifferentOneOf",
+    "Mode": "Update"
+  },
+  {
+    "Severity": "Error",
+    "Message": "The new version has a different 'oneOf' property than the previous one.",
+    "OldJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "NewJsonRef": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "OldJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "NewJsonPath": "#/paths/~1api~1public~1form/post/requestBody/content/application~1json/schema/oneOf",
+    "Id": 10321,
+    "Code": "DifferentOneOf",
+    "Mode": "Update"
+  }
+]
