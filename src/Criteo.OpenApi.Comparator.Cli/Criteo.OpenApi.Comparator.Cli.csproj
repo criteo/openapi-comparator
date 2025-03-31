@@ -24,6 +24,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>openapi-compare</ToolCommandName>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <EnablePackageValidation>true</EnablePackageValidation>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
