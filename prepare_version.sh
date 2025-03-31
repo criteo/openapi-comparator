@@ -11,5 +11,5 @@ done
 git add ./src/**/*.csproj && \
 git commit -v --edit -m "Bump to ${_version}" && \
 git tag "v${_version}" && \
-echo "Tagging version: '${_version}'"
-git push origin master --tags
+echo "Tagging version: 'v${_version}'"
+git push origin main --tags
