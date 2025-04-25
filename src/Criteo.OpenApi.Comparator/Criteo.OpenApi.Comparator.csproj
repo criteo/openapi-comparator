@@ -21,11 +21,12 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <EnablePackageValidation>true</EnablePackageValidation>
     <!-- Mandatory so that the build archive is published to Nexus -->
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
-    <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.2.3" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.4.2" />
+    <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.4.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>

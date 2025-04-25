@@ -1,4 +1,4 @@
-openapi: 3.0
+openapi: 3.0.1
 info:
   title: removed_definition
   version: "2.0"
@@ -21,6 +21,7 @@ components:
       in: header
       description: number of items to skip
       required: true
+      style: simple
       schema:
         type: integer
         format: int32
@@ -29,6 +30,7 @@ components:
       in: header
       description: max records to return
       required: true
+      style: simple
       schema:
         type: integer
         format: int32
