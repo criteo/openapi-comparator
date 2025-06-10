@@ -144,7 +144,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 context.Strict = !isVersionChanged;
             }
 
-            if (context.Strict)
+            if (oldVersion.ToLower().Equals(newVersion.ToLower()))
             {
                 // There was no version change between the documents. This is not an error, but noteworthy.
                 context.LogInfo(ComparisonRules.NoVersionChange);

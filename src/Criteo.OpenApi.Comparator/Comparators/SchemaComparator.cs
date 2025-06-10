@@ -527,11 +527,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     if (property.Value.ReadOnly)
                         context.LogInfo(ComparisonRules.AddedReadOnlyPropertyInResponse, property.Key);
                     else
-                        context.LogBreakingChange(ComparisonRules.AddedPropertyInResponse, property.Key);
+                        context.LogWarning(ComparisonRules.AddedPropertyInResponse, property.Key);
                 }
                 else if (isSchemaReferenced && !newSchema.IsPropertyRequired(property.Key))
                 {
-                    context.LogBreakingChange(ComparisonRules.AddedOptionalProperty, property.Key);
+                    context.LogWarning(ComparisonRules.AddedOptionalProperty, property.Key);
                 }
 
                 context.Pop();
