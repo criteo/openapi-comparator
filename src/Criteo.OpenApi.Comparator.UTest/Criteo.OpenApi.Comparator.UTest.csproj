@@ -11,13 +11,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resource\added_required_parameter_same_major_version\diff.json">
+    <Content Include="Resource\added_required_parameter_same_minor_version\diff.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resource\added_required_parameter_same_major_version\new.yaml">
+    <Content Include="Resource\added_required_parameter_same_minor_version\new.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resource\added_required_parameter_same_major_version\old.yaml">
+    <Content Include="Resource\added_required_parameter_same_minor_version\old.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
