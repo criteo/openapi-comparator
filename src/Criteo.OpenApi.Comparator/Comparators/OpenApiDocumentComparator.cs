@@ -96,7 +96,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             var oldVersionAsList = oldVersion.Split('.');
 
             // If the version consists only of numbers separated by '.', we'll consider it semantic versioning.
-            if (!context.Strict && oldVersionAsList.Length > 0 && newVersionAsList.Length > 0)
+            if (oldVersionAsList.Length > 0 && newVersionAsList.Length > 0)
             {
                 var isVersionChanged = false;
 
@@ -141,10 +141,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     isVersionChanged = !oldVersion.ToLower().Equals(newVersion.ToLower());
                 }
 
-                context.Strict = !isVersionChanged;
+                context.HasVersionChanged = isVersionChanged;
             }
 
-            if (context.Strict)
+            if (oldVersion.ToLower().Equals(newVersion.ToLower()))
             {
                 // There was no version change between the documents. This is not an error, but noteworthy.
                 context.LogInfo(ComparisonRules.NoVersionChange);

@@ -39,8 +39,8 @@ namespace Criteo.OpenApi.Comparator
         /// Old swagger
         internal OpenApiDocument NewOpenApiDocument => _newOpenApiDocument.Typed;
 
-        /// If true, then breaking changes are errors instead of warnings.
-        internal bool Strict { get; set; }
+        /// If true, then breaking changes are errors instead of warnings. If null base this on version differences
+        internal bool? Strict { get; set; }
 
         /// Request, Response, Both or None
         private readonly DisposableDataDirection _direction = new();
@@ -76,6 +76,7 @@ namespace Criteo.OpenApi.Comparator
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
                 Severity.Info,
+                false,
                 formatArguments
             ));
 
@@ -86,6 +87,7 @@ namespace Criteo.OpenApi.Comparator
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
                 Severity.Warning,
+                false,
                 formatArguments
             ));
 
@@ -96,6 +98,7 @@ namespace Criteo.OpenApi.Comparator
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
                 Severity.Error,
+                false,
                 formatArguments
             ));
 
@@ -105,9 +108,20 @@ namespace Criteo.OpenApi.Comparator
                 Path,
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
-                Strict ? Severity.Error : Severity.Warning,
+                UseStrict() ? Severity.Error : Severity.Warning,
+                true,
                 formatArguments
             ));
+
+        public bool UseStrict()
+        {
+            if (Strict.HasValue)
+            {
+                return Strict.Value;
+            }
+
+            return !HasVersionChanged;
+        }
 
         /// <summary>
         /// Lists all the found differences
@@ -121,6 +135,8 @@ namespace Criteo.OpenApi.Comparator
                 return _messages; //.Distinct(new CustomComparer());
             }
         }
+
+        public bool HasVersionChanged { get; set; }
 
         private readonly IList<ComparisonMessage> _messages = new List<ComparisonMessage>();
     }

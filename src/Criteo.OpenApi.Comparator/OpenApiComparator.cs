@@ -20,12 +20,12 @@ namespace Criteo.OpenApi.Comparator
         /// <param name="oldOpenApiSpec">The content of the old OpenAPI Specification</param>
         /// <param name="newOpenApiSpec">The content of the new OpenAPI Specification</param>
         /// <param name="parsingErrors">Parsing errors</param>
-        /// <param name="strict">If true, then breaking changes are errors instead of warnings.</param>
+        /// <param name="strict">If true, then breaking changes are errors instead of warnings. If null it will auto detect based on versions. Major and Minor version changes will not default to strict.</param>
         public static IEnumerable<ComparisonMessage> Compare(
             string oldOpenApiSpec,
             string newOpenApiSpec,
             out IEnumerable<ParsingError> parsingErrors,
-            bool strict = false)
+            bool? strict = null)
         {
             var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec, out var oldSpecDiagnostic);
             var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec, out var newSpecDiagnostic);

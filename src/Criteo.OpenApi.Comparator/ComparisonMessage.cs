@@ -23,10 +23,12 @@ namespace Criteo.OpenApi.Comparator
             IJsonDocument oldDocument,
             IJsonDocument newDocument,
             Severity severity,
+            bool breakingChange,
             params object[] formatArguments
         )
         {
             Severity = severity;
+            BreakingChange = breakingChange;
             Message = $"{string.Format(CultureInfo.CurrentCulture, rule.Message, formatArguments)}";
             Path = path;
             OldDocument = oldDocument;
@@ -43,6 +45,14 @@ namespace Criteo.OpenApi.Comparator
 
         /// Info, Error, Warning
         public Severity Severity { get; }
+
+        /// <summary>
+        ///     Is a breaking change.
+        /// </summary>
+        /// <remarks>
+        ///     Breaking changes will be warnings unless strict mode is enabled.
+        /// </remarks>
+        public bool BreakingChange { get; }
 
         /// <summary>
         /// Explicit description of the change.
@@ -137,6 +147,7 @@ namespace Criteo.OpenApi.Comparator
         public override string ToString() =>
             $"code = {Code},\n" +
             $"type = {Severity},\n" +
+            $"breaking = {BreakingChange},\n" +
             $"message = {Message},\n" +
             $"docurl = {DocUrl},\n" +
             $"mode = {Mode}";
