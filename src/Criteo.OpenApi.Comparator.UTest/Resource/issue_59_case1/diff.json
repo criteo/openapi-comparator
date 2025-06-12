@@ -11,7 +11,7 @@
     "Mode": "Update"
   },
   {
-    "Severity": "Warning",
+    "Severity": "Error",
     "Message": "The new version has a new property 'testHiddenNotNullableProperty' in response that was not found in the old version.",
     "OldJsonRef": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema/properties/testHiddenNotNullableProperty",
     "NewJsonRef": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema/properties/testHiddenNotNullableProperty",

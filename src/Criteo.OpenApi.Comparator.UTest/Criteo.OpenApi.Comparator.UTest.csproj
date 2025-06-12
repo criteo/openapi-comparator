@@ -11,6 +11,24 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resource\added_property_in_response_no_additional_properties\diff.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resource\added_property_in_response_no_additional_properties\new.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resource\added_property_in_response_no_additional_properties\old.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resource\added_property_in_response_same_minor_version\diff.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resource\added_property_in_response_same_minor_version\new.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resource\added_property_in_response_same_minor_version\old.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resource\added_required_parameter_same_minor_version\diff.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -18,6 +36,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resource\added_required_parameter_same_minor_version\old.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resource\added_required_property_same_minor_version\diff.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resource\added_required_property_same_minor_version\new.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resource\added_required_property_same_minor_version\old.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

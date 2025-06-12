@@ -107,7 +107,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             CompareProperties(context, oldSchema, newSchema, isSchemaReferenced);
 
-            CompareRequired(context, oldSchema.Required, newSchema.Required);
+            CompareRequired(context, oldSchema, newSchema);
 
             CompareNullable(context, oldSchema.Nullable, newSchema.Nullable);
         }
@@ -517,21 +517,25 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 context.PushProperty(property.Key);
 
-                if (oldSchema.IsPropertyRequired(property.Key))
-                {
-                    context.LogBreakingChange(ComparisonRules.AddedRequiredProperty, property.Key);
-                }
-
                 if (context.Direction == DataDirection.Response)
                 {
                     if (property.Value.ReadOnly)
                         context.LogInfo(ComparisonRules.AddedReadOnlyPropertyInResponse, property.Key);
-                    else
+                    else if (newSchema.AdditionalPropertiesAllowed && oldSchema.AdditionalPropertiesAllowed)
                         context.LogWarning(ComparisonRules.AddedPropertyInResponse, property.Key);
+                    else
+                        context.LogBreakingChange(ComparisonRules.AddedPropertyInResponse, property.Key);
                 }
                 else if (isSchemaReferenced && !newSchema.IsPropertyRequired(property.Key))
                 {
-                    context.LogWarning(ComparisonRules.AddedOptionalProperty, property.Key);
+                    if (oldSchema.IsPropertyRequired(property.Key))
+                    {
+                        context.LogBreakingChange(ComparisonRules.AddedRequiredProperty, property.Key);
+                    }
+                    else
+                    {
+                        context.LogWarning(ComparisonRules.AddedOptionalProperty, property.Key);
+                    }
                 }
 
                 context.Pop();
@@ -580,8 +584,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldRequired">A set of old required properties</param>
         /// <param name="newRequired">A set of new required properties</param>
         private static void CompareRequired(ComparisonContext context,
-            ISet<string> oldRequired,
-            ISet<string> newRequired)
+            OpenApiSchema oldRequired,
+            OpenApiSchema newRequired)
         {
             if (newRequired == null)
                 return;
@@ -592,11 +596,19 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
             }
 
-            List<string> addedRequiredProperties = newRequired.Except(oldRequired).ToList();
+            List<string> addedRequiredProperties = newRequired.Required.Except(oldRequired.Required).ToList();
             if (addedRequiredProperties.Any())
             {
-                context.LogBreakingChange(ComparisonRules.AddedRequiredProperty,
+                if (context.Direction == DataDirection.Request || !oldRequired.AdditionalPropertiesAllowed || ! newRequired.AdditionalPropertiesAllowed)
+                {
+                    context.LogBreakingChange(ComparisonRules.AddedRequiredProperty,
                     string.Join(", ", addedRequiredProperties));
+                }
+                else
+                {
+                    context.LogWarning(ComparisonRules.AddedRequiredProperty,
+                        string.Join(", ", addedRequiredProperties));
+                }
             }
         }
     }

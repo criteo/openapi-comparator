@@ -1,0 +1,46 @@
+[
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a new property \u0027petType\u0027 in response that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/petType",
+    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/petType",
+    "OldJsonPath": "#/components/schemas/Pet/properties/petType",
+    "NewJsonPath": "#/components/schemas/Pet/properties/petType",
+    "Id": 1041,
+    "Code": "AddedPropertyInResponse",
+    "Mode": "Addition"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a new property \u0027petAge\u0027 in response that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/petAge",
+    "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items/properties/petAge",
+    "OldJsonPath": "#/components/schemas/Pet/properties/petAge",
+    "NewJsonPath": "#/components/schemas/Pet/properties/petAge",
+    "Id": 1041,
+    "Code": "AddedPropertyInResponse",
+    "Mode": "Addition"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a new property \u0027message\u0027 in response that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1pets/get/responses/404/content/application~1json/schema/properties/message",
+    "NewJsonRef": "#/paths/~1pets/get/responses/404/content/application~1json/schema/properties/message",
+    "OldJsonPath": "#/paths/~1pets/get/responses/404/content/application~1json/schema/properties/message",
+    "NewJsonPath": "#/paths/~1pets/get/responses/404/content/application~1json/schema/properties/message",
+    "Id": 1041,
+    "Code": "AddedPropertyInResponse",
+    "Mode": "Addition"
+  },
+  {
+    "Severity": "Warning",
+    "Message": "The new version has a new property \u0027message\u0027 in response that was not found in the old version.",
+    "OldJsonRef": "#/paths/~1pets/get/responses/500/content/application~1json/schema/properties/message",
+    "NewJsonRef": "#/paths/~1pets/get/responses/500/content/application~1json/schema/properties/message",
+    "OldJsonPath": "#/components/responses/InternalErrorResponse/content/application~1json/schema/properties/message",
+    "NewJsonPath": "#/components/responses/InternalErrorResponse/content/application~1json/schema/properties/message",
+    "Id": 1041,
+    "Code": "AddedPropertyInResponse",
+    "Mode": "Addition"
+  }
+]
