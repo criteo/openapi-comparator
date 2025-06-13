@@ -35,7 +35,13 @@ namespace Criteo.OpenApi.Comparator
             Code = rule.Code;
             DocUrl = $"{DocBaseUrl}{rule.Id}.md";
             Mode = rule.Type;
+            Breaking = rule.LogType == MessageSeverity.Breaking;
         }
+
+        /// <summary>
+        ///     Could this be a breaking change. Strict mode and version numbers will determine if these are errors or warnings.
+        /// </summary>
+        public bool Breaking { get; set; }
 
         private IJsonDocument OldDocument { get; }
 

@@ -64,11 +64,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 context.PushProperty("required");
                 if (newRequired)
                 {
-                    context.LogBreakingChange(ComparisonRules.RequiredStatusChange, oldRequired, newRequired);
+                    context.Log(ComparisonRules.RequiredStatusAdded, oldRequired, newRequired);
                 }
                 else
                 {
-                    context.LogInfo(ComparisonRules.RequiredStatusChange, oldRequired, newRequired);
+                    context.Log(ComparisonRules.RequiredStatusRemoved, oldRequired, newRequired);
                 }
                 context.Pop();
             }

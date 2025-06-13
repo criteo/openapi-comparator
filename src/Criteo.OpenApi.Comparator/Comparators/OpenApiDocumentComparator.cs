@@ -147,7 +147,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (oldVersion.ToLower().Equals(newVersion.ToLower()))
             {
                 // There was no version change between the documents. This is not an error, but noteworthy.
-                context.LogInfo(ComparisonRules.NoVersionChange);
+                context.Log(ComparisonRules.NoVersionChange);
             }
 
             context.Pop();
@@ -205,7 +205,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             foreach (var addedPath in newPaths.Keys.Except(commonPaths))
             {
                 context.PushPathProperty(addedPath, isFromExtension);
-                context.LogInfo(ComparisonRules.AddedPath);
+                context.Log(ComparisonRules.AddedPath);
                 context.Pop();
             }
 
@@ -238,7 +238,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             foreach (var addedOperationName in newOperations.Keys.Except(commonOperations))
             {
                 context.PushProperty(addedOperationName.ToString().ToLower());
-                context.LogInfo(ComparisonRules.AddedOperation);
+                context.Log(ComparisonRules.AddedOperation);
                 context.Pop();
             }
 

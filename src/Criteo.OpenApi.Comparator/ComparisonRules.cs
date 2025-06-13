@@ -27,7 +27,9 @@ namespace Criteo.OpenApi.Comparator
             Id = 1001,
             Code = nameof(NoVersionChange),
             Message = "The versions have not changed.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Info
+
         };
 
         /// <summary>
@@ -83,7 +85,9 @@ namespace Criteo.OpenApi.Comparator
             Id = 1004,
             Code = nameof(ResponseBodyFormatNowSupported),
             Message = "The old version did not support '{0}' as a response body format.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Info
+
         };
 
         /// <summary>
@@ -196,8 +200,21 @@ namespace Criteo.OpenApi.Comparator
         {
             Id = 1013,
             Code = nameof(AddingHeader),
+            Message = "The new version adds a header '{0}'.",
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Info
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1013.md
+        /// </summary>
+        public static ComparisonRule AddingRequiredHeader = new ComparisonRule
+        {
+            Id = 1013,
+            Code = nameof(AddingRequiredHeader),
             Message = "The new version adds a required header '{0}'.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -208,7 +225,20 @@ namespace Criteo.OpenApi.Comparator
             Id = 1014,
             Code = nameof(RemovingHeader),
             Message = "The new version removes a required header '{0}'.",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1014.md
+        /// </summary>
+        public static ComparisonRule RemovingRequestHeader = new ComparisonRule
+        {
+            Id = 1014,
+            Code = nameof(RemovingRequestHeader),
+            Message = "The new version removes a required header '{0}'.",
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Info
         };
 
         /// <summary>
@@ -253,6 +283,7 @@ namespace Criteo.OpenApi.Comparator
             Code = nameof(RequestBodyFormatNowSupported),
             Message = "The old version did not support '{0}' as a request body format.",
             Type = MessageType.Addition,
+            LogType = MessageSeverity.Info
         };
 
         /// <summary>
@@ -318,18 +349,56 @@ namespace Criteo.OpenApi.Comparator
             Id = 1024,
             Code = nameof(ConstraintIsStronger),
             Message = "The new version has a more constraining '{0}' value than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1024.md
+        /// </summary>
+        public static ComparisonRule ResponseConstraintIsStronger = new ComparisonRule
+        {
+            Id = 1024,
+            Code = nameof(ResponseConstraintIsStronger),
+            Message = "The new version has a more constraining '{0}' value than the previous one for a response schema.",
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Info
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1024.md
+        /// </summary>
+        public static ComparisonRule EnumConstraintIsStronger = new ComparisonRule
+        {
+            Id = 1024,
+            Code = nameof(EnumConstraintIsStronger),
+            Message = "The new version has a more constraining '{0}' value than the previous one for an enum.",
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Info
         };
 
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1025.md
         /// </summary>
-        public static ComparisonRule RequiredStatusChange = new ComparisonRule
+        public static ComparisonRule RequiredStatusAdded = new ComparisonRule
         {
             Id = 1025,
-            Code = nameof(RequiredStatusChange),
+            Code = nameof(RequiredStatusAdded),
             Message = "The 'required' status changed from the old version('{0}') to the new version('{1}').",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1025.md
+        /// </summary>
+        public static ComparisonRule RequiredStatusRemoved = new ComparisonRule
+        {
+            Id = 1025,
+            Code = nameof(RequiredStatusRemoved),
+            Message = "The 'required' status was removed from the old version('{0}') to the new version('{1}').",
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Info
         };
 
         /// <summary>
@@ -475,7 +544,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1036,
             Code = nameof(ConstraintChanged),
             Message = "The new version has a different '{0}' value than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Info
         };
 
         /// <summary>
@@ -486,8 +556,34 @@ namespace Criteo.OpenApi.Comparator
             Id = 1037,
             Code = nameof(ConstraintIsWeaker),
             Message = "The new version has a less constraining '{0}' value than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1037.md
+        /// </summary>
+        public static ComparisonRule RequestConstraintIsWeaker = new ComparisonRule
+        {
+            Id = 1037,
+            Code = nameof(RequestConstraintIsWeaker),
+            Message = "The new version has a less constraining '{0}' value than the previous one in a request schema.",
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Info
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1037.md
+        /// </summary>
+        public static ComparisonRule EnumConstraintIsWeaker = new ComparisonRule
+        {
+            Id = 1037,
+            Code = nameof(EnumConstraintIsWeaker),
+            Message = "The new version has a less constraining '{0}' value than the previous one in an enum.",
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Info
+        };
+
 
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1038.md
@@ -497,7 +593,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1038,
             Code = nameof(AddedPath),
             Message = "The new version is adding a path that was not found in the old version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Info
         };
 
         /// <summary>
@@ -508,7 +605,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1039,
             Code = nameof(AddedOperation),
             Message = "The new version is adding an operation that was not found in the old version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Info
         };
 
         /// <summary>
@@ -520,7 +618,8 @@ namespace Criteo.OpenApi.Comparator
             Code = nameof(AddedReadOnlyPropertyInResponse),
             Message =
                 "The new version has a new read-only property '{0}' in response that was not found in the old version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Info
         };
 
         /// <summary>

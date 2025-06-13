@@ -69,6 +69,27 @@ namespace Criteo.OpenApi.Comparator
 
         private readonly Stack<ObjectPath> _path = new Stack<ObjectPath>(new[] { ObjectPath.Empty });
 
+        internal void Log(ComparisonRule rule, params object[] formatArguments) =>
+            _messages.Add(new ComparisonMessage(
+                rule,
+                Path,
+                _oldOpenApiDocument,
+                _newOpenApiDocument,
+                Convert(rule.LogType),
+                formatArguments
+            ));
+
+        private Severity Convert(MessageSeverity ruleLogType)
+        {
+            return ruleLogType switch
+            {
+                MessageSeverity.Info => Severity.Info,
+                MessageSeverity.Warning => Severity.Warning,
+                MessageSeverity.Breaking => Strict ? Severity.Error : Severity.Warning,
+                _ => Severity.Error
+            };
+        }
+
         internal void LogInfo(ComparisonRule rule, params object[] formatArguments) =>
             _messages.Add(new ComparisonMessage(
                 rule,

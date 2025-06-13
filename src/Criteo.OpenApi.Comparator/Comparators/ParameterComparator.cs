@@ -105,11 +105,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.PushProperty("required");
             if (newParameter.IsRequired())
             {
-                context.LogBreakingChange(ComparisonRules.RequiredStatusChange, false, true);
+                context.Log(ComparisonRules.RequiredStatusAdded, false, true);
             }
             else
             {
-                context.LogInfo(ComparisonRules.RequiredStatusChange, true, false);
+                context.Log(ComparisonRules.RequiredStatusRemoved, true, false);
             }
             context.Pop();
         }

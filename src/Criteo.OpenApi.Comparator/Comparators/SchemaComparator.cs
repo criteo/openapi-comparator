@@ -239,16 +239,16 @@ namespace Criteo.OpenApi.Comparator.Comparators
              else if (Narrows(oldConstraint, newConstraint, isLowerBound))
              {
                  if (context.Direction == DataDirection.Request)
-                    context.LogBreakingChange(ComparisonRules.ConstraintIsStronger, attributeName);
+                    context.Log(ComparisonRules.ConstraintIsStronger, attributeName);
                  else
-                    context.LogInfo(ComparisonRules.ConstraintIsStronger, attributeName);
+                    context.Log(ComparisonRules.ResponseConstraintIsStronger, attributeName);
              }
              else if (Widens(oldConstraint, newConstraint, isLowerBound))
              {
                  if (context.Direction == DataDirection.Response)
-                    context.LogBreakingChange(ComparisonRules.ConstraintIsWeaker, attributeName);
+                    context.Log(ComparisonRules.ConstraintIsWeaker, attributeName);
                  else
-                    context.LogInfo(ComparisonRules.ConstraintIsWeaker, attributeName);
+                    context.Log(ComparisonRules.RequestConstraintIsWeaker, attributeName);
              }
              context.Pop();
          }
@@ -349,11 +349,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
 
             if (relaxes && constrains)
-                context.LogInfo(ComparisonRules.ConstraintChanged, "enum");
+                context.Log(ComparisonRules.ConstraintChanged, "enum");
             else if (relaxes)
-                context.LogInfo(ComparisonRules.ConstraintIsWeaker, "enum");
+                context.Log(ComparisonRules.EnumConstraintIsWeaker, "enum");
             else if (constrains)
-                context.LogInfo(ComparisonRules.ConstraintIsStronger, "enum");
+                context.Log(ComparisonRules.EnumConstraintIsStronger, "enum");
 
             context.Pop();
         }
@@ -520,7 +520,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 if (context.Direction == DataDirection.Response)
                 {
                     if (property.Value.ReadOnly)
-                        context.LogInfo(ComparisonRules.AddedReadOnlyPropertyInResponse, property.Key);
+                        context.Log(ComparisonRules.AddedReadOnlyPropertyInResponse, property.Key);
                     else if (newSchema.AdditionalPropertiesAllowed && oldSchema.AdditionalPropertiesAllowed)
                         context.LogWarning(ComparisonRules.AddedPropertyInResponse, property.Key);
                     else
