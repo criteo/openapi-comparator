@@ -87,7 +87,7 @@ public class OpenApiSpecificationsCompareTests
 
 internal class ComparisonMessageModel
 {
-    public Severity Severity { get; set; }
+    public MessageSeverity Severity { get; set; }
     public string Message { get; set; }
     public string OldJsonRef { get; set; }
     public string NewJsonRef { get; set; }

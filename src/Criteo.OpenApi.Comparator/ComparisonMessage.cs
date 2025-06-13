@@ -7,6 +7,8 @@ using System.Globalization;
 using System.Linq;
 using Criteo.OpenApi.Comparator.Parser;
 using Criteo.OpenApi.Comparator.Logging;
+using Microsoft.OpenApi.Models;
+using System.Data;
 
 namespace Criteo.OpenApi.Comparator
 {
@@ -22,8 +24,6 @@ namespace Criteo.OpenApi.Comparator
             ObjectPath path,
             IJsonDocument oldDocument,
             IJsonDocument newDocument,
-            Severity severity,
-            bool breakingChange,
             params object[] formatArguments
         )
         {
@@ -32,6 +32,17 @@ namespace Criteo.OpenApi.Comparator
             Path = path;
             OldDocument = oldDocument;
             NewDocument = newDocument;
+            Id = rule.Id;
+            Code = rule.Code;
+            DocUrl = $"{DocBaseUrl}{rule.Id}.md";
+            Mode = rule.Type;
+        }
+
+        internal ComparisonMessage(OpenApiError item)
+        {
+            var rule = ComparisonRules.OpenApiError;
+            Severity = rule.Severity;
+            Message = item.Message + " " + item.Pointer;
             Id = rule.Id;
             Code = rule.Code;
             DocUrl = $"{DocBaseUrl}{rule.Id}.md";

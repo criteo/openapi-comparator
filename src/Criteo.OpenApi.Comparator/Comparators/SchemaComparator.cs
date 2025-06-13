@@ -373,12 +373,14 @@ namespace Criteo.OpenApi.Comparator.Comparators
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema)
         {
-            if (!oldSchema.Format.DifferFrom(newSchema.Format)
-                || IsFormatChangeAllowed(context, oldSchema, newSchema))
+            if (!oldSchema.Format.DifferFrom(newSchema.Format))
                 return;
 
             context.PushProperty("format");
-            context.Log(ComparisonRules.TypeFormatChanged);
+            if (IsFormatChangeAllowed(context, oldSchema, newSchema))
+                context.Log(ComparisonRules.WideningTypeFormatChanged);
+            else
+                context.Log(ComparisonRules.TypeFormatChanged);
             context.Pop();
         }
 
@@ -386,7 +388,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema)
         {
-            if (newSchema.Type == null || !newSchema.Type.Equals("integer") || context.UseStrict()
+            if (newSchema.Type == null || !newSchema.Type.Equals("integer") 
                 || oldSchema.Format == null || newSchema.Format == null)
                 return false;
 

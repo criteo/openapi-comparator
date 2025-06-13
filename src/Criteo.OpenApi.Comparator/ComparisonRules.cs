@@ -378,6 +378,18 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1023.md
         /// </summary>
+        public static ComparisonRule WideningTypeFormatChanged = new ComparisonRule
+        {
+            Id = 1023,
+            Code = nameof(WideningTypeFormatChanged),
+            Message = "The new version has a different format than the previous one.",
+            Type = MessageType.Update,
+            Severity = MessageSeverity.Info
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1023.md
+        /// </summary>
         public static ComparisonRule TypeFormatChanged = new ComparisonRule
         {
             Id = 1023,
@@ -858,6 +870,16 @@ namespace Criteo.OpenApi.Comparator
             Message = "The nullable property has changed from '{0}' to '{1}'.",
             Type = MessageType.Update,
             Severity = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// OpenApi Specification version 3 specific
+        /// </summary>
+        public static ComparisonRule OpenApiError = new ComparisonRule()
+        {
+            Id = 9000,
+            Code = nameof(OpenApiError),
+            Severity = MessageSeverity.Error
         };
     }
 }

@@ -26,24 +26,32 @@ namespace Criteo.OpenApi.Comparator
         /// <param name="strict">If true, then breaking changes are errors instead of warnings. If null the version will be used to determine strict mode.</param>
         /// <returns>The severity of the changes.</returns>
         public static Severity Compare(
+            out List<ComparisonMessage> comparisonMessages,
             string oldOpenApiSpec,
             string newOpenApiSpec,
-            out IEnumerable<ComparisonMessage> comparisonMessages,
             bool? strict = true)
         {
             var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec, out var oldSpecDiagnostic);
             var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec, out var newSpecDiagnostic);
-
-            var parsingErrors = oldSpecDiagnostic.Errors
-                .Select(e => new ParsingError("old", e))
-                .Concat(newSpecDiagnostic.Errors.Select(e => new ParsingError("new", e)));
-
-            var context = new ComparisonContext(oldOpenApiDocument, newOpenApiDocument) { Strict = strict };
+            var context = new ComparisonContext(oldOpenApiDocument, newOpenApiDocument);
 
             var comparator = new OpenApiDocumentComparator();
             comparisonMessages = comparator.Compare(context, oldOpenApiDocument.Typed, newOpenApiDocument.Typed);
+            comparisonMessages.AddRange(oldSpecDiagnostic.Errors.Select(item => new ComparisonMessage(item)));
+            comparisonMessages.AddRange(newSpecDiagnostic.Errors.Select(item => new ComparisonMessage(item)));
 
-            return comparisonMessages;
+            if (!comparisonMessages.Any())
+                return Severity.None;
+
+            var maxSeverity = comparisonMessages.Max(s=>s.Severity);
+
+            return maxSeverity switch
+            {
+                MessageSeverity.Info => Severity.None,
+                MessageSeverity.Error => Severity.Error,
+                MessageSeverity.Warning => Severity.Warning,
+                _ => (strict ?? !context.HasVersionChanged)  ? Severity.Error: Severity.Warning
+            };
         }
 
         /// <summary>
@@ -53,12 +61,12 @@ namespace Criteo.OpenApi.Comparator
         /// <param name="newOpenApiSpec">The content of the new OpenAPI Specification</param>
         /// <param name="parsingErrors">Parsing errors</param>
         /// <param name="strict">If true, then breaking changes are errors instead of warnings.</param>
-        [Obsolete("Use compare with strict mode on by default")]
+        [Obsolete("Use new compare which returns severity and parsing errors as a comparison message. Also strict is true by default")]
         public static IEnumerable<ComparisonMessage> Compare(
             string oldOpenApiSpec,
             string newOpenApiSpec,
             out IEnumerable<ParsingError> parsingErrors,
-            bool? strict = null)
+            bool? strict = false)
         {
             var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec, out var oldSpecDiagnostic);
             var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec, out var newSpecDiagnostic);
@@ -67,7 +75,7 @@ namespace Criteo.OpenApi.Comparator
                 .Select(e => new ParsingError("old", e))
                 .Concat(newSpecDiagnostic.Errors.Select(e => new ParsingError("new", e)));
 
-            var context = new ComparisonContext(oldOpenApiDocument, newOpenApiDocument) { Strict = strict };
+            var context = new ComparisonContext(oldOpenApiDocument, newOpenApiDocument);
 
             var comparator = new OpenApiDocumentComparator();
             var comparisonMessages = comparator.Compare(context, oldOpenApiDocument.Typed, newOpenApiDocument.Typed);
@@ -79,6 +87,7 @@ namespace Criteo.OpenApi.Comparator
     /// <summary>
     /// Represents an error that occurred while parsing an OpenAPI document.
     /// </summary>
+    [Obsolete]
     public class ParsingError
     {
         private readonly string _documentName;

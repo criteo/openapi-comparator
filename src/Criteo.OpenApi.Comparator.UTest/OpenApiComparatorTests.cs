@@ -43,7 +43,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         /// </summary>
         [TestCase(false, Severity.Warning)]
         [TestCase(true, Severity.Error)]
-        public void OpenApiComparator_WithStrictSet_ShouldHaveMatchingErrors(bool strict, Severity severity)
+        public void OpenApiComparator_WithStrictSet_ShouldHaveMatchingErrors(bool strict, MessageSeverity severity)
         {
             var oldYaml = ReadOpenApiFile("added_required_parameter/old.yaml");
             var newYaml = ReadOpenApiFile("added_required_parameter/new.yaml");

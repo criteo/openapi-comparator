@@ -38,7 +38,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldDocument">The original document model.</param>
         /// <param name="newDocument">The new document model.</param>
         /// <returns>A list of messages from the comparison.</returns>
-        internal IEnumerable<ComparisonMessage> Compare(
+        internal List<ComparisonMessage> Compare(
             ComparisonContext context,
             OpenApiDocument oldDocument,
             OpenApiDocument newDocument
