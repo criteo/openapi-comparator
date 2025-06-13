@@ -31,7 +31,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             if (oldSchema == null)
             {
-                context.LogError(ComparisonRules.AddedSchema);
+                context.Log(ComparisonRules.AddedSchema);
                 return;
             }
 
@@ -337,14 +337,14 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                 if (constrains)
                 {
-                    LogAction logger = context.Direction == DataDirection.Response ? context.LogWarning : context.LogBreakingChange;
-                    logger(ComparisonRules.RemovedEnumValue, string.Join(", ", removedEnums.Select(e => e.StringValue())));
+                    var rule = context.Direction == DataDirection.Response ? ComparisonRules.ResponseRemovedEnumValue : ComparisonRules.RemovedEnumValue;
+                    context.Log(rule, string.Join(", ", removedEnums.Select(e => e.StringValue())));
                 }
 
                 if (relaxes && !IsEnumModelAsString(enumExtension))
                 {
-                    LogAction logger = context.Direction == DataDirection.Request ? context.LogWarning : context.LogBreakingChange;
-                    logger(ComparisonRules.AddedEnumValue, string.Join(", ", addedEnums.Select(e => e.StringValue())));
+                    var rule = context.Direction == DataDirection.Request ? ComparisonRules.RequestAddedEnumValue : ComparisonRules.AddedEnumValue;
+                    context.Log(rule, string.Join(", ", addedEnums.Select(e => e.StringValue())));
                 }
             }
 
@@ -522,9 +522,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     if (property.Value.ReadOnly)
                         context.Log(ComparisonRules.AddedReadOnlyPropertyInResponse, property.Key);
                     else if (newSchema.AdditionalPropertiesAllowed && oldSchema.AdditionalPropertiesAllowed)
-                        context.LogWarning(ComparisonRules.AddedPropertyInResponse, property.Key);
+                        context.Log(ComparisonRules.AddedPropertyInResponse, property.Key);
                     else
-                        context.LogBreakingChange(ComparisonRules.AddedPropertyInResponse, property.Key);
+                        context.Log(ComparisonRules.AddedBreakingPropertyInResponse, property.Key);
                 }
                 else if (isSchemaReferenced && !newSchema.IsPropertyRequired(property.Key))
                 {
@@ -534,7 +534,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     }
                     else
                     {
-                        context.LogWarning(ComparisonRules.AddedOptionalProperty, property.Key);
+                        context.Log(ComparisonRules.AddedOptionalProperty, property.Key);
                     }
                 }
 
@@ -592,7 +592,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             if (oldRequired == null)
             {
-                context.LogBreakingChange(ComparisonRules.AddedRequiredProperty, string.Join(", ", newRequired));
+                context.Log(ComparisonRules.AddedRequiredProperty, string.Join(", ", newRequired));
                 return;
             }
 
@@ -601,12 +601,12 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 if (context.Direction == DataDirection.Request || !oldRequired.AdditionalPropertiesAllowed || ! newRequired.AdditionalPropertiesAllowed)
                 {
-                    context.LogBreakingChange(ComparisonRules.AddedRequiredProperty,
+                    context.Log(ComparisonRules.AddedRequiredProperty,
                     string.Join(", ", addedRequiredProperties));
                 }
                 else
                 {
-                    context.LogWarning(ComparisonRules.AddedRequiredProperty,
+                    context.Log(ComparisonRules.AddedRequiredResponseProperty,
                         string.Join(", ", addedRequiredProperties));
                 }
             }

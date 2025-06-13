@@ -113,7 +113,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                     if (oldMajor > newMajor)
                     {
-                        context.LogError(ComparisonRules.VersionsReversed, oldVersion, newVersion);
+                        context.Log(ComparisonRules.VersionsReversed, oldVersion, newVersion);
                     }
                 }
 
@@ -128,7 +128,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                         if (oldMinor > newMinor)
                         {
-                            context.LogError(ComparisonRules.VersionsReversed, oldVersion, newVersion);
+                            context.Log(ComparisonRules.VersionsReversed, oldVersion, newVersion);
                         }
                     }
                 }
@@ -168,7 +168,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             foreach (var oldServerUrl in oldServerUrls.Except(newServerUrls))
             {
                 context.PushServerByUrl(oldServerUrl);
-                context.LogBreakingChange(ComparisonRules.ServerNoLongerSupported, oldServerUrl);
+                context.Log(ComparisonRules.ServerNoLongerSupported, oldServerUrl);
                 context.Pop();
             }
             context.Pop();

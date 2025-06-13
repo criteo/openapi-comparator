@@ -90,26 +90,6 @@ namespace Criteo.OpenApi.Comparator
             };
         }
 
-        internal void LogInfo(ComparisonRule rule, params object[] formatArguments) =>
-            _messages.Add(new ComparisonMessage(
-                rule,
-                Path,
-                _oldOpenApiDocument,
-                _newOpenApiDocument,
-                Severity.Info,
-                formatArguments
-            ));
-
-        internal void LogWarning(ComparisonRule rule, params object[] formatArguments) =>
-            _messages.Add(new ComparisonMessage(
-                rule,
-                Path,
-                _oldOpenApiDocument,
-                _newOpenApiDocument,
-                Severity.Warning,
-                formatArguments
-            ));
-
         internal void LogError(ComparisonRule rule, params object[] formatArguments) =>
             _messages.Add(new ComparisonMessage(
                 rule,

@@ -16,7 +16,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1000,
             Code = nameof(VersionsReversed),
             Message = "The new version has a lower value than the old: {0} -> {1}",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Error
         };
 
         /// <summary>
@@ -40,7 +41,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1002,
             Code = nameof(ProtocolNoLongerSupported),
             Message = "The new version does not support '{0}' as a protocol.",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -51,7 +53,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 10021,
             Code = nameof(ServerNoLongerSupported),
             Message = "The new version does not support the server with url '{0}' anymore",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -62,7 +65,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1003,
             Code = nameof(RequestBodyFormatNoLongerSupported),
             Message = "The new version does not support '{0}' as a request body format.",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -74,7 +78,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 10031,
             Code = nameof(ResponseBodyInOperationFormatNoLongerSupported),
             Message = "The new version of operation does not support '{0}' as a response body format.",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -99,7 +104,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 10041,
             Code = nameof(ResponseBodyInOperationFormatNowSupported),
             Message = "The old version of operation did not support '{0}' as a response body format.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -111,7 +117,8 @@ namespace Criteo.OpenApi.Comparator
             Code = nameof(RemovedPath),
             Message =
                 "The new version is missing a path that was found in the old version. Was path '{0}' removed or restructured?",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -123,7 +130,8 @@ namespace Criteo.OpenApi.Comparator
             Code = nameof(RemovedDefinition),
             Message =
                 "The new version is missing a definition that was found in the old version. Was '{0}' removed or renamed?",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -135,7 +143,8 @@ namespace Criteo.OpenApi.Comparator
             Code = nameof(RemovedClientParameter),
             Message =
                 "The new version is missing a client parameter that was found in the old version. Was '{0}' removed or renamed?",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -146,7 +155,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1008,
             Code = nameof(ModifiedOperationId),
             Message = "The operation id has been changed from '{0}' to '{1}'. This will impact generated code.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -157,7 +167,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1009,
             Code = nameof(RemovedRequiredParameter),
             Message = "The required parameter '{0}' was removed in the new version.",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -168,7 +179,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1010,
             Code = nameof(AddingRequiredParameter),
             Message = "The required parameter '{0}' was added in the new version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -179,7 +191,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1011,
             Code = nameof(AddingResponseCode),
             Message = "The new version adds a response code '{0}'.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -190,7 +203,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1012,
             Code = nameof(RemovedResponseCode),
             Message = "The new version removes the response code '{0}'",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -249,7 +263,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1015,
             Code = nameof(ParameterInHasChanged),
             Message = "How the parameter is passed has changed -- it used to be '{0}', now it is '{1}'.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -260,7 +275,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1016,
             Code = nameof(ConstantStatusHasChanged),
             Message = "The 'constant' status changed from the old version to the new.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -271,7 +287,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1017,
             Code = nameof(ReferenceRedirection),
             Message = "The '$ref' property points to different models in the old and new versions.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -294,7 +311,20 @@ namespace Criteo.OpenApi.Comparator
             Id = 1019,
             Code = nameof(RemovedEnumValue),
             Message = "The new version is removing enum value(s) '{0}' from the old version.",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1019.md
+        /// </summary>
+        public static ComparisonRule ResponseRemovedEnumValue = new ComparisonRule
+        {
+            Id = 1019,
+            Code = nameof(ResponseRemovedEnumValue),
+            Message = "The new version is removing enum value(s) '{0}' from the old version.",
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Warning
         };
 
         /// <summary>
@@ -305,7 +335,20 @@ namespace Criteo.OpenApi.Comparator
             Id = 1020,
             Code = nameof(AddedEnumValue),
             Message = "The new version is adding enum value(s) '{0}' from the old version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1000.md
+        /// </summary>
+        public static ComparisonRule RequestAddedEnumValue = new ComparisonRule
+        {
+            Id = 1020,
+            Code = nameof(RequestAddedEnumValue),
+            Message = "The new version is adding enum value(s) '{0}' from the old version.",
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Warning
         };
 
         /// <summary>
@@ -316,7 +359,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1021,
             Code = nameof(AddedAdditionalProperties),
             Message = "The new version adds an 'additionalProperties' element.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -327,7 +371,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1022,
             Code = nameof(RemovedAdditionalProperties),
             Message = "The new version removes the 'additionalProperties' element.",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -338,7 +383,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1023,
             Code = nameof(TypeFormatChanged),
             Message = "The new version has a different format than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -409,7 +455,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1026,
             Code = nameof(TypeChanged),
             Message = "The new version has a different type '{0}' than the previous one '{1}'.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -420,7 +467,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1027,
             Code = nameof(DefaultValueChanged),
             Message = "The new version has a different default value than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -431,7 +479,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1028,
             Code = nameof(ArrayCollectionFormatChanged),
             Message = "The new version has a different array collection format than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -442,7 +491,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 10281,
             Code = nameof(ParameterStyleChanged),
             Message = "Parameter '{0}' has a different style value in the new version.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -453,7 +503,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1029,
             Code = nameof(ReadonlyPropertyChanged),
             Message = "The read only property has changed from '{0}' to '{1}'.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -464,7 +515,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1030,
             Code = nameof(DifferentDiscriminator),
             Message = "The new version has a different discriminator than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -475,7 +527,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1031,
             Code = nameof(DifferentExtends),
             Message = "The new version has a different 'extends' property than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -486,7 +539,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1032,
             Code = nameof(DifferentAllOf),
             Message = "The new version has a different 'allOf' property than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
 
@@ -498,7 +552,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 10321,
             Code = nameof(DifferentOneOf),
             Message = "The new version has a different 'oneOf' property than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -510,7 +565,8 @@ namespace Criteo.OpenApi.Comparator
             Code = nameof(RemovedProperty),
             Message =
                 "The new version is missing a property found in the old version. Was '{0}' renamed or removed?",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -521,7 +577,20 @@ namespace Criteo.OpenApi.Comparator
             Id = 1034,
             Code = nameof(AddedRequiredProperty),
             Message = "The new version has new required property '{0}' that was not found in the old version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1034.md
+        /// </summary>
+        public static ComparisonRule AddedRequiredResponseProperty = new ComparisonRule
+        {
+            Id = 1034,
+            Code = nameof(AddedRequiredResponseProperty),
+            Message = "The new version has new required response property '{0}' that was not found in the old version.",
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Warning
         };
 
         /// <summary>
@@ -533,7 +602,8 @@ namespace Criteo.OpenApi.Comparator
             Code = nameof(RemovedOperation),
             Message =
                 "The new version is missing an operation that was found in the old version. Was operationId '{0}' removed or restructured?",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -630,7 +700,20 @@ namespace Criteo.OpenApi.Comparator
             Id = 1041,
             Code = nameof(AddedPropertyInResponse),
             Message = "The new version has a new property '{0}' in response that was not found in the old version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Warning
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1041.md
+        /// </summary>
+        public static ComparisonRule AddedBreakingPropertyInResponse = new ComparisonRule
+        {
+            Id = 1041,
+            Code = nameof(AddedBreakingPropertyInResponse),
+            Message = "The new version has a new property '{0}' in response that was not found in the old version and additional properties are specifically forbidden.",
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -641,7 +724,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1042,
             Code = nameof(ChangedParameterOrder),
             Message = "The order of parameter '{0}' was changed. ",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -652,7 +736,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1043,
             Code = nameof(AddingOptionalParameter),
             Message = "The optional parameter '{0}' was added in the new version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -663,7 +748,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1044,
             Code = nameof(LongRunningOperationExtensionChanged),
             Message = "The new version has a different 'x-ms-long-running-operation' value than the previous one.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -674,7 +760,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1045,
             Code = nameof(AddedOptionalProperty),
             Message = "The new version has a new optional property '{0}' that was not found in the old version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Warning
         };
 
         /// <summary>
@@ -685,7 +772,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1046,
             Code = nameof(AddedRequestBody),
             Message = "The new version is adding a requestBody that was not found in the old version.",
-            Type = MessageType.Addition
+            Type = MessageType.Addition,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -696,7 +784,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1047,
             Code = nameof(RemovedRequestBody),
             Message = "The new version is removing a requestBody that was found in the old version.",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>
@@ -707,7 +796,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 1048,
             Code = nameof(AddedSchema),
             Message = "The new version is adding a new schema that was not found in the old version.",
-            Type = MessageType.Removal
+            Type = MessageType.Removal,
+            LogType = MessageSeverity.Error
         };
 
         /// <summary>
@@ -718,7 +808,8 @@ namespace Criteo.OpenApi.Comparator
             Id = 2000,
             Code = nameof(NullablePropertyChanged),
             Message = "The nullable property has changed from '{0}' to '{1}'.",
-            Type = MessageType.Update
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
     }
 }

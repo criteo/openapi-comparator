@@ -35,7 +35,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 var comparisonMessage = context.Direction == DataDirection.Request
                     ? ComparisonRules.RequestBodyFormatNoLongerSupported
                     : ComparisonRules.ResponseBodyInOperationFormatNoLongerSupported;
-                context.LogBreakingChange(comparisonMessage, removedMediaType);
+                context.Log(comparisonMessage, removedMediaType);
                 context.Pop();
             }
 
