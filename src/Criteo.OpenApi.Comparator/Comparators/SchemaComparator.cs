@@ -386,7 +386,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema)
         {
-            if (newSchema.Type == null || !newSchema.Type.Equals("integer") || context.Strict
+            if (newSchema.Type == null || !newSchema.Type.Equals("integer") || context.UseStrict()
                 || oldSchema.Format == null || newSchema.Format == null)
                 return false;
 

@@ -58,7 +58,7 @@ namespace Criteo.OpenApi.Comparator
             string oldOpenApiSpec,
             string newOpenApiSpec,
             out IEnumerable<ParsingError> parsingErrors,
-            bool strict = false)
+            bool? strict = null)
         {
             var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec, out var oldSpecDiagnostic);
             var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec, out var newSpecDiagnostic);
