@@ -26,7 +26,7 @@ namespace Criteo.OpenApi.Comparator
             params object[] formatArguments
         )
         {
-            Severity = severity;
+            Severity = rule.Severity;
             Message = $"{string.Format(CultureInfo.CurrentCulture, rule.Message, formatArguments)}";
             Path = path;
             OldDocument = oldDocument;
@@ -35,20 +35,14 @@ namespace Criteo.OpenApi.Comparator
             Code = rule.Code;
             DocUrl = $"{DocBaseUrl}{rule.Id}.md";
             Mode = rule.Type;
-            Breaking = rule.LogType == MessageSeverity.Breaking;
         }
-
-        /// <summary>
-        ///     Could this be a breaking change. Strict mode and version numbers will determine if these are errors or warnings.
-        /// </summary>
-        public bool Breaking { get; set; }
 
         private IJsonDocument OldDocument { get; }
 
         private IJsonDocument NewDocument { get; }
 
         /// Info, Error, Warning
-        public Severity Severity { get; }
+        public MessageSeverity Severity { get; }
 
         /// <summary>
         /// Explicit description of the change.

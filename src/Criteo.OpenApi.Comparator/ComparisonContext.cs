@@ -73,7 +73,7 @@ namespace Criteo.OpenApi.Comparator
                 Path,
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
-                Convert(rule.LogType),
+                Convert(rule.Severity),
                 formatArguments
             ));
 

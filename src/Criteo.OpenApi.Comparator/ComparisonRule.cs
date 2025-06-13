@@ -21,6 +21,6 @@ namespace Criteo.OpenApi.Comparator
         public MessageType Type { get; set; }
 
         /// <summary> Difference type (Info, Warning, Breading, Error) </summary>
-        public MessageSeverity LogType { get; set; }
+        public MessageSeverity Severity { get; set; }
     }
 }

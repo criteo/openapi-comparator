@@ -13,7 +13,7 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// <summary>
         /// The change hasn't any impact on the API (i.e. the version of the OAS is updated)
         /// </summary>
-        Info,
+        None,
         
         /// <summary>
         /// The change has an impact on the API, but should not break client's integration (i.e. adding an optional parameter)
