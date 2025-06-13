@@ -66,7 +66,7 @@ namespace Criteo.OpenApi.Comparator
             string oldOpenApiSpec,
             string newOpenApiSpec,
             out IEnumerable<ParsingError> parsingErrors,
-            bool? strict = false)
+            bool strict = false)
         {
             var oldOpenApiDocument = OpenApiParser.Parse(oldOpenApiSpec, out var oldSpecDiagnostic);
             var newOpenApiDocument = OpenApiParser.Parse(newOpenApiSpec, out var newSpecDiagnostic);
@@ -79,6 +79,15 @@ namespace Criteo.OpenApi.Comparator
 
             var comparator = new OpenApiDocumentComparator();
             var comparisonMessages = comparator.Compare(context, oldOpenApiDocument.Typed, newOpenApiDocument.Typed);
+
+            if (!context.HasVersionChanged)
+                strict = true;
+
+            comparisonMessages.ForEach(c =>
+            {
+                if (c.Severity == MessageSeverity.Breaking)
+                    c.Severity = strict ? MessageSeverity.Error : MessageSeverity.Warning;
+            });
 
             return comparisonMessages;
         }

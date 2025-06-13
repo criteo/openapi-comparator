@@ -54,7 +54,7 @@ namespace Criteo.OpenApi.Comparator
         private IJsonDocument NewDocument { get; }
 
         /// Info, Error, Warning
-        public MessageSeverity Severity { get; }
+        public MessageSeverity Severity { get; set; }
 
         /// <summary>
         ///     Is a breaking change.
