@@ -615,7 +615,55 @@ namespace Criteo.OpenApi.Comparator
             Code = nameof(ConstraintChanged),
             Message = "The new version has a different '{0}' value than the previous one.",
             Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
+        /// </summary>
+        public static ComparisonRule EnumConstraintChanged = new ComparisonRule
+        {
+            Id = 1036,
+            Code = nameof(EnumConstraintChanged),
+            Message = "The new version has a different '{0}' value than the previous one.",
+            Type = MessageType.Update,
             LogType = MessageSeverity.Info
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
+        /// </summary>
+        public static ComparisonRule MultipleOfConstraintChanged = new ComparisonRule
+        {
+            Id = 1036,
+            Code = nameof(MultipleOfConstraintChanged),
+            Message = "The new version has a different '{0}' value than the previous one.",
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
+        /// </summary>
+        public static ComparisonRule UniqueItemsConstraintChanged = new ComparisonRule
+        {
+            Id = 1036,
+            Code = nameof(UniqueItemsConstraintChanged),
+            Message = "The new version has a different '{0}' value than the previous one.",
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
+        /// </summary>
+        public static ComparisonRule PatternConstraintChanged = new ComparisonRule
+        {
+            Id = 1036,
+            Code = nameof(PatternConstraintChanged),
+            Message = "The new version has a different '{0}' value than the previous one.",
+            Type = MessageType.Update,
+            LogType = MessageSeverity.Breaking
         };
 
         /// <summary>

@@ -26,13 +26,13 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                 if (oldRequestBody == null)
                 {
-                    context.LogBreakingChange(ComparisonRules.AddedRequestBody);
+                    context.Log(ComparisonRules.AddedRequestBody);
                     return;
                 }
 
                 if (newRequestBody == null)
                 {
-                    context.LogBreakingChange(ComparisonRules.RemovedRequestBody);
+                    context.Log(ComparisonRules.RemovedRequestBody);
                     return;
                 }
 
