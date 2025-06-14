@@ -1,24 +1,24 @@
 [
   {
     "Severity": "Warning",
-    "Message": "The new version has new required property 'petType' that was not found in the old version.",
+    "Message": "The new version has new required response property 'petType' that was not found in the old version.",
     "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items",
     "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items",
     "OldJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items",
     "NewJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/items",
     "Id": 1034,
-    "Code": "AddedRequiredProperty",
+    "Code": "AddedRequiredResponseProperty",
     "Mode": "Addition"
   },
   {
     "Severity": "Warning",
-    "Message": "The new version has new required property 'message' that was not found in the old version.",
+    "Message": "The new version has new required response property 'message' that was not found in the old version.",
     "OldJsonRef": "#/paths/~1pets/get/responses/404/content/application~1json/schema",
     "NewJsonRef": "#/paths/~1pets/get/responses/404/content/application~1json/schema",
     "OldJsonPath": "#/paths/~1pets/get/responses/404/content/application~1json/schema",
     "NewJsonPath": "#/paths/~1pets/get/responses/404/content/application~1json/schema",
     "Id": 1034,
-    "Code": "AddedRequiredProperty",
+    "Code": "AddedRequiredResponseProperty",
     "Mode": "Addition"
   }
 ]

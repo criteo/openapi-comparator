@@ -37,22 +37,5 @@ namespace Criteo.OpenApi.Comparator.UTest
                 "NoVersionChange warning (Id 1001) should not be present in the results.");
 
         }
-
-        /// <summary>
-        ///     Info NoVersionChange message should not be coming back
-        /// </summary>
-        [TestCase(false, Severity.Warning)]
-        [TestCase(true, Severity.Error)]
-        public void OpenApiComparator_WithStrictSet_ShouldHaveMatchingErrors(bool strict, MessageSeverity severity)
-        {
-            var oldYaml = ReadOpenApiFile("added_required_parameter/old.yaml");
-            var newYaml = ReadOpenApiFile("added_required_parameter/new.yaml");
-
-            var results = OpenApiComparator.Compare(oldYaml, newYaml, out _, strict);
-
-            Assert.That(results.Where(r=>r.BreakingChange).All(r => r.Severity == severity),
-                "All results that would break changes should be severity "+severity);
-
-        }
     }
 }

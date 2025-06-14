@@ -7,7 +7,7 @@
     "OldJsonPath": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "NewJsonPath": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "Id": 1020,
-    "Code": "AddedEnumValue",
+    "Code": "AddedEnumRequestValue",
     "Mode": "Addition"
   },
   {
@@ -18,7 +18,7 @@
     "OldJsonPath": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "NewJsonPath": "#/paths/~1order~1{path}/post/requestBody/content/application~1json/schema/properties/foo/enum",
     "Id": 1037,
-    "Code": "ConstraintIsWeaker",
+    "Code": "EnumConstraintIsWeaker",
     "Mode": "Update"
   }
 ]

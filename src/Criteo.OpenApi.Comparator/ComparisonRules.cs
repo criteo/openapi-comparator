@@ -318,10 +318,10 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1019.md
         /// </summary>
-        public static ComparisonRule ResponseRemovedEnumValue = new ComparisonRule
+        public static ComparisonRule RemovedEnumResponseValue = new ComparisonRule
         {
             Id = 1019,
-            Code = nameof(ResponseRemovedEnumValue),
+            Code = nameof(RemovedEnumResponseValue),
             Message = "The new version is removing enum value(s) '{0}' from the old version.",
             Type = MessageType.Removal,
             Severity = MessageSeverity.Warning
@@ -342,10 +342,10 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1000.md
         /// </summary>
-        public static ComparisonRule RequestAddedEnumValue = new ComparisonRule
+        public static ComparisonRule AddedEnumRequestValue = new ComparisonRule
         {
             Id = 1020,
-            Code = nameof(RequestAddedEnumValue),
+            Code = nameof(AddedEnumRequestValue),
             Message = "The new version is adding enum value(s) '{0}' from the old version.",
             Type = MessageType.Addition,
             Severity = MessageSeverity.Warning
@@ -430,7 +430,7 @@ namespace Criteo.OpenApi.Comparator
         {
             Id = 1024,
             Code = nameof(EnumConstraintIsStronger),
-            Message = "The new version has a more constraining '{0}' value than the previous one for an enum.",
+            Message = "The new version has a more constraining '{0}' value than the previous one.",
             Type = MessageType.Update,
             Severity = MessageSeverity.Info
         };
@@ -709,7 +709,7 @@ namespace Criteo.OpenApi.Comparator
         {
             Id = 1037,
             Code = nameof(EnumConstraintIsWeaker),
-            Message = "The new version has a less constraining '{0}' value than the previous one in an enum.",
+            Message = "The new version has a less constraining '{0}' value than the previous one.",
             Type = MessageType.Update,
             Severity = MessageSeverity.Info
         };

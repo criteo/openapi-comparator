@@ -337,13 +337,13 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                 if (constrains)
                 {
-                    var rule = context.Direction == DataDirection.Response ? ComparisonRules.ResponseRemovedEnumValue : ComparisonRules.RemovedEnumValue;
+                    var rule = context.Direction == DataDirection.Response ? ComparisonRules.RemovedEnumResponseValue : ComparisonRules.RemovedEnumValue;
                     context.Log(rule, string.Join(", ", removedEnums.Select(e => e.StringValue())));
                 }
 
                 if (relaxes && !IsEnumModelAsString(enumExtension))
                 {
-                    var rule = context.Direction == DataDirection.Request ? ComparisonRules.RequestAddedEnumValue : ComparisonRules.AddedEnumValue;
+                    var rule = context.Direction == DataDirection.Request ? ComparisonRules.AddedEnumRequestValue : ComparisonRules.AddedEnumValue;
                     context.Log(rule, string.Join(", ", addedEnums.Select(e => e.StringValue())));
                 }
             }

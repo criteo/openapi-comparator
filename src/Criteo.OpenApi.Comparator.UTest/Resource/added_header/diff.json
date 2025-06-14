@@ -1,7 +1,7 @@
 [
   {
     "Severity": "Info",
-    "Message": "The new version adds a required header \u0027x-d\u0027.",
+    "Message": "The new version adds a header \u0027x-d\u0027.",
     "OldJsonRef": "#/paths/~1api~1Parameters/get/responses/200/headers/x-d",
     "NewJsonRef": "#/paths/~1api~1Parameters/get/responses/200/headers/x-d",
     "OldJsonPath": "#/paths/~1api~1Parameters/get/responses/200/headers/x-d",
@@ -12,7 +12,7 @@
   },
   {
     "Severity": "Info",
-    "Message": "The new version adds a required header \u0027x-c\u0027.",
+    "Message": "The new version adds a header \u0027x-c\u0027.",
     "OldJsonRef": "#/paths/~1api~1Responses/get/responses/200/headers/x-c",
     "NewJsonRef": "#/paths/~1api~1Responses/get/responses/200/headers/x-c",
     "OldJsonPath": "#/paths/~1api~1Responses/get/responses/200/headers/x-c",

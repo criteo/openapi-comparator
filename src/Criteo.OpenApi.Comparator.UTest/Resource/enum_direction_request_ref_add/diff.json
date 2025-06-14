@@ -7,7 +7,7 @@
     "OldJsonPath": "#/components/schemas/RequestOnlyEnum/enum",
     "NewJsonPath": "#/components/schemas/RequestOnlyEnum/enum",
     "Id": 1020,
-    "Code": "AddedEnumValue",
+    "Code": "AddedEnumRequestValue",
     "Mode": "Addition"
   },
   {
@@ -18,7 +18,7 @@
     "OldJsonPath": "#/components/schemas/RequestOnlyEnum/enum",
     "NewJsonPath": "#/components/schemas/RequestOnlyEnum/enum",
     "Id": 1037,
-    "Code": "ConstraintIsWeaker",
+    "Code": "EnumConstraintIsWeaker",
     "Mode": "Update"
   }
 ]

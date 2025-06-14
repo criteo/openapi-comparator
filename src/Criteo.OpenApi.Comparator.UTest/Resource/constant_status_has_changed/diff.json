@@ -18,7 +18,7 @@
     "OldJsonPath": "#/components/parameters/limitParam/schema/enum",
     "NewJsonPath": "#/components/parameters/limitParam/schema/enum",
     "Id": 1020,
-    "Code": "AddedEnumValue",
+    "Code": "AddedEnumRequestValue",
     "Mode": "Addition"
   },
   {
@@ -29,7 +29,7 @@
     "OldJsonPath": "#/components/parameters/limitParam/schema/enum",
     "NewJsonPath": "#/components/parameters/limitParam/schema/enum",
     "Id": 1037,
-    "Code": "ConstraintIsWeaker",
+    "Code": "EnumConstraintIsWeaker",
     "Mode": "Update"
   }
 ]

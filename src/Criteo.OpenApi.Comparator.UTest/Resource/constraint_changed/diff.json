@@ -1,29 +1,29 @@
 [
   {
     "Severity": "Warning",
-    "Message": "The new version has a different \u0027pattern\u0027 value than the previous one.",
+    "Message": "The new version has a different 'pattern' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/accessKey/pattern",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/accessKey/pattern",
     "OldJsonPath": "#/components/schemas/limitParam/properties/accessKey/pattern",
     "NewJsonPath": "#/components/schemas/limitParam/properties/accessKey/pattern",
     "Id": 1036,
-    "Code": "ConstraintChanged",
+    "Code": "PatternConstraintChanged",
     "Mode": "Update"
   },
   {
     "Severity": "Warning",
-    "Message": "The new version has a different \u0027uniqueItems\u0027 value than the previous one.",
+    "Message": "The new version has a different 'uniqueItems' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/redirectUrl/uniqueItems",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/redirectUrl/uniqueItems",
     "OldJsonPath": "#/components/schemas/limitParam/properties/redirectUrl/uniqueItems",
     "NewJsonPath": "#/components/schemas/limitParam/properties/redirectUrl/uniqueItems",
     "Id": 1036,
-    "Code": "ConstraintChanged",
+    "Code": "UniqueItemsConstraintChanged",
     "Mode": "Update"
   },
   {
     "Severity": "Warning",
-    "Message": "The new version is removing enum value(s) \u0027item3\u0027 from the old version.",
+    "Message": "The new version is removing enum value(s) 'item3' from the old version.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "OldJsonPath": "#/components/schemas/limitParam/properties/constrainsItems/enum",
@@ -34,35 +34,35 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version is adding enum value(s) \u0027item4\u0027 from the old version.",
+    "Message": "The new version is adding enum value(s) 'item4' from the old version.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "OldJsonPath": "#/components/schemas/limitParam/properties/constrainsItems/enum",
     "NewJsonPath": "#/components/schemas/limitParam/properties/constrainsItems/enum",
     "Id": 1020,
-    "Code": "AddedEnumValue",
+    "Code": "AddedEnumRequestValue",
     "Mode": "Addition"
   },
   {
     "Severity": "Info",
-    "Message": "The new version has a different \u0027enum\u0027 value than the previous one.",
+    "Message": "The new version has a different 'enum' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/constrainsItems/enum",
     "OldJsonPath": "#/components/schemas/limitParam/properties/constrainsItems/enum",
     "NewJsonPath": "#/components/schemas/limitParam/properties/constrainsItems/enum",
     "Id": 1036,
-    "Code": "ConstraintChanged",
+    "Code": "EnumConstraintChanged",
     "Mode": "Update"
   },
   {
     "Severity": "Warning",
-    "Message": "The new version has a different \u0027multipleOf\u0027 value than the previous one.",
+    "Message": "The new version has a different 'multipleOf' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/maxRequest/multipleOf",
     "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/maxRequest/multipleOf",
     "OldJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/maxRequest/multipleOf",
     "NewJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/maxRequest/multipleOf",
     "Id": 1036,
-    "Code": "ConstraintChanged",
+    "Code": "MultipleOfConstraintChanged",
     "Mode": "Update"
   }
 ]

@@ -57,14 +57,6 @@ namespace Criteo.OpenApi.Comparator
         public MessageSeverity Severity { get; set; }
 
         /// <summary>
-        ///     Is a breaking change.
-        /// </summary>
-        /// <remarks>
-        ///     Breaking changes will be warnings unless strict mode is enabled.
-        /// </remarks>
-        public bool BreakingChange { get; }
-
-        /// <summary>
         /// Explicit description of the change.
         /// </summary>
         public string Message { get; }
@@ -157,7 +149,6 @@ namespace Criteo.OpenApi.Comparator
         public override string ToString() =>
             $"code = {Code},\n" +
             $"type = {Severity},\n" +
-            $"breaking = {BreakingChange},\n" +
             $"message = {Message},\n" +
             $"docurl = {DocUrl},\n" +
             $"mode = {Mode}";
