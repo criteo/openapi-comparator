@@ -25,7 +25,7 @@ namespace Criteo.OpenApi.Comparator
         /// <param name="comparisonMessages">Result Details</param>
         /// <param name="strict">If true, then breaking changes are errors instead of warnings. If null the version will be used to determine strict mode.</param>
         /// <returns>The severity of the changes.</returns>
-        public static Severity Compare(
+        public static ChangeLevel Compare(
             out List<ComparisonMessage> comparisonMessages,
             string oldOpenApiSpec,
             string newOpenApiSpec,
@@ -41,16 +41,16 @@ namespace Criteo.OpenApi.Comparator
             comparisonMessages.AddRange(newSpecDiagnostic.Errors.Select(item => new ComparisonMessage(item)));
 
             if (!comparisonMessages.Any())
-                return Severity.None;
+                return ChangeLevel.None;
 
             var maxSeverity = comparisonMessages.Max(s=>s.Severity);
 
             return maxSeverity switch
             {
-                MessageSeverity.Info => Severity.None,
-                MessageSeverity.Error => Severity.Error,
-                MessageSeverity.Warning => Severity.Warning,
-                _ => (strict ?? !context.HasVersionChanged)  ? Severity.Error: Severity.Warning
+                MessageSeverity.Info => ChangeLevel.Info,
+                MessageSeverity.Error => ChangeLevel.Error,
+                MessageSeverity.Warning => ChangeLevel.Warning,
+                _ => (strict ?? !context.HasVersionChanged)  ? ChangeLevel.Error: ChangeLevel.Warning
             };
         }
 

@@ -8,7 +8,7 @@ namespace Criteo.OpenApi.Comparator.Logging;
 /// this property is defined according to our own interpretation of the
 /// comparison rules and may differ according to your own interpretation.
 /// </summary>
-public enum Severity
+public enum ChangeLevel
 {
     /// <summary>
     ///     No changes detected
