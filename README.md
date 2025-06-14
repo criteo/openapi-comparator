@@ -50,6 +50,26 @@ Each comparison rule is documented in the [documentation section](https://github
 
 Internally, the comparator uses [microsoft/OpenAPI.NET](https://github.com/microsoft/OpenAPI.NET/) which currently supports OpenAPI 2.0 to 3.0.0.
 
+## Versions
+
+### 1.0
+- Made breaking changes to support that additive changes are allowed by default
+- Severity now includes a Breaking severity so that regardless of strict mode the original severity can be identified
+- Compare now returns a Change level that reflects the result or all found changes. This takes into account the strict mode, and version number if strict is set to null. Strict now defaults to true.
+  - When strict mode is null and a major or minor version change has occured breaking changes result in warnings and not errors
+- Combined the Parsing Errors with the Comparsion Messages
+- A code will now always uniquely identify the message severity
+- Split up several Code so that they are easier to identify
+  - ConstrantIsStronger
+    - ResponseConstraintIsStronger
+    - EnumConstrantIsStronger
+  - AddedPropertyInResponse
+    - AddedBreakingPropertyInResponse
+  - ConstraintChanged
+    - EnumConstraintChanged
+    - MultipleOfConstraintChanged
+    - UniqueItemsConstraintChanged
+
 ## Contributing
 
 Any contribution is more than welcomed. For now, no specific rule must be applied to contribute, just create an Issue or a Pull Request and we'll try to handle it ASAP.
