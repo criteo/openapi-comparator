@@ -111,6 +111,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 {
                     isVersionChanged = true;
 
+                    if (newMajor > oldMajor)
+                    {
+                        context.Log(ComparisonRules.MajorVersionChange, oldVersion, newVersion);
+                    }
+
                     if (oldMajor > newMajor)
                     {
                         context.Log(ComparisonRules.VersionsReversed, oldVersion, newVersion);
@@ -124,7 +129,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                     if (areIntegers && oldMinor != newMinor)
                     {
-                        isVersionChanged = true;
+                        if (newMinor > oldMinor)
+                        {
+                            context.Log(ComparisonRules.MinorVersionChange, oldVersion, newVersion);
+                        }
 
                         if (oldMinor > newMinor)
                         {
@@ -133,15 +141,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     }
                 }
 
-                // Situation 2: The versioning scheme is something else, maybe a date or just a label?
-                //              Regardless of what it is, we just check whether the two strings are equal or not.
-
-                if (!isVersionChanged && !areIntegers)
+                if (!areIntegers)
                 {
-                    isVersionChanged = !oldVersion.ToLower().Equals(newVersion.ToLower());
+                    context.Log(ComparisonRules.NonSemanticVersion, oldVersion, newVersion);
                 }
-
-                context.HasVersionChanged = isVersionChanged;
             }
 
             if (oldVersion.ToLower().Equals(newVersion.ToLower()))

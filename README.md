@@ -69,6 +69,7 @@ Internally, the comparator uses [microsoft/OpenAPI.NET](https://github.com/micro
     - EnumConstraintChanged
     - MultipleOfConstraintChanged
     - UniqueItemsConstraintChanged
+- Removed .NET 6 support as its no longer supported by Microsoft
 
 ## Contributing
 

@@ -22,5 +22,10 @@ namespace Criteo.OpenApi.Comparator
         /// If an OpenAPI element is removed in the new version
         /// </summary>
         Removal,
+
+        /// <summary>
+        ///     An element doesn't follow the Open API specification
+        /// </summary>
+        Specification
     }
 }

@@ -44,7 +44,7 @@ public class OpenApiSpecificationsCompareTests
         var diffFileName = Path.Combine(resourceDirectory, testcase, "diff.json");
 
         var result = OpenApiComparator
-            .Compare(out var differences, File.ReadAllText(oldFileName), File.ReadAllText(newFileName), null);
+            .Compare(out var differences, File.ReadAllText(oldFileName), File.ReadAllText(newFileName));
 
         var expectedDifferencesText = File.ReadAllText(diffFileName);
         var expectedDifferences = JsonSerializer

@@ -82,8 +82,6 @@ namespace Criteo.OpenApi.Comparator
             // Issue: https://github.com/Azure/openapi-diff/issues/48
             _messages; //.Distinct(new CustomComparer());
 
-        public bool HasVersionChanged { get; set; }
-
         private readonly List<ComparisonMessage> _messages = [];
     }
 

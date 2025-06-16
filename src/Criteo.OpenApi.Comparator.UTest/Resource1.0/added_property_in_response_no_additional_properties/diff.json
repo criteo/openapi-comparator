@@ -1,5 +1,5 @@
 {
-  "Result": "Warning",
+  "Result": "Error",
   "Messages": [
     {
       "Severity": "Breaking",

@@ -11,7 +11,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1000.md
         /// </summary>
-        public static ComparisonRule VersionsReversed = new ComparisonRule
+        public static ComparisonRule VersionsReversed = new()
         {
             Id = 1000,
             Code = nameof(VersionsReversed),
@@ -23,32 +23,55 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1001.md
         /// </summary>
-        public static ComparisonRule NoVersionChange = new ComparisonRule
+        public static ComparisonRule NoVersionChange = new()
         {
             Id = 1001,
             Code = nameof(NoVersionChange),
             Message = "The versions have not changed.",
             Type = MessageType.Update,
             Severity = MessageSeverity.Info
-
         };
 
         /// <summary>
-        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1002.md
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1049.md
         /// </summary>
-        public static ComparisonRule ProtocolNoLongerSupported = new ComparisonRule
+        public static ComparisonRule NonSemanticVersion = new()
         {
-            Id = 1002,
-            Code = nameof(ProtocolNoLongerSupported),
-            Message = "The new version does not support '{0}' as a protocol.",
-            Type = MessageType.Removal,
+            Id = 1049,
+            Code = nameof(NonSemanticVersion),
+            Message = "A version number does not follow semantic conventions Old {0}, New {1}.",
+            Type = MessageType.Specification,
+            Severity = MessageSeverity.Error
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1050.md
+        /// </summary>
+        public static ComparisonRule MajorVersionChange = new()
+        {
+            Id = 1050,
+            Code = nameof(MajorVersionChange),
+            Message = "A major version change. This signifies breaking changes may be made. Old {0}, New {1}.",
+            Type = MessageType.Addition,
             Severity = MessageSeverity.Breaking
+        };
+
+        /// <summary>
+        /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1051.md
+        /// </summary>
+        public static ComparisonRule MinorVersionChange = new()
+        {
+            Id = 1051,
+            Code = nameof(MinorVersionChange),
+            Message = "A minor version change. This signifies additive changes or occasionally, non-backwards compatible changes may be made in minor version where impact is believed to be low relative to the benefit provided. Old {0}, New {1}.",
+            Type = MessageType.Addition,
+            Severity = MessageSeverity.Warning
         };
 
         /// <summary>
         /// OpenApi Specification version 3 specific
         /// </summary>
-        public static ComparisonRule ServerNoLongerSupported = new ComparisonRule
+        public static ComparisonRule ServerNoLongerSupported = new()
         {
             Id = 10021,
             Code = nameof(ServerNoLongerSupported),
@@ -60,7 +83,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1003.md
         /// </summary>
-        public static ComparisonRule RequestBodyFormatNoLongerSupported = new ComparisonRule
+        public static ComparisonRule RequestBodyFormatNoLongerSupported = new()
         {
             Id = 1003,
             Code = nameof(RequestBodyFormatNoLongerSupported),
@@ -73,7 +96,7 @@ namespace Criteo.OpenApi.Comparator
         /// Extension of rule 1003
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1003.md
         /// </summary>
-        public static ComparisonRule ResponseBodyInOperationFormatNoLongerSupported = new ComparisonRule
+        public static ComparisonRule ResponseBodyInOperationFormatNoLongerSupported = new()
         {
             Id = 10031,
             Code = nameof(ResponseBodyInOperationFormatNoLongerSupported),
@@ -85,7 +108,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1004.md
         /// </summary>
-        public static ComparisonRule ResponseBodyFormatNowSupported = new ComparisonRule
+        public static ComparisonRule ResponseBodyFormatNowSupported = new()
         {
             Id = 1004,
             Code = nameof(ResponseBodyFormatNowSupported),
@@ -99,7 +122,7 @@ namespace Criteo.OpenApi.Comparator
         /// Extension of rule 1004
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1004.md
         /// </summary>
-        public static ComparisonRule ResponseBodyInOperationFormatNowSupported = new ComparisonRule
+        public static ComparisonRule ResponseBodyInOperationFormatNowSupported = new()
         {
             Id = 10041,
             Code = nameof(ResponseBodyInOperationFormatNowSupported),
@@ -111,7 +134,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1005.md
         /// </summary>
-        public static ComparisonRule RemovedPath = new ComparisonRule
+        public static ComparisonRule RemovedPath = new()
         {
             Id = 1005,
             Code = nameof(RemovedPath),
@@ -124,7 +147,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1006.md
         /// </summary>
-        public static ComparisonRule RemovedDefinition = new ComparisonRule
+        public static ComparisonRule RemovedDefinition = new()
         {
             Id = 1006,
             Code = nameof(RemovedDefinition),
@@ -137,7 +160,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1007.md
         /// </summary>
-        public static ComparisonRule RemovedClientParameter = new ComparisonRule
+        public static ComparisonRule RemovedClientParameter = new()
         {
             Id = 1007,
             Code = nameof(RemovedClientParameter),
@@ -150,7 +173,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1008.md
         /// </summary>
-        public static ComparisonRule ModifiedOperationId = new ComparisonRule
+        public static ComparisonRule ModifiedOperationId = new()
         {
             Id = 1008,
             Code = nameof(ModifiedOperationId),
@@ -162,7 +185,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1009.md
         /// </summary>
-        public static ComparisonRule RemovedRequiredParameter = new ComparisonRule
+        public static ComparisonRule RemovedRequiredParameter = new()
         {
             Id = 1009,
             Code = nameof(RemovedRequiredParameter),
@@ -174,7 +197,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1010.md
         /// </summary>
-        public static ComparisonRule AddingRequiredParameter = new ComparisonRule
+        public static ComparisonRule AddingRequiredParameter = new()
         {
             Id = 1010,
             Code = nameof(AddingRequiredParameter),
@@ -186,7 +209,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1011.md
         /// </summary>
-        public static ComparisonRule AddingResponseCode = new ComparisonRule
+        public static ComparisonRule AddingResponseCode = new()
         {
             Id = 1011,
             Code = nameof(AddingResponseCode),
@@ -198,7 +221,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1012.md
         /// </summary>
-        public static ComparisonRule RemovedResponseCode = new ComparisonRule
+        public static ComparisonRule RemovedResponseCode = new()
         {
             Id = 1012,
             Code = nameof(RemovedResponseCode),
@@ -210,7 +233,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1013.md
         /// </summary>
-        public static ComparisonRule AddingHeader = new ComparisonRule
+        public static ComparisonRule AddingHeader = new()
         {
             Id = 1013,
             Code = nameof(AddingHeader),
@@ -222,7 +245,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1013.md
         /// </summary>
-        public static ComparisonRule AddingRequiredHeader = new ComparisonRule
+        public static ComparisonRule AddingRequiredHeader = new()
         {
             Id = 1013,
             Code = nameof(AddingRequiredHeader),
@@ -234,7 +257,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1014.md
         /// </summary>
-        public static ComparisonRule RemovingHeader = new ComparisonRule
+        public static ComparisonRule RemovingHeader = new()
         {
             Id = 1014,
             Code = nameof(RemovingHeader),
@@ -246,7 +269,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1014.md
         /// </summary>
-        public static ComparisonRule RemovingRequestHeader = new ComparisonRule
+        public static ComparisonRule RemovingRequestHeader = new()
         {
             Id = 1014,
             Code = nameof(RemovingRequestHeader),
@@ -258,7 +281,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1015.md
         /// </summary>
-        public static ComparisonRule ParameterInHasChanged = new ComparisonRule
+        public static ComparisonRule ParameterInHasChanged = new()
         {
             Id = 1015,
             Code = nameof(ParameterInHasChanged),
@@ -270,7 +293,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1016.md
         /// </summary>
-        public static ComparisonRule ConstantStatusHasChanged = new ComparisonRule
+        public static ComparisonRule ConstantStatusHasChanged = new()
         {
             Id = 1016,
             Code = nameof(ConstantStatusHasChanged),
@@ -282,7 +305,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1017.md
         /// </summary>
-        public static ComparisonRule ReferenceRedirection = new ComparisonRule
+        public static ComparisonRule ReferenceRedirection = new()
         {
             Id = 1017,
             Code = nameof(ReferenceRedirection),
@@ -294,7 +317,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1018.md
         /// </summary>
-        public static ComparisonRule RequestBodyFormatNowSupported = new ComparisonRule
+        public static ComparisonRule RequestBodyFormatNowSupported = new()
         {
             Id = 1018,
             Code = nameof(RequestBodyFormatNowSupported),
@@ -306,7 +329,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1019.md
         /// </summary>
-        public static ComparisonRule RemovedEnumValue = new ComparisonRule
+        public static ComparisonRule RemovedEnumValue = new()
         {
             Id = 1019,
             Code = nameof(RemovedEnumValue),
@@ -318,7 +341,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1019.md
         /// </summary>
-        public static ComparisonRule RemovedEnumResponseValue = new ComparisonRule
+        public static ComparisonRule RemovedEnumResponseValue = new()
         {
             Id = 1019,
             Code = nameof(RemovedEnumResponseValue),
@@ -330,7 +353,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1000.md
         /// </summary>
-        public static ComparisonRule AddedEnumValue = new ComparisonRule
+        public static ComparisonRule AddedEnumValue = new()
         {
             Id = 1020,
             Code = nameof(AddedEnumValue),
@@ -342,7 +365,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1000.md
         /// </summary>
-        public static ComparisonRule AddedEnumRequestValue = new ComparisonRule
+        public static ComparisonRule AddedEnumRequestValue = new()
         {
             Id = 1020,
             Code = nameof(AddedEnumRequestValue),
@@ -354,7 +377,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1021.md
         /// </summary>
-        public static ComparisonRule AddedAdditionalProperties = new ComparisonRule
+        public static ComparisonRule AddedAdditionalProperties = new()
         {
             Id = 1021,
             Code = nameof(AddedAdditionalProperties),
@@ -366,7 +389,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1022.md
         /// </summary>
-        public static ComparisonRule RemovedAdditionalProperties = new ComparisonRule
+        public static ComparisonRule RemovedAdditionalProperties = new()
         {
             Id = 1022,
             Code = nameof(RemovedAdditionalProperties),
@@ -378,7 +401,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1023.md
         /// </summary>
-        public static ComparisonRule WideningTypeFormatChanged = new ComparisonRule
+        public static ComparisonRule WideningTypeFormatChanged = new()
         {
             Id = 1023,
             Code = nameof(WideningTypeFormatChanged),
@@ -390,7 +413,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1023.md
         /// </summary>
-        public static ComparisonRule TypeFormatChanged = new ComparisonRule
+        public static ComparisonRule TypeFormatChanged = new()
         {
             Id = 1023,
             Code = nameof(TypeFormatChanged),
@@ -402,7 +425,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1024.md
         /// </summary>
-        public static ComparisonRule ConstraintIsStronger = new ComparisonRule
+        public static ComparisonRule ConstraintIsStronger = new()
         {
             Id = 1024,
             Code = nameof(ConstraintIsStronger),
@@ -414,7 +437,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1024.md
         /// </summary>
-        public static ComparisonRule ResponseConstraintIsStronger = new ComparisonRule
+        public static ComparisonRule ResponseConstraintIsStronger = new()
         {
             Id = 1024,
             Code = nameof(ResponseConstraintIsStronger),
@@ -426,7 +449,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1024.md
         /// </summary>
-        public static ComparisonRule EnumConstraintIsStronger = new ComparisonRule
+        public static ComparisonRule EnumConstraintIsStronger = new()
         {
             Id = 1024,
             Code = nameof(EnumConstraintIsStronger),
@@ -438,7 +461,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1025.md
         /// </summary>
-        public static ComparisonRule RequiredStatusAdded = new ComparisonRule
+        public static ComparisonRule RequiredStatusAdded = new()
         {
             Id = 1025,
             Code = nameof(RequiredStatusAdded),
@@ -450,7 +473,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1025.md
         /// </summary>
-        public static ComparisonRule RequiredStatusRemoved = new ComparisonRule
+        public static ComparisonRule RequiredStatusRemoved = new()
         {
             Id = 1025,
             Code = nameof(RequiredStatusRemoved),
@@ -462,7 +485,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1026.md
         /// </summary>
-        public static ComparisonRule TypeChanged = new ComparisonRule
+        public static ComparisonRule TypeChanged = new()
         {
             Id = 1026,
             Code = nameof(TypeChanged),
@@ -474,7 +497,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1027.md
         /// </summary>
-        public static ComparisonRule DefaultValueChanged = new ComparisonRule
+        public static ComparisonRule DefaultValueChanged = new()
         {
             Id = 1027,
             Code = nameof(DefaultValueChanged),
@@ -486,7 +509,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1028.md
         /// </summary>
-        public static ComparisonRule ArrayCollectionFormatChanged = new ComparisonRule
+        public static ComparisonRule ArrayCollectionFormatChanged = new()
         {
             Id = 1028,
             Code = nameof(ArrayCollectionFormatChanged),
@@ -498,7 +521,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// OpenApi Specification version 3 specific
         /// </summary>
-        public static ComparisonRule ParameterStyleChanged = new ComparisonRule
+        public static ComparisonRule ParameterStyleChanged = new()
         {
             Id = 10281,
             Code = nameof(ParameterStyleChanged),
@@ -510,7 +533,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1029.md
         /// </summary>
-        public static ComparisonRule ReadonlyPropertyChanged = new ComparisonRule
+        public static ComparisonRule ReadonlyPropertyChanged = new()
         {
             Id = 1029,
             Code = nameof(ReadonlyPropertyChanged),
@@ -522,7 +545,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1031.md
         /// </summary>
-        public static ComparisonRule DifferentDiscriminator = new ComparisonRule
+        public static ComparisonRule DifferentDiscriminator = new()
         {
             Id = 1030,
             Code = nameof(DifferentDiscriminator),
@@ -534,7 +557,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1031.md
         /// </summary>
-        public static ComparisonRule DifferentExtends = new ComparisonRule
+        public static ComparisonRule DifferentExtends = new()
         {
             Id = 1031,
             Code = nameof(DifferentExtends),
@@ -546,7 +569,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1032.md
         /// </summary>
-        public static ComparisonRule DifferentAllOf = new ComparisonRule
+        public static ComparisonRule DifferentAllOf = new()
         {
             Id = 1032,
             Code = nameof(DifferentAllOf),
@@ -559,7 +582,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// OpenApi Specification version 3 specific
         /// </summary>
-        public static ComparisonRule DifferentOneOf = new ComparisonRule
+        public static ComparisonRule DifferentOneOf = new()
         {
             Id = 10321,
             Code = nameof(DifferentOneOf),
@@ -571,7 +594,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1033.md
         /// </summary>
-        public static ComparisonRule RemovedProperty = new ComparisonRule
+        public static ComparisonRule RemovedProperty = new()
         {
             Id = 1033,
             Code = nameof(RemovedProperty),
@@ -584,7 +607,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1034.md
         /// </summary>
-        public static ComparisonRule AddedRequiredProperty = new ComparisonRule
+        public static ComparisonRule AddedRequiredProperty = new()
         {
             Id = 1034,
             Code = nameof(AddedRequiredProperty),
@@ -596,7 +619,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1034.md
         /// </summary>
-        public static ComparisonRule AddedRequiredResponseProperty = new ComparisonRule
+        public static ComparisonRule AddedRequiredResponseProperty = new()
         {
             Id = 1034,
             Code = nameof(AddedRequiredResponseProperty),
@@ -608,7 +631,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1035.md
         /// </summary>
-        public static ComparisonRule RemovedOperation = new ComparisonRule
+        public static ComparisonRule RemovedOperation = new()
         {
             Id = 1035,
             Code = nameof(RemovedOperation),
@@ -621,7 +644,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
         /// </summary>
-        public static ComparisonRule ConstraintChanged = new ComparisonRule
+        public static ComparisonRule ConstraintChanged = new()
         {
             Id = 1036,
             Code = nameof(ConstraintChanged),
@@ -633,7 +656,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
         /// </summary>
-        public static ComparisonRule EnumConstraintChanged = new ComparisonRule
+        public static ComparisonRule EnumConstraintChanged = new()
         {
             Id = 1036,
             Code = nameof(EnumConstraintChanged),
@@ -645,7 +668,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
         /// </summary>
-        public static ComparisonRule MultipleOfConstraintChanged = new ComparisonRule
+        public static ComparisonRule MultipleOfConstraintChanged = new()
         {
             Id = 1036,
             Code = nameof(MultipleOfConstraintChanged),
@@ -657,7 +680,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
         /// </summary>
-        public static ComparisonRule UniqueItemsConstraintChanged = new ComparisonRule
+        public static ComparisonRule UniqueItemsConstraintChanged = new()
         {
             Id = 1036,
             Code = nameof(UniqueItemsConstraintChanged),
@@ -669,7 +692,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1036.md
         /// </summary>
-        public static ComparisonRule PatternConstraintChanged = new ComparisonRule
+        public static ComparisonRule PatternConstraintChanged = new()
         {
             Id = 1036,
             Code = nameof(PatternConstraintChanged),
@@ -681,7 +704,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1037.md
         /// </summary>
-        public static ComparisonRule ConstraintIsWeaker = new ComparisonRule
+        public static ComparisonRule ConstraintIsWeaker = new()
         {
             Id = 1037,
             Code = nameof(ConstraintIsWeaker),
@@ -693,7 +716,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1037.md
         /// </summary>
-        public static ComparisonRule RequestConstraintIsWeaker = new ComparisonRule
+        public static ComparisonRule RequestConstraintIsWeaker = new()
         {
             Id = 1037,
             Code = nameof(RequestConstraintIsWeaker),
@@ -705,7 +728,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1037.md
         /// </summary>
-        public static ComparisonRule EnumConstraintIsWeaker = new ComparisonRule
+        public static ComparisonRule EnumConstraintIsWeaker = new()
         {
             Id = 1037,
             Code = nameof(EnumConstraintIsWeaker),
@@ -718,7 +741,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1038.md
         /// </summary>
-        public static ComparisonRule AddedPath = new ComparisonRule
+        public static ComparisonRule AddedPath = new()
         {
             Id = 1038,
             Code = nameof(AddedPath),
@@ -730,7 +753,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1039.md
         /// </summary>
-        public static ComparisonRule AddedOperation = new ComparisonRule
+        public static ComparisonRule AddedOperation = new()
         {
             Id = 1039,
             Code = nameof(AddedOperation),
@@ -742,7 +765,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1040.md
         /// </summary>
-        public static ComparisonRule AddedReadOnlyPropertyInResponse = new ComparisonRule
+        public static ComparisonRule AddedReadOnlyPropertyInResponse = new()
         {
             Id = 1040,
             Code = nameof(AddedReadOnlyPropertyInResponse),
@@ -755,7 +778,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1041.md
         /// </summary>
-        public static ComparisonRule AddedPropertyInResponse = new ComparisonRule
+        public static ComparisonRule AddedPropertyInResponse = new()
         {
             Id = 1041,
             Code = nameof(AddedPropertyInResponse),
@@ -767,7 +790,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1041.md
         /// </summary>
-        public static ComparisonRule AddedBreakingPropertyInResponse = new ComparisonRule
+        public static ComparisonRule AddedBreakingPropertyInResponse = new()
         {
             Id = 1041,
             Code = nameof(AddedBreakingPropertyInResponse),
@@ -779,7 +802,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1042.md
         /// </summary>
-        public static ComparisonRule ChangedParameterOrder = new ComparisonRule
+        public static ComparisonRule ChangedParameterOrder = new()
         {
             Id = 1042,
             Code = nameof(ChangedParameterOrder),
@@ -791,7 +814,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1043.md
         /// </summary>
-        public static ComparisonRule AddingOptionalParameter = new ComparisonRule
+        public static ComparisonRule AddingOptionalParameter = new()
         {
             Id = 1043,
             Code = nameof(AddingOptionalParameter),
@@ -803,7 +826,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1044.md
         /// </summary>
-        public static ComparisonRule LongRunningOperationExtensionChanged = new ComparisonRule
+        public static ComparisonRule LongRunningOperationExtensionChanged = new()
         {
             Id = 1044,
             Code = nameof(LongRunningOperationExtensionChanged),
@@ -815,7 +838,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1045.md
         /// </summary>
-        public static ComparisonRule AddedOptionalProperty = new ComparisonRule
+        public static ComparisonRule AddedOptionalProperty = new()
         {
             Id = 1045,
             Code = nameof(AddedOptionalProperty),
@@ -827,7 +850,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1046.md
         /// </summary>
-        public static ComparisonRule AddedRequestBody = new ComparisonRule
+        public static ComparisonRule AddedRequestBody = new()
         {
             Id = 1046,
             Code = nameof(AddedRequestBody),
@@ -839,7 +862,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1047.md
         /// </summary>
-        public static ComparisonRule RemovedRequestBody = new ComparisonRule
+        public static ComparisonRule RemovedRequestBody = new()
         {
             Id = 1047,
             Code = nameof(RemovedRequestBody),
@@ -851,7 +874,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// Rule documentation: https://github.com/Azure/openapi-diff/blob/master/docs/rules/1048.md
         /// </summary>
-        public static ComparisonRule AddedSchema = new ComparisonRule
+        public static ComparisonRule AddedSchema = new()
         {
             Id = 1048,
             Code = nameof(AddedSchema),
@@ -863,7 +886,7 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// OpenApi Specification version 3 specific
         /// </summary>
-        public static ComparisonRule NullablePropertyChanged = new ComparisonRule()
+        public static ComparisonRule NullablePropertyChanged = new()
         {
             Id = 2000,
             Code = nameof(NullablePropertyChanged),
@@ -875,11 +898,12 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// OpenApi Specification version 3 specific
         /// </summary>
-        public static ComparisonRule OpenApiError = new ComparisonRule()
+        public static ComparisonRule OpenApiError = new()
         {
             Id = 9000,
             Code = nameof(OpenApiError),
-            Severity = MessageSeverity.Error
+            Severity = MessageSeverity.Error,
+            Type = MessageType.Specification
         };
     }
 }
