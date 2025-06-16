@@ -22,7 +22,6 @@ public static class OpenApiComparator
     /// <param name="oldOpenApiSpec">The content of the old OpenAPI Specification</param>
     /// <param name="newOpenApiSpec">The content of the new OpenAPI Specification</param>
     /// <param name="comparisonMessages">Result Details</param>
-    /// <param name="strict">If true, then breaking changes are errors instead of warnings. If null the version will be used to determine strict mode.</param>
     /// <returns>The severity of the changes.</returns>
     public static ChangeLevel Compare(
         out List<ComparisonMessage> comparisonMessages,

@@ -13,7 +13,8 @@ dotnet add package Criteo.OpenApi.Comparator
 
 Here is an example of how to use the Comparator:
 ```C#
-var differences = OpenApiComparator.Compare(
+var result = OpenApiComparator.Compare(
+    out var differences,
     oldOpenApiSpec,
     newOpenApiSpec
 );
@@ -54,12 +55,14 @@ Internally, the comparator uses [microsoft/OpenAPI.NET](https://github.com/micro
 
 ### 1.0
 - Made breaking changes to support that additive changes are allowed by default
-- Severity now includes a Breaking severity so that regardless of strict mode the original severity can be identified
-- Compare now returns a Change level that reflects the result or all found changes. This takes into account the strict mode, and version number if strict is set to null. Strict now defaults to true.
-  - When strict mode is null and a major or minor version change has occured breaking changes result in warnings and not errors
+- Compare now returns a Change level that reflects the result or all found changes. 
+- Removed strict mode. 
+  - When not in strict mode there were very few errors in previous versions
+  - A major version update in the spec is now considered an Breaking rule in that your API can intentionally change.
 - Combined the Parsing Errors with the Comparsion Messages
-- A code will now always uniquely identify the message severity
-- Split up several Code so that they are easier to identify
+- On the message itself a code will now always uniquely identify the message severity
+  - Severity now includes a Breaking severity
+- Split up several Code so that they are easier to identify and customize
   - ConstrantIsStronger
     - ResponseConstraintIsStronger
     - EnumConstrantIsStronger
@@ -69,6 +72,10 @@ Internally, the comparator uses [microsoft/OpenAPI.NET](https://github.com/micro
     - EnumConstraintChanged
     - MultipleOfConstraintChanged
     - UniqueItemsConstraintChanged
+  - Added new Codes
+    - MajorVersionChange
+    - MinorVersionChange
+    - NonSemanticVersion
 - Removed .NET 6 support as its no longer supported by Microsoft
 
 ## Contributing
