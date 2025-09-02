@@ -38,7 +38,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldDocument">The original document model.</param>
         /// <param name="newDocument">The new document model.</param>
         /// <returns>A list of messages from the comparison.</returns>
-        internal IEnumerable<ComparisonMessage> Compare(
+        internal List<ComparisonMessage> Compare(
             ComparisonContext context,
             OpenApiDocument oldDocument,
             OpenApiDocument newDocument
@@ -96,7 +96,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             var oldVersionAsList = oldVersion.Split('.');
 
             // If the version consists only of numbers separated by '.', we'll consider it semantic versioning.
-            if (!context.Strict && oldVersionAsList.Length > 0 && newVersionAsList.Length > 0)
+            if (oldVersionAsList.Length > 0 && newVersionAsList.Length > 0)
             {
                 var isVersionChanged = false;
 
@@ -111,9 +111,14 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 {
                     isVersionChanged = true;
 
+                    if (newMajor > oldMajor)
+                    {
+                        context.Log(ComparisonRules.MajorVersionChange, oldVersion, newVersion);
+                    }
+
                     if (oldMajor > newMajor)
                     {
-                        context.LogError(ComparisonRules.VersionsReversed, oldVersion, newVersion);
+                        context.Log(ComparisonRules.VersionsReversed, oldVersion, newVersion);
                     }
                 }
 
@@ -124,30 +129,28 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                     if (areIntegers && oldMinor != newMinor)
                     {
-                        isVersionChanged = true;
+                        if (newMinor > oldMinor)
+                        {
+                            context.Log(ComparisonRules.MinorVersionChange, oldVersion, newVersion);
+                        }
 
                         if (oldMinor > newMinor)
                         {
-                            context.LogError(ComparisonRules.VersionsReversed, oldVersion, newVersion);
+                            context.Log(ComparisonRules.VersionsReversed, oldVersion, newVersion);
                         }
                     }
                 }
 
-                // Situation 2: The versioning scheme is something else, maybe a date or just a label?
-                //              Regardless of what it is, we just check whether the two strings are equal or not.
-
-                if (!isVersionChanged && !areIntegers)
+                if (!areIntegers)
                 {
-                    isVersionChanged = !oldVersion.ToLower().Equals(newVersion.ToLower());
+                    context.Log(ComparisonRules.NonSemanticVersion, oldVersion, newVersion);
                 }
-
-                context.Strict = !isVersionChanged;
             }
 
-            if (context.Strict)
+            if (oldVersion.ToLower().Equals(newVersion.ToLower()))
             {
                 // There was no version change between the documents. This is not an error, but noteworthy.
-                context.LogInfo(ComparisonRules.NoVersionChange);
+                context.Log(ComparisonRules.NoVersionChange);
             }
 
             context.Pop();
@@ -168,7 +171,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             foreach (var oldServerUrl in oldServerUrls.Except(newServerUrls))
             {
                 context.PushServerByUrl(oldServerUrl);
-                context.LogBreakingChange(ComparisonRules.ServerNoLongerSupported, oldServerUrl);
+                context.Log(ComparisonRules.ServerNoLongerSupported, oldServerUrl);
                 context.Pop();
             }
             context.Pop();
@@ -198,14 +201,14 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 context.PushPathProperty(removedPath, isFromExtension);
                 var removedPathWithVariables =
                     oldPathsWithVariables.First(oldPath => ObjectPath.OpenApiPathName(oldPath) == removedPath);
-                context.LogBreakingChange(ComparisonRules.RemovedPath, removedPathWithVariables);
+                context.Log(ComparisonRules.RemovedPath, removedPathWithVariables);
                 context.Pop();
             }
 
             foreach (var addedPath in newPaths.Keys.Except(commonPaths))
             {
                 context.PushPathProperty(addedPath, isFromExtension);
-                context.LogInfo(ComparisonRules.AddedPath);
+                context.Log(ComparisonRules.AddedPath);
                 context.Pop();
             }
 
@@ -231,14 +234,14 @@ namespace Criteo.OpenApi.Comparator.Comparators
             foreach (var removedOperationName in oldOperations.Keys.Except(commonOperations))
             {
                 context.PushProperty(removedOperationName.ToString().ToLower());
-                context.LogBreakingChange(ComparisonRules.RemovedOperation, oldOperations[removedOperationName].OperationId);
+                context.Log(ComparisonRules.RemovedOperation, oldOperations[removedOperationName].OperationId);
                 context.Pop();
             }
 
             foreach (var addedOperationName in newOperations.Keys.Except(commonOperations))
             {
                 context.PushProperty(addedOperationName.ToString().ToLower());
-                context.LogInfo(ComparisonRules.AddedOperation);
+                context.Log(ComparisonRules.AddedOperation);
                 context.Pop();
             }
 
@@ -484,7 +487,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                      if (!_isSchemaReferenced[oldSchema.Value])
                      {
                          // It's only an error if the schema is referenced in the old service.
-                         context.LogBreakingChange(ComparisonRules.RemovedDefinition, oldSchema.Key);
+                         context.Log(ComparisonRules.RemovedDefinition, oldSchema.Key);
                      }
                  }
                  else
@@ -506,7 +509,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                  context.PushProperty(oldParameterName);
                  if (!newParameters.TryGetValue(oldParameterName, out var newParameter))
                  {
-                     context.LogBreakingChange(ComparisonRules.RemovedClientParameter, oldParameterName);
+                     context.Log(ComparisonRules.RemovedClientParameter, oldParameterName);
                  }
                  else
                  {
@@ -526,7 +529,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
              {
                  if (!newResponses.TryGetValue(oldDefinition, out var response))
                  {
-                     context.LogBreakingChange(ComparisonRules.RemovedDefinition, oldDefinition);
+                     context.Log(ComparisonRules.RemovedDefinition, oldDefinition);
                  }
                  else
                  {

@@ -150,6 +150,11 @@ namespace Criteo.OpenApi.Comparator.Logging
         /// <returns>The json path of the json document</returns>
         internal string JsonPointer(IJsonDocument jsonDocument, bool resolveReferences = false)
         {
+            if (jsonDocument == null)
+            {
+                return null;
+            }
+
             string path = null;
             foreach (var (_, reference, name) in CompletePath(jsonDocument.Token))
             {

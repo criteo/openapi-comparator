@@ -35,7 +35,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 var comparisonMessage = context.Direction == DataDirection.Request
                     ? ComparisonRules.RequestBodyFormatNoLongerSupported
                     : ComparisonRules.ResponseBodyInOperationFormatNoLongerSupported;
-                context.LogBreakingChange(comparisonMessage, removedMediaType);
+                context.Log(comparisonMessage, removedMediaType);
                 context.Pop();
             }
 
@@ -45,7 +45,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 var comparisonMessage = context.Direction == DataDirection.Request
                     ? ComparisonRules.RequestBodyFormatNowSupported
                     : ComparisonRules.ResponseBodyFormatNowSupported;
-                context.LogInfo(comparisonMessage, addedMediaType);
+                context.Log(comparisonMessage, addedMediaType);
                 context.Pop();
             }
 

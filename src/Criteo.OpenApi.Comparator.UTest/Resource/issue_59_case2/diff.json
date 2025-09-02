@@ -12,13 +12,13 @@
   },
   {
     "Severity": "Error",
-    "Message": "The new version has a new property 'testHiddenNotNullableProperty' in response that was not found in the old version.",
+    "Message": "The new version has a new property 'testHiddenNotNullableProperty' in response that was not found in the old version and additional properties are specifically forbidden.",
     "OldJsonRef": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema/properties/testHiddenNotNullableProperty",
     "NewJsonRef": "#/paths/~1api~1v1~1public~1productContent/get/responses/200/content/application~1json/schema/properties/testHiddenNotNullableProperty",
     "OldJsonPath": "#/components/schemas/ContentModel/properties/testHiddenNotNullableProperty",
     "NewJsonPath": "#/components/schemas/ContentModel/properties/testHiddenNotNullableProperty",
     "Id": 1041,
-    "Code": "AddedPropertyInResponse",
+    "Code": "AddedBreakingPropertyInResponse",
     "Mode": "Addition"
   },
   {

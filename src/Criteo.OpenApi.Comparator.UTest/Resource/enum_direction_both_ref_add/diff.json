@@ -18,7 +18,7 @@
     "OldJsonPath": "#/components/schemas/RequestResponseEnum/enum",
     "NewJsonPath": "#/components/schemas/RequestResponseEnum/enum",
     "Id": 1037,
-    "Code": "ConstraintIsWeaker",
+    "Code": "EnumConstraintIsWeaker",
     "Mode": "Update"
   },
   {
@@ -40,7 +40,7 @@
     "OldJsonPath": "#/components/schemas/RequestResponseEnum/enum",
     "NewJsonPath": "#/components/schemas/RequestResponseEnum/enum",
     "Id": 1037,
-    "Code": "ConstraintIsWeaker",
+    "Code": "EnumConstraintIsWeaker",
     "Mode": "Update"
   }
 ]

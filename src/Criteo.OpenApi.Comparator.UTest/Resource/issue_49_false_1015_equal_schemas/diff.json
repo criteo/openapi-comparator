@@ -1,13 +1,2 @@
 [
-  {
-    "Severity": "Info",
-    "Message": "The versions have not changed.",
-    "OldJsonRef": "#/info/version",
-    "NewJsonRef": "#/info/version",
-    "OldJsonPath": "#/info/version",
-    "NewJsonPath": "#/info/version",
-    "Id": 1001,
-    "Code": "NoVersionChange",
-    "Mode": "Update"
-  }
 ]

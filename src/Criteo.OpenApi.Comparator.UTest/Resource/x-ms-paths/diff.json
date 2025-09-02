@@ -18,7 +18,7 @@
     "OldJsonPath": "#/x-ms-paths/~1myPath~1query-drive?op=folder/get/parameters/0/required",
     "NewJsonPath": "#/x-ms-paths/~1myPath~1query-drive?op=folder/get/parameters/0/required",
     "Id": 1025,
-    "Code": "RequiredStatusChange",
+    "Code": "RequiredStatusAdded",
     "Mode": "Update"
   },
   {

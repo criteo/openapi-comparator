@@ -18,7 +18,7 @@
     "OldJsonPath": "#/components/schemas/RequestOnlyEnum/enum",
     "NewJsonPath": "#/components/schemas/RequestOnlyEnum/enum",
     "Id": 1024,
-    "Code": "ConstraintIsStronger",
+    "Code": "EnumConstraintIsStronger",
     "Mode": "Update"
   }
 ]

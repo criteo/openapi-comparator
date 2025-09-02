@@ -1,25 +1,25 @@
 [
   {
     "Severity": "Info",
-    "Message": "The \u0027required\u0027 status changed from the old version(\u0027True\u0027) to the new version(\u0027False\u0027).",
+    "Message": "The \u0027required\u0027 status was removed from the old version(\u0027True\u0027) to the new version(\u0027False\u0027).",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/required",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/required",
     "OldJsonPath": "#/paths/~1pets/get/parameters/0/required",
     "NewJsonPath": "#/paths/~1pets/get/parameters/0/required",
     "Id": 1025,
-    "Code": "RequiredStatusChange",
-    "Mode": "Update"
+    "Code": "RequiredStatusRemoved",
+    "Mode": "Removal"
   },
   {
     "Severity": "Info",
-    "Message": "The \u0027required\u0027 status changed from the old version(\u0027True\u0027) to the new version(\u0027False\u0027).",
+    "Message": "The \u0027required\u0027 status was removed from the old version(\u0027True\u0027) to the new version(\u0027False\u0027).",
     "OldJsonRef": "#/paths/~1pets/get/parameters/1/required",
     "NewJsonRef": "#/paths/~1pets/get/parameters/1/required",
     "OldJsonPath": "#/components/parameters/limit/required",
     "NewJsonPath": "#/components/parameters/limit/required",
     "Id": 1025,
-    "Code": "RequiredStatusChange",
-    "Mode": "Update"
+    "Code": "RequiredStatusRemoved",
+    "Mode": "Removal"
   },
   {
     "Severity": "Warning",
@@ -29,7 +29,7 @@
     "OldJsonPath": "#/paths/~1pets/get/requestBody/required",
     "NewJsonPath": "#/paths/~1pets/get/requestBody/required",
     "Id": 1025,
-    "Code": "RequiredStatusChange",
+    "Code": "RequiredStatusAdded",
     "Mode": "Update"
   }
 ]

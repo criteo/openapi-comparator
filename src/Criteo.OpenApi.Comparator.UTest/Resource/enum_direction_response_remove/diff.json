@@ -7,7 +7,7 @@
     "OldJsonPath": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
     "NewJsonPath": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
     "Id": 1019,
-    "Code": "RemovedEnumValue",
+    "Code": "RemovedEnumResponseValue",
     "Mode": "Removal"
   },
   {
@@ -18,7 +18,7 @@
     "OldJsonPath": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
     "NewJsonPath": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
     "Id": 1024,
-    "Code": "ConstraintIsStronger",
+    "Code": "EnumConstraintIsStronger",
     "Mode": "Update"
   }
 ]

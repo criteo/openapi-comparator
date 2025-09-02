@@ -43,16 +43,18 @@ public class OpenApiSpecificationsCompareTests
         var newFileName = Path.Combine(resourceDirectory, testcase, "new.yaml");
         var diffFileName = Path.Combine(resourceDirectory, testcase, "diff.json");
 
-        var differences = OpenApiComparator
-            .Compare(File.ReadAllText(oldFileName), File.ReadAllText(newFileName), out _);
+        var result = OpenApiComparator
+            .Compare(out var differences, File.ReadAllText(oldFileName), File.ReadAllText(newFileName));
 
         var expectedDifferencesText = File.ReadAllText(diffFileName);
         var expectedDifferences = JsonSerializer
-            .Deserialize<ComparisonMessageModel[]>(expectedDifferencesText, serializerOptions);
+            .Deserialize<TestResult>(expectedDifferencesText, serializerOptions);
 
         Assert.That(differences,
-            Is.EquivalentTo(expectedDifferences).Using<ComparisonMessage, ComparisonMessageModel>(Comparer),
-            $"Expected differences:\n{expectedDifferencesText}\nActual differences:\n{JsonSerializer.Serialize(differences, serializerOptions)}");
+            Is.EquivalentTo(expectedDifferences.Messages).Using<ComparisonMessage, ComparisonMessageModel>(Comparer),
+            $"Expected differences:\n{JsonSerializer.Serialize(expectedDifferences.Messages, serializerOptions)}\nActual differences:\n{JsonSerializer.Serialize(differences, serializerOptions)}");
+        Assert.That(result, Is.EqualTo(expectedDifferences.Result));
+
     }
 
     private static IEnumerable<string> TestCases()
@@ -68,7 +70,7 @@ public class OpenApiSpecificationsCompareTests
     {
         var assemblyLocation = typeof(OpenApiSpecificationsCompareTests).GetTypeInfo().Assembly.Location;
         var baseDirectory = Directory.GetParent(assemblyLocation).ToString();
-        return Path.Combine(baseDirectory, "Resource");
+        return Path.Combine(baseDirectory, "Resource1.0");
     }
 
     private static bool Comparer(ComparisonMessage message, ComparisonMessageModel model)
@@ -85,15 +87,8 @@ public class OpenApiSpecificationsCompareTests
     }
 }
 
-internal class ComparisonMessageModel
+internal class TestResult
 {
-    public Severity Severity { get; set; }
-    public string Message { get; set; }
-    public string OldJsonRef { get; set; }
-    public string NewJsonRef { get; set; }
-    public string OldJsonPath { get; set; }
-    public string NewJsonPath { get; set; }
-    public int Id { get; set; }
-    public string Code { get; set; }
-    public MessageType Mode { get; set; }
+    public ChangeLevel Result { get; set; }
+    public List<ComparisonMessageModel> Messages { get; set; }
 }

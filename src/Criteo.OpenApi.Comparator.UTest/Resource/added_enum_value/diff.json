@@ -18,7 +18,7 @@
     "OldJsonPath": "#/components/schemas/Pet/properties/petType/enum",
     "NewJsonPath": "#/components/schemas/Pet/properties/petType/enum",
     "Id": 1037,
-    "Code": "ConstraintIsWeaker",
+    "Code": "EnumConstraintIsWeaker",
     "Mode": "Update"
   },
   {
@@ -29,7 +29,7 @@
     "OldJsonPath": "#/components/schemas/Pet/properties/accountType/enum",
     "NewJsonPath": "#/components/schemas/Pet/properties/accountType/enum",
     "Id": 1037,
-    "Code": "ConstraintIsWeaker",
+    "Code": "EnumConstraintIsWeaker",
     "Mode": "Update"
   }
 ]

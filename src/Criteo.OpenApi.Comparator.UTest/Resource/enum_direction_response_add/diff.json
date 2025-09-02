@@ -18,7 +18,7 @@
     "OldJsonPath": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
     "NewJsonPath": "#/paths/~1order~1{path}/post/responses/200/content/application~1json/schema/properties/bar/enum",
     "Id": 1037,
-    "Code": "ConstraintIsWeaker",
+    "Code": "EnumConstraintIsWeaker",
     "Mode": "Update"
   }
 ]

@@ -19,5 +19,8 @@ namespace Criteo.OpenApi.Comparator
 
         /// <summary> Difference type (Addition, Update, Removal) </summary>
         public MessageType Type { get; set; }
+
+        /// <summary> Difference type (Info, Warning, Breading, Error) </summary>
+        public MessageSeverity Severity { get; set; }
     }
 }

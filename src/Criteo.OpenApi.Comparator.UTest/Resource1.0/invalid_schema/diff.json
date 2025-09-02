@@ -1,0 +1,27 @@
+{
+  "Result": "Error",
+  "Messages": [
+    {
+      "Severity": "Error",
+      "Message": "Paths must be a map/object ",
+      "OldJsonRef": null,
+      "NewJsonRef": null,
+      "OldJsonPath": null,
+      "NewJsonPath": null,
+      "Id": 9000,
+      "Code": "OpenApiError",
+      "Mode": "Specification"
+    },
+    {
+      "Severity": "Error",
+      "Message": "The field 'paths' in 'document' object is REQUIRED. #/paths",
+      "OldJsonRef": null,
+      "NewJsonRef": null,
+      "OldJsonPath": null,
+      "NewJsonPath": null,
+      "Id": 9000,
+      "Code": "OpenApiError",
+      "Mode": "Specification"
+    }
+  ]
+}

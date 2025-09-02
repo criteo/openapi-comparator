@@ -9,8 +9,6 @@ using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator
 {
-    internal delegate void LogAction(ComparisonRule rule, params object[] formatArguments);
-
     /// <summary>
     /// Provides context for a comparison, such as the ancestors in the validation tree, the root object
     /// and information about the key or index that locate this object in the parent's list or dictionary
@@ -39,9 +37,6 @@ namespace Criteo.OpenApi.Comparator
         /// Old swagger
         internal OpenApiDocument NewOpenApiDocument => _newOpenApiDocument.Typed;
 
-        /// If true, then breaking changes are errors instead of warnings.
-        internal bool Strict { get; set; }
-
         /// Request, Response, Both or None
         private readonly DisposableDataDirection _direction = new();
 
@@ -67,62 +62,27 @@ namespace Criteo.OpenApi.Comparator
 
         internal void Pop() => _path.Pop();
 
-        private readonly Stack<ObjectPath> _path = new Stack<ObjectPath>(new[] { ObjectPath.Empty });
+        private readonly Stack<ObjectPath> _path = new([ObjectPath.Empty]);
 
-        internal void LogInfo(ComparisonRule rule, params object[] formatArguments) =>
+        internal void Log(ComparisonRule rule, params object[] formatArguments) =>
             _messages.Add(new ComparisonMessage(
                 rule,
                 Path,
                 _oldOpenApiDocument,
                 _newOpenApiDocument,
-                Severity.Info,
                 formatArguments
             ));
 
-        internal void LogWarning(ComparisonRule rule, params object[] formatArguments) =>
-            _messages.Add(new ComparisonMessage(
-                rule,
-                Path,
-                _oldOpenApiDocument,
-                _newOpenApiDocument,
-                Severity.Warning,
-                formatArguments
-            ));
-
-        internal void LogError(ComparisonRule rule, params object[] formatArguments) =>
-            _messages.Add(new ComparisonMessage(
-                rule,
-                Path,
-                _oldOpenApiDocument,
-                _newOpenApiDocument,
-                Severity.Error,
-                formatArguments
-            ));
-
-        internal void LogBreakingChange(ComparisonRule rule, params object[] formatArguments) =>
-            _messages.Add(new ComparisonMessage(
-                rule,
-                Path,
-                _oldOpenApiDocument,
-                _newOpenApiDocument,
-                Strict ? Severity.Error : Severity.Warning,
-                formatArguments
-            ));
 
         /// <summary>
         /// Lists all the found differences
         /// </summary>
-        internal IEnumerable<ComparisonMessage> Messages
-        {
-            get
-            {
-                // TODO: How to eliminate duplicate messages
-                // Issue: https://github.com/Azure/openapi-diff/issues/48
-                return _messages; //.Distinct(new CustomComparer());
-            }
-        }
+        internal List<ComparisonMessage> Messages =>
+            // TODO: How to eliminate duplicate messages
+            // Issue: https://github.com/Azure/openapi-diff/issues/48
+            _messages; //.Distinct(new CustomComparer());
 
-        private readonly IList<ComparisonMessage> _messages = new List<ComparisonMessage>();
+        private readonly List<ComparisonMessage> _messages = [];
     }
 
     internal class DisposableDataDirection : IDisposable

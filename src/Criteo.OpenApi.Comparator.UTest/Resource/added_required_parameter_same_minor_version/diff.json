@@ -1,0 +1,13 @@
+[
+  {
+    "Severity": "Error",
+    "Message": "The required parameter \u0027limitParam\u0027 was added in the new version.",
+    "OldJsonRef": null,
+    "NewJsonRef": "#/paths/~1api~1Parameters/put/parameters/1",
+    "OldJsonPath": null,
+    "NewJsonPath": "#/paths/~1api~1Parameters/put/parameters/1",
+    "Id": 1010,
+    "Code": "AddingRequiredParameter",
+    "Mode": "Addition"
+  }
+]

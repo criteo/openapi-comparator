@@ -7,6 +7,8 @@ using System.Globalization;
 using System.Linq;
 using Criteo.OpenApi.Comparator.Parser;
 using Criteo.OpenApi.Comparator.Logging;
+using Microsoft.OpenApi.Models;
+using System.Data;
 
 namespace Criteo.OpenApi.Comparator
 {
@@ -22,15 +24,25 @@ namespace Criteo.OpenApi.Comparator
             ObjectPath path,
             IJsonDocument oldDocument,
             IJsonDocument newDocument,
-            Severity severity,
             params object[] formatArguments
         )
         {
-            Severity = severity;
+            Severity = rule.Severity;
             Message = $"{string.Format(CultureInfo.CurrentCulture, rule.Message, formatArguments)}";
             Path = path;
             OldDocument = oldDocument;
             NewDocument = newDocument;
+            Id = rule.Id;
+            Code = rule.Code;
+            DocUrl = $"{DocBaseUrl}{rule.Id}.md";
+            Mode = rule.Type;
+        }
+
+        internal ComparisonMessage(OpenApiError item)
+        {
+            var rule = ComparisonRules.OpenApiError;
+            Severity = rule.Severity;
+            Message = item.Message + " " + item.Pointer;
             Id = rule.Id;
             Code = rule.Code;
             DocUrl = $"{DocBaseUrl}{rule.Id}.md";
@@ -42,7 +54,7 @@ namespace Criteo.OpenApi.Comparator
         private IJsonDocument NewDocument { get; }
 
         /// Info, Error, Warning
-        public Severity Severity { get; }
+        public MessageSeverity Severity { get; set; }
 
         /// <summary>
         /// Explicit description of the change.
@@ -57,7 +69,7 @@ namespace Criteo.OpenApi.Comparator
         /// <returns>JSON Pointer of the old JSON reference</returns>
         /// JSON Pointer defines a string syntax for identifying a specific value
         /// within a JSON document
-        public string OldJsonRef => Path.JsonPointer(OldDocument);
+        public string OldJsonRef => Path?.JsonPointer(OldDocument);
 
         /// <summary>
         /// A JToken from the old document that contains such information as location.
@@ -71,7 +83,7 @@ namespace Criteo.OpenApi.Comparator
         /// <returns>JSON Pointer of the new JSON reference</returns>
         /// JSON Pointer defines a string syntax for identifying a specific value
         /// within a JSON document
-        public string NewJsonRef => Path.JsonPointer(NewDocument);
+        public string NewJsonRef => Path?.JsonPointer(NewDocument);
 
         /// <summary>
         /// A JToken from the new document that contains such information as location.
@@ -84,12 +96,12 @@ namespace Criteo.OpenApi.Comparator
         /// <summary>
         /// JSON Pointer of the old resolved JSON reference
         /// </summary>
-        public string OldJsonPath => Path.JsonPointer(OldDocument, resolveReferences: true);
+        public string OldJsonPath => Path?.JsonPointer(OldDocument, resolveReferences: true);
 
         /// <summary>
         /// JSON Pointer of the new resolved JSON reference
         /// </summary>
-        public string NewJsonPath => Path.JsonPointer(NewDocument, resolveReferences: true);
+        public string NewJsonPath => Path?.JsonPointer(NewDocument, resolveReferences: true);
 
         /// <summary>
         /// The id of the validation message
