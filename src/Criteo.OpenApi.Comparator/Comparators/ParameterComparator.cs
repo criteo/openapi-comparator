@@ -76,7 +76,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (oldIn != newIn)
             {
                 context.PushProperty("in");
-                context.LogBreakingChange(ComparisonRules.ParameterInHasChanged,
+                context.Log(ComparisonRules.ParameterInHasChanged,
                     oldIn.ToString().ToLower(),
                     newIn.ToString().ToLower()
                 );
@@ -91,7 +91,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (newParameter.IsConstant() != oldParameter.IsConstant())
             {
                 context.PushProperty("enum");
-                context.LogBreakingChange(ComparisonRules.ConstantStatusHasChanged);
+                context.Log(ComparisonRules.ConstantStatusHasChanged);
                 context.Pop();
             }
         }
@@ -105,11 +105,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.PushProperty("required");
             if (newParameter.IsRequired())
             {
-                context.LogBreakingChange(ComparisonRules.RequiredStatusChange, false, true);
+                context.Log(ComparisonRules.RequiredStatusAdded, false, true);
             }
             else
             {
-                context.LogInfo(ComparisonRules.RequiredStatusChange, true, false);
+                context.Log(ComparisonRules.RequiredStatusRemoved, true, false);
             }
             context.Pop();
         }
@@ -121,7 +121,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (oldParameter.Style != newParameter.Style)
             {
                 context.PushProperty("style");
-                context.LogBreakingChange(ComparisonRules.ParameterStyleChanged, oldParameter.Name);
+                context.Log(ComparisonRules.ParameterStyleChanged, oldParameter.Name);
                 context.Pop();
             }
         }

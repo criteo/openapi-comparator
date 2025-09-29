@@ -18,7 +18,7 @@
     "OldJsonPath": "#/components/parameters/limitParam/schema/enum",
     "NewJsonPath": "#/components/parameters/limitParam/schema/enum",
     "Id": 1024,
-    "Code": "ConstraintIsStronger",
+    "Code": "EnumConstraintIsStronger",
     "Mode": "Update"
   },
   {
@@ -40,7 +40,7 @@
     "OldJsonPath": "#/components/schemas/Pet/properties/petType/enum",
     "NewJsonPath": "#/components/schemas/Pet/properties/petType/enum",
     "Id": 1024,
-    "Code": "ConstraintIsStronger",
+    "Code": "EnumConstraintIsStronger",
     "Mode": "Update"
   },
   {
@@ -62,7 +62,7 @@
     "OldJsonPath": "#/components/schemas/Pet/properties/petType/enum",
     "NewJsonPath": "#/components/schemas/Pet/properties/petType/enum",
     "Id": 1024,
-    "Code": "ConstraintIsStronger",
+    "Code": "EnumConstraintIsStronger",
     "Mode": "Update"
   }
 ]

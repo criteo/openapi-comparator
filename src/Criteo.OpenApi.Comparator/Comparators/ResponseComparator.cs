@@ -5,77 +5,84 @@ using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Microsoft.OpenApi.Models;
 
-namespace Criteo.OpenApi.Comparator.Comparators
+namespace Criteo.OpenApi.Comparator.Comparators;
+
+internal class ResponseComparator
 {
-    internal class ResponseComparator
+    private readonly ContentComparator _contentComparator;
+
+    internal ResponseComparator(ContentComparator contentComparator)
     {
-        private readonly ContentComparator _contentComparator;
+        _contentComparator = contentComparator;
+    }
 
-        internal ResponseComparator(ContentComparator contentComparator)
+    internal void Compare(ComparisonContext context,
+        OpenApiResponse oldResponse, OpenApiResponse newResponse)
+    {
+        ComponentComparator<OpenApiResponse>.Compare(context, oldResponse, newResponse);
+
+        using (context.WithDirection(DataDirection.Response))
         {
-            _contentComparator = contentComparator;
-        }
-
-        internal void Compare(ComparisonContext context,
-            OpenApiResponse oldResponse, OpenApiResponse newResponse)
-        {
-            ComponentComparator<OpenApiResponse>.Compare(context, oldResponse, newResponse);
-
-            using (context.WithDirection(DataDirection.Response))
+            if (!string.IsNullOrWhiteSpace(oldResponse.Reference?.ReferenceV3))
             {
-                if (!string.IsNullOrWhiteSpace(oldResponse.Reference?.ReferenceV3))
-                {
-                    oldResponse = oldResponse.Reference.Resolve(context.OldOpenApiDocument.Components.Responses);
-                    if (oldResponse == null)
-                        return;
-                }
-
-                if (!string.IsNullOrWhiteSpace(newResponse.Reference?.ReferenceV3))
-                {
-                    newResponse = newResponse.Reference.Resolve(context.NewOpenApiDocument.Components.Responses);
-                    if (newResponse == null)
-                        return;
-                }
-
-                CompareHeaders(context, oldResponse.Headers, newResponse.Headers);
-
-                _contentComparator.Compare(context, oldResponse.Content, newResponse.Content);
+                oldResponse = oldResponse.Reference.Resolve(context.OldOpenApiDocument.Components.Responses);
+                if (oldResponse == null)
+                    return;
             }
-        }
 
-        private static void CompareHeaders(ComparisonContext context,
-            IDictionary<string, OpenApiHeader> oldHeaders,
-            IDictionary<string, OpenApiHeader> newHeaders)
-        {
-            newHeaders = newHeaders ?? new Dictionary<string, OpenApiHeader>();
-            oldHeaders = oldHeaders ?? new Dictionary<string, OpenApiHeader>();
-
-            context.PushProperty("headers");
-            foreach (var header in newHeaders)
+            if (!string.IsNullOrWhiteSpace(newResponse.Reference?.ReferenceV3))
             {
-                context.PushProperty(header.Key);
-                if (!oldHeaders.TryGetValue(header.Key, out var oldHeader))
-                {
-                    context.LogInfo(ComparisonRules.AddingHeader, header.Key);
-                }
+                newResponse = newResponse.Reference.Resolve(context.NewOpenApiDocument.Components.Responses);
+                if (newResponse == null)
+                    return;
+            }
+
+            CompareHeaders(context, oldResponse.Headers, newResponse.Headers);
+
+            _contentComparator.Compare(context, oldResponse.Content, newResponse.Content);
+        }
+    }
+
+    private static void CompareHeaders(ComparisonContext context,
+        IDictionary<string, OpenApiHeader> oldHeaders,
+        IDictionary<string, OpenApiHeader> newHeaders)
+    {
+        newHeaders ??= new Dictionary<string, OpenApiHeader>();
+        oldHeaders ??= new Dictionary<string, OpenApiHeader>();
+
+        context.PushProperty("headers");
+        foreach (var header in newHeaders)
+        {
+            context.PushProperty(header.Key);
+            if (!oldHeaders.TryGetValue(header.Key, out var oldHeader))
+            {
+                if (header.Value.Required && context.Direction == DataDirection.Request)
+                    context.Log(ComparisonRules.AddingRequiredHeader, header.Key);
                 else
-                {
-                    ComponentComparator<OpenApiHeader>.Compare(context, oldHeader, header.Value);
-                }
-                context.Pop();
+                    context.Log(ComparisonRules.AddingHeader, header.Key);
             }
-
-            foreach (var oldHeader in oldHeaders)
+            else
             {
-                context.PushProperty(oldHeader.Key);
-                if (!newHeaders.ContainsKey(oldHeader.Key))
-                {
-                    context.LogBreakingChange(ComparisonRules.RemovingHeader, oldHeader.Key);
-                }
-                context.Pop();
+                ComponentComparator<OpenApiHeader>.Compare(context, oldHeader, header.Value);
             }
 
             context.Pop();
         }
+
+        foreach (var oldHeader in oldHeaders)
+        {
+            context.PushProperty(oldHeader.Key);
+            if (!newHeaders.ContainsKey(oldHeader.Key))
+            {
+                if (context.Direction == DataDirection.Response)
+                    context.Log(ComparisonRules.RemovingHeader, oldHeader.Key);
+                else
+                    context.Log(ComparisonRules.RemovingRequestHeader, oldHeader.Key);
+            }
+
+            context.Pop();
+        }
+
+        context.Pop();
     }
 }

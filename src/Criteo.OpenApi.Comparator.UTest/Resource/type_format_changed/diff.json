@@ -20,5 +20,16 @@
     "Id": 1023,
     "Code": "TypeFormatChanged",
     "Mode": "Update"
+  },
+  {
+    "Severity": "Info",
+    "Message": "The new version has a different format than the previous one.",
+    "OldJsonRef": "#/components/parameters/skipParam/schema/format",
+    "NewJsonRef": "#/components/parameters/skipParam/schema/format",
+    "OldJsonPath": "#/components/parameters/skipParam/schema/format",
+    "NewJsonPath": "#/components/parameters/skipParam/schema/format",
+    "Id": 1023,
+    "Code": "WideningTypeFormatChanged",
+    "Mode": "Update"
   }
 ]

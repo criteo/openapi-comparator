@@ -1,0 +1,16 @@
+{
+  "Result": "Error",
+  "Messages": [
+    {
+      "Severity": "Error",
+      "Message": "A version number does not follow semantic conventions Old 1.0.0, New 2e.",
+      "OldJsonRef": "#/info/version",
+      "NewJsonRef": "#/info/version",
+      "OldJsonPath": "#/info/version",
+      "NewJsonPath": "#/info/version",
+      "Id": 1049,
+      "Code": "NonSemanticVersion",
+      "Mode": "Specification"
+    }
+  ]
+}

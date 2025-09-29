@@ -18,7 +18,7 @@
     "OldJsonPath": "#/paths/~1order~1{path}/post/parameters/1/schema/enum",
     "NewJsonPath": "#/paths/~1order~1{path}/post/parameters/1/schema/enum",
     "Id": 1024,
-    "Code": "ConstraintIsStronger",
+    "Code": "EnumConstraintIsStronger",
     "Mode": "Update"
   }
 ]

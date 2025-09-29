@@ -1,0 +1,16 @@
+{
+  "Result": "Warning",
+  "Messages": [
+    {
+      "Severity": "Warning",
+      "Message": "A minor version change. This signifies additive changes or occasionally, non-backwards compatible changes may be made in minor version where impact is believed to be low relative to the benefit provided. Old 1.0.0, New 1.1.0.",
+      "OldJsonRef": "#/info/version",
+      "NewJsonRef": "#/info/version",
+      "OldJsonPath": "#/info/version",
+      "NewJsonPath": "#/info/version",
+      "Id": 1051,
+      "Code": "MinorVersionChange",
+      "Mode": "Addition"
+    }
+  ]
+}

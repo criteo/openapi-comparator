@@ -1,0 +1,16 @@
+{
+  "Result": "Error",
+  "Messages": [
+    {
+      "Severity": "Breaking",
+      "Message": "A major version change. This signifies breaking changes may be made. Old 1.0.0, New 2.0.0.",
+      "OldJsonRef": "#/info/version",
+      "NewJsonRef": "#/info/version",
+      "OldJsonPath": "#/info/version",
+      "NewJsonPath": "#/info/version",
+      "Id": 1050,
+      "Code": "MajorVersionChange",
+      "Mode": "Addition"
+    }
+  ]
+}

@@ -7,7 +7,7 @@
     "OldJsonPath": "#/components/schemas/ResponseOnlyEnum/enum",
     "NewJsonPath": "#/components/schemas/ResponseOnlyEnum/enum",
     "Id": 1019,
-    "Code": "RemovedEnumValue",
+    "Code": "RemovedEnumResponseValue",
     "Mode": "Removal"
   },
   {
@@ -18,7 +18,7 @@
     "OldJsonPath": "#/components/schemas/ResponseOnlyEnum/enum",
     "NewJsonPath": "#/components/schemas/ResponseOnlyEnum/enum",
     "Id": 1024,
-    "Code": "ConstraintIsStronger",
+    "Code": "EnumConstraintIsStronger",
     "Mode": "Update"
   }
 ]

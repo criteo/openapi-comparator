@@ -44,7 +44,7 @@
     "Mode": "Update"
   },
   {
-    "Severity": "Error",
+    "Severity": "Warning",
     "Message": "The new version has a new property 'allow_attachments' in response that was not found in the old version.",
     "OldJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/properties/allow_attachments",
     "NewJsonRef": "#/paths/~1api~1public~1form/post/responses/200/content/application~1json/schema/properties/ticket/properties/allow_attachments",

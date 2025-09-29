@@ -31,20 +31,20 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             if (oldSchema == null)
             {
-                context.LogError(ComparisonRules.AddedSchema);
+                context.Log(ComparisonRules.AddedSchema);
                 return;
             }
 
             if (newSchema == null)
             {
-                context.LogBreakingChange(ComparisonRules.RemovedDefinition, default(string));
+                context.Log(ComparisonRules.RemovedDefinition, default(string));
                 return;
             }
 
             if (newSchema.Reference?.ReferenceV3 != null
                 && !newSchema.Reference.ReferenceV3.Equals(oldSchema.Reference?.ReferenceV3))
             {
-                context.LogBreakingChange(ComparisonRules.ReferenceRedirection);
+                context.Log(ComparisonRules.ReferenceRedirection);
             }
 
             var areSchemasReferenced = false;
@@ -107,7 +107,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             CompareProperties(context, oldSchema, newSchema, isSchemaReferenced);
 
-            CompareRequired(context, oldSchema.Required, newSchema.Required);
+            CompareRequired(context, oldSchema, newSchema);
 
             CompareNullable(context, oldSchema.Nullable, newSchema.Nullable);
         }
@@ -118,7 +118,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         {
             if (oldNullable == newNullable) return;
             context.PushProperty("nullable");
-            context.LogBreakingChange(
+            context.Log(
                 ComparisonRules.NullablePropertyChanged,
                 oldNullable.ToString().ToLower(),
                 newNullable.ToString().ToLower()
@@ -133,7 +133,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (oldReadOnly != newReadOnly)
             {
                 context.PushProperty("readOnly");
-                context.LogBreakingChange(
+                context.Log(
                     ComparisonRules.ReadonlyPropertyChanged,
                     oldReadOnly.ToString().ToLower(),
                     newReadOnly.ToString().ToLower()
@@ -149,7 +149,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 || oldDiscriminator?.PropertyName != null && !oldDiscriminator.PropertyName.Equals(newDiscriminator?.PropertyName))
             {
                 context.PushProperty("discriminator");
-                context.LogBreakingChange(ComparisonRules.DifferentDiscriminator);
+                context.Log(ComparisonRules.DifferentDiscriminator);
                 context.Pop();
             }
         }
@@ -165,7 +165,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
 
             context.PushProperty("default");
-            context.LogBreakingChange(ComparisonRules.DefaultValueChanged);
+            context.Log(ComparisonRules.DefaultValueChanged);
             context.Pop();
         }
 
@@ -209,21 +209,21 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (oldSchema.MultipleOf.DifferFrom(newSchema.MultipleOf))
             {
                 context.PushProperty("multipleOf");
-                context.LogBreakingChange(ComparisonRules.ConstraintChanged, "multipleOf");
+                context.Log(ComparisonRules.MultipleOfConstraintChanged, "multipleOf");
                 context.Pop();
             }
 
             if (oldSchema.UniqueItems != newSchema.UniqueItems)
             {
                 context.PushProperty("uniqueItems");
-                context.LogBreakingChange(ComparisonRules.ConstraintChanged, "uniqueItems");
+                context.Log(ComparisonRules.UniqueItemsConstraintChanged, "uniqueItems");
                 context.Pop();
             }
 
             if (oldSchema.Pattern.DifferFrom(newSchema.Pattern))
             {
                 context.PushProperty("pattern");
-                context.LogBreakingChange(ComparisonRules.ConstraintChanged, "pattern");
+                context.Log(ComparisonRules.PatternConstraintChanged, "pattern");
                 context.Pop();
             }
         }
@@ -234,21 +234,21 @@ namespace Criteo.OpenApi.Comparator.Comparators
              context.PushProperty(attributeName);
              if (additionalCondition)
              {
-                 context.LogBreakingChange(ComparisonRules.ConstraintChanged, attributeName);
+                 context.Log(ComparisonRules.ConstraintChanged, attributeName);
              }
              else if (Narrows(oldConstraint, newConstraint, isLowerBound))
              {
                  if (context.Direction == DataDirection.Request)
-                    context.LogBreakingChange(ComparisonRules.ConstraintIsStronger, attributeName);
+                    context.Log(ComparisonRules.ConstraintIsStronger, attributeName);
                  else
-                    context.LogInfo(ComparisonRules.ConstraintIsStronger, attributeName);
+                    context.Log(ComparisonRules.ResponseConstraintIsStronger, attributeName);
              }
              else if (Widens(oldConstraint, newConstraint, isLowerBound))
              {
                  if (context.Direction == DataDirection.Response)
-                    context.LogBreakingChange(ComparisonRules.ConstraintIsWeaker, attributeName);
+                    context.Log(ComparisonRules.ConstraintIsWeaker, attributeName);
                  else
-                    context.LogInfo(ComparisonRules.ConstraintIsWeaker, attributeName);
+                    context.Log(ComparisonRules.RequestConstraintIsWeaker, attributeName);
              }
              context.Pop();
          }
@@ -297,7 +297,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 var newTypeString = newType == null ? "" : newType.ToLower();
 
                 context.PushProperty("type");
-                context.LogBreakingChange(ComparisonRules.TypeChanged, newTypeString, oldTypeString);
+                context.Log(ComparisonRules.TypeChanged, newTypeString, oldTypeString);
                 context.Pop();
             }
         }
@@ -337,23 +337,23 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                 if (constrains)
                 {
-                    LogAction logger = context.Direction == DataDirection.Response ? context.LogWarning : context.LogBreakingChange;
-                    logger(ComparisonRules.RemovedEnumValue, string.Join(", ", removedEnums.Select(e => e.StringValue())));
+                    var rule = context.Direction == DataDirection.Response ? ComparisonRules.RemovedEnumResponseValue : ComparisonRules.RemovedEnumValue;
+                    context.Log(rule, string.Join(", ", removedEnums.Select(e => e.StringValue())));
                 }
 
                 if (relaxes && !IsEnumModelAsString(enumExtension))
                 {
-                    LogAction logger = context.Direction == DataDirection.Request ? context.LogWarning : context.LogBreakingChange;
-                    logger(ComparisonRules.AddedEnumValue, string.Join(", ", addedEnums.Select(e => e.StringValue())));
+                    var rule = context.Direction == DataDirection.Request ? ComparisonRules.AddedEnumRequestValue : ComparisonRules.AddedEnumValue;
+                    context.Log(rule, string.Join(", ", addedEnums.Select(e => e.StringValue())));
                 }
             }
 
             if (relaxes && constrains)
-                context.LogInfo(ComparisonRules.ConstraintChanged, "enum");
+                context.Log(ComparisonRules.EnumConstraintChanged, "enum");
             else if (relaxes)
-                context.LogInfo(ComparisonRules.ConstraintIsWeaker, "enum");
+                context.Log(ComparisonRules.EnumConstraintIsWeaker, "enum");
             else if (constrains)
-                context.LogInfo(ComparisonRules.ConstraintIsStronger, "enum");
+                context.Log(ComparisonRules.EnumConstraintIsStronger, "enum");
 
             context.Pop();
         }
@@ -373,12 +373,14 @@ namespace Criteo.OpenApi.Comparator.Comparators
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema)
         {
-            if (!oldSchema.Format.DifferFrom(newSchema.Format)
-                || IsFormatChangeAllowed(context, oldSchema, newSchema))
+            if (!oldSchema.Format.DifferFrom(newSchema.Format))
                 return;
 
             context.PushProperty("format");
-            context.LogBreakingChange(ComparisonRules.TypeFormatChanged);
+            if (IsFormatChangeAllowed(context, oldSchema, newSchema))
+                context.Log(ComparisonRules.WideningTypeFormatChanged);
+            else
+                context.Log(ComparisonRules.TypeFormatChanged);
             context.Pop();
         }
 
@@ -386,7 +388,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             OpenApiSchema oldSchema,
             OpenApiSchema newSchema)
         {
-            if (newSchema.Type == null || !newSchema.Type.Equals("integer") || context.Strict
+            if (newSchema.Type == null || !newSchema.Type.Equals("integer") 
                 || oldSchema.Format == null || newSchema.Format == null)
                 return false;
 
@@ -406,7 +408,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.PushProperty("allOf");
             if (oldAllOf == null || newAllOf == null)
             {
-                context.LogBreakingChange(ComparisonRules.DifferentAllOf);
+                context.Log(ComparisonRules.DifferentAllOf);
                 context.Pop();
                 return;
             }
@@ -421,7 +423,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             if (differenceCount > 0)
             {
-                context.LogBreakingChange(ComparisonRules.DifferentAllOf);
+                context.Log(ComparisonRules.DifferentAllOf);
             }
             context.Pop();
         }
@@ -435,7 +437,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.PushProperty("oneOf");
             if (oldOneOf == null || newOneOf == null)
             {
-                context.LogBreakingChange(ComparisonRules.DifferentOneOf);
+                context.Log(ComparisonRules.DifferentOneOf);
                 context.Pop();
                 return;
             }
@@ -450,7 +452,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             if (differenceCount > 0)
             {
-                context.LogBreakingChange(ComparisonRules.DifferentOneOf);
+                context.Log(ComparisonRules.DifferentOneOf);
             }
 
             var commonReferences = oldOneOfReferences
@@ -497,7 +499,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             foreach (var propertyName in removedProperties)
             {
                 context.PushProperty(propertyName);
-                context.LogBreakingChange(ComparisonRules.RemovedProperty, propertyName);
+                context.Log(ComparisonRules.RemovedProperty, propertyName);
                 context.Pop();
             }
         }
@@ -517,21 +519,25 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 context.PushProperty(property.Key);
 
-                if (oldSchema.IsPropertyRequired(property.Key))
-                {
-                    context.LogBreakingChange(ComparisonRules.AddedRequiredProperty, property.Key);
-                }
-
                 if (context.Direction == DataDirection.Response)
                 {
                     if (property.Value.ReadOnly)
-                        context.LogInfo(ComparisonRules.AddedReadOnlyPropertyInResponse, property.Key);
+                        context.Log(ComparisonRules.AddedReadOnlyPropertyInResponse, property.Key);
+                    else if (newSchema.AdditionalPropertiesAllowed && oldSchema.AdditionalPropertiesAllowed)
+                        context.Log(ComparisonRules.AddedPropertyInResponse, property.Key);
                     else
-                        context.LogBreakingChange(ComparisonRules.AddedPropertyInResponse, property.Key);
+                        context.Log(ComparisonRules.AddedBreakingPropertyInResponse, property.Key);
                 }
                 else if (isSchemaReferenced && !newSchema.IsPropertyRequired(property.Key))
                 {
-                    context.LogBreakingChange(ComparisonRules.AddedOptionalProperty, property.Key);
+                    if (oldSchema.IsPropertyRequired(property.Key))
+                    {
+                        context.Log(ComparisonRules.AddedRequiredProperty, property.Key);
+                    }
+                    else
+                    {
+                        context.Log(ComparisonRules.AddedOptionalProperty, property.Key);
+                    }
                 }
 
                 context.Pop();
@@ -560,11 +566,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.PushProperty("additionalProperties");
             if (oldAdditionalProperties == null && newAdditionalProperties != null)
             {
-                context.LogBreakingChange(ComparisonRules.AddedAdditionalProperties);
+                context.Log(ComparisonRules.AddedAdditionalProperties);
             }
             else if (oldAdditionalProperties != null && newAdditionalProperties == null)
             {
-                context.LogBreakingChange(ComparisonRules.RemovedAdditionalProperties);
+                context.Log(ComparisonRules.RemovedAdditionalProperties);
             }
             else if (newAdditionalProperties != null)
             {
@@ -580,23 +586,31 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldRequired">A set of old required properties</param>
         /// <param name="newRequired">A set of new required properties</param>
         private static void CompareRequired(ComparisonContext context,
-            ISet<string> oldRequired,
-            ISet<string> newRequired)
+            OpenApiSchema oldRequired,
+            OpenApiSchema newRequired)
         {
             if (newRequired == null)
                 return;
 
             if (oldRequired == null)
             {
-                context.LogBreakingChange(ComparisonRules.AddedRequiredProperty, string.Join(", ", newRequired));
+                context.Log(ComparisonRules.AddedRequiredProperty, string.Join(", ", newRequired));
                 return;
             }
 
-            List<string> addedRequiredProperties = newRequired.Except(oldRequired).ToList();
+            List<string> addedRequiredProperties = newRequired.Required.Except(oldRequired.Required).ToList();
             if (addedRequiredProperties.Any())
             {
-                context.LogBreakingChange(ComparisonRules.AddedRequiredProperty,
+                if (context.Direction == DataDirection.Request || !oldRequired.AdditionalPropertiesAllowed || ! newRequired.AdditionalPropertiesAllowed)
+                {
+                    context.Log(ComparisonRules.AddedRequiredProperty,
                     string.Join(", ", addedRequiredProperties));
+                }
+                else
+                {
+                    context.Log(ComparisonRules.AddedRequiredResponseProperty,
+                        string.Join(", ", addedRequiredProperties));
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 [
   {
     "Severity": "Warning",
-    "Message": "The new version has a more constraining \u0027maximum\u0027 value than the previous one.",
+    "Message": "The new version has a more constraining 'maximum' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/minLimit/maximum",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/minLimit/maximum",
     "OldJsonPath": "#/components/schemas/limitParam/properties/minLimit/maximum",
@@ -12,7 +12,7 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version has a more constraining \u0027minimum\u0027 value than the previous one.",
+    "Message": "The new version has a more constraining 'minimum' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/exclusiveMin/minimum",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/exclusiveMin/minimum",
     "OldJsonPath": "#/components/schemas/limitParam/properties/exclusiveMin/minimum",
@@ -23,7 +23,7 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version has a more constraining \u0027maxLength\u0027 value than the previous one.",
+    "Message": "The new version has a more constraining 'maxLength' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/maxTextSize/maxLength",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/maxTextSize/maxLength",
     "OldJsonPath": "#/components/schemas/limitParam/properties/maxTextSize/maxLength",
@@ -34,7 +34,7 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version has a more constraining \u0027minLength\u0027 value than the previous one.",
+    "Message": "The new version has a more constraining 'minLength' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/minTextSize/minLength",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/minTextSize/minLength",
     "OldJsonPath": "#/components/schemas/limitParam/properties/minTextSize/minLength",
@@ -45,7 +45,7 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version has a more constraining \u0027maxItems\u0027 value than the previous one.",
+    "Message": "The new version has a more constraining 'maxItems' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/redirectUrl/maxItems",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/redirectUrl/maxItems",
     "OldJsonPath": "#/components/schemas/limitParam/properties/redirectUrl/maxItems",
@@ -56,7 +56,7 @@
   },
   {
     "Severity": "Warning",
-    "Message": "The new version has a more constraining \u0027minItems\u0027 value than the previous one.",
+    "Message": "The new version has a more constraining 'minItems' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/redirectUrl/minItems",
     "NewJsonRef": "#/paths/~1pets/get/parameters/0/schema/properties/redirectUrl/minItems",
     "OldJsonPath": "#/components/schemas/limitParam/properties/redirectUrl/minItems",
@@ -67,35 +67,35 @@
   },
   {
     "Severity": "Info",
-    "Message": "The new version has a more constraining \u0027maximum\u0027 value than the previous one.",
+    "Message": "The new version has a more constraining 'maximum' value than the previous one for a response schema.",
     "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/code/maximum",
     "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/code/maximum",
     "OldJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/code/maximum",
     "NewJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/code/maximum",
     "Id": 1024,
-    "Code": "ConstraintIsStronger",
+    "Code": "ResponseConstraintIsStronger",
     "Mode": "Update"
   },
   {
     "Severity": "Warning",
-    "Message": "The new version is removing enum value(s) \u0027item2\u0027 from the old version.",
+    "Message": "The new version is removing enum value(s) 'item2' from the old version.",
     "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/constrainsItems/enum",
     "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/constrainsItems/enum",
     "OldJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/constrainsItems/enum",
     "NewJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/constrainsItems/enum",
     "Id": 1019,
-    "Code": "RemovedEnumValue",
+    "Code": "RemovedEnumResponseValue",
     "Mode": "Removal"
   },
   {
     "Severity": "Info",
-    "Message": "The new version has a more constraining \u0027enum\u0027 value than the previous one.",
+    "Message": "The new version has a more constraining 'enum' value than the previous one.",
     "OldJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/constrainsItems/enum",
     "NewJsonRef": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/constrainsItems/enum",
     "OldJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/constrainsItems/enum",
     "NewJsonPath": "#/paths/~1pets/get/responses/200/content/application~1json/schema/properties/constrainsItems/enum",
     "Id": 1024,
-    "Code": "ConstraintIsStronger",
+    "Code": "EnumConstraintIsStronger",
     "Mode": "Update"
   }
 ]
