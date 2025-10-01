@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.x
@@ -36,7 +36,7 @@ jobs:
     needs: [create]
     steps:
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
       - uses: actions/download-artifact@v5
         with:
           name: nuget_packages
