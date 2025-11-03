@@ -1,4 +1,4 @@
-name: Publish executables
+name: Package publication
 
 on:
   push:
