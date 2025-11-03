@@ -1,30 +1,40 @@
-name: Packages publication
+name: Publish executables
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*" # Trigger on tags starting with 'v'
 
 env:
   nuget_directory: ${{ github.workspace}}/artifacts
 
-
 jobs:
-  create:
+  build:
     runs-on: ubuntu-latest
+    name: Build and pack
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v5
-      - name: Setup .NET Core SDK
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Extract Version from tag
+        run: |
+          TAG_VERSION=$(echo "${{ github.ref }}" | sed 's/refs\/tags\/v//')
+          echo "PROJECT_VERSION=$TAG_VERSION" >> $GITHUB_ENV # Output the version to the environment
+        shell: bash
+
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
             6.x
             8.x
       - name: Build
-        run: dotnet build -c Release
+        run: dotnet build -c Release -p:Version=${{ env.PROJECT_VERSION }}
       - name: Pack
-        run: dotnet pack -c Release -o ${{ env.nuget_directory }}
-      - name: Display created package files
-        run: ls -R ${{ env.nuget_directory }}  
+        run: dotnet pack -c Release -p:Version=${{ env.PROJECT_VERSION }} -o ${{ env.nuget_directory }}
+        shell: bash
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -33,19 +43,15 @@ jobs:
           if-no-files-found: error
   publish:
     runs-on: ubuntu-latest
-    needs: [create]
-    steps:
+    needs: [build]
+    steps:   
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v4
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v4
         with:
           name: nuget_packages
           path: ${{ env.nuget_directory }}
-      - name: Display prepared package files
+      - name: Display package files
         run: ls -R ${{ env.nuget_directory }}
       - name: Publish all packages to NuGet
-        run: dotnet nuget push ${{ env.nuget_directory }}/*.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-      
-        
-      
-            
+        run: dotnet nuget push ${{ env.nuget_directory }}/*.${{ env.PROJECT_VERSION }}.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
