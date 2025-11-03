@@ -43,6 +43,7 @@ jobs:
           if-no-files-found: error
   publish:
     runs-on: ubuntu-latest
+    name: Publish packages
     needs: [build]
     steps:   
       - name: Setup .NET Core SDK
@@ -54,4 +55,4 @@ jobs:
       - name: Display package files
         run: ls -R ${{ env.nuget_directory }}
       - name: Publish all packages to NuGet
-        run: dotnet nuget push ${{ env.nuget_directory }}/*.${{ env.PROJECT_VERSION }}.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push ${{ env.nuget_directory }}/*.nupkg --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
