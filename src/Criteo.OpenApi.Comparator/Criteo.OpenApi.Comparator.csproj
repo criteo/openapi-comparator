@@ -25,8 +25,8 @@
     <!-- Mandatory so that the build archive is published to Nexus -->
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.OpenApi" Version="1.4.2" />
-    <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.4.1" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.4.5" />
+    <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.4.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
