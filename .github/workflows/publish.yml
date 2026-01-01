@@ -48,7 +48,7 @@ jobs:
     steps:   
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v5
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           name: nuget_packages
           path: ${{ env.nuget_directory }}
