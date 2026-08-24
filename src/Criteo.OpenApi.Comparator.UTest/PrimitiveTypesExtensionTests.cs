@@ -120,5 +120,21 @@ namespace Criteo.OpenApi.Comparator.UTest
             var newString = new OpenApiString("newString");
             Assert.That(oldString.DifferFrom(newString), Is.True);
         }
+
+        [Test]
+        public void DifferFrom_ShouldReturn_false_When_SameOpenApiFloat()
+        {
+            var oldFloat = new OpenApiFloat(1.5f);
+            var newFloat = new OpenApiFloat(1.5f);
+            Assert.That(oldFloat.DifferFrom(newFloat), Is.False);
+        }
+
+        [Test]
+        public void DifferFrom_ShouldReturn_true_When_DifferentOpenApiFloat()
+        {
+            var oldFloat = new OpenApiFloat(1.5f);
+            var newFloat = new OpenApiFloat(2.5f);
+            Assert.That(oldFloat.DifferFrom(newFloat), Is.True);
+        }
     }
 }
