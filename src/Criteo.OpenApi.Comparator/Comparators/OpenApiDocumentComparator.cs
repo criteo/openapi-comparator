@@ -215,7 +215,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 var newPathItem = newPaths[commonPath];
 
                 context.PushPathProperty(commonPath, isFromExtension);
-                _operationComparator.CompareParameters(context, oldPathItem.Parameters, newPathItem.Parameters);
+                _operationComparator.CompareParameters(context,
+                    oldPathItem.Parameters ?? new List<OpenApiParameter>(),
+                    newPathItem.Parameters ?? new List<OpenApiParameter>());
                 CompareOperations(context, oldPathItem.Operations, newPathItem.Operations);
                 context.Pop();
             }
@@ -226,6 +228,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
             IDictionary<OperationType,OpenApiOperation> oldOperations,
             IDictionary<OperationType,OpenApiOperation> newOperations)
         {
+            oldOperations ??= new Dictionary<OperationType, OpenApiOperation>();
+            newOperations ??= new Dictionary<OperationType, OpenApiOperation>();
+
             var commonOperations = newOperations.Keys.Where(oldOperations.Keys.Contains).ToList();
 
             foreach (var removedOperationName in oldOperations.Keys.Except(commonOperations))
@@ -475,6 +480,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
              IDictionary<string, OpenApiSchema> oldSchemas,
              IDictionary<string, OpenApiSchema> newSchemas)
          {
+             oldSchemas ??= new Dictionary<string, OpenApiSchema>();
+             newSchemas ??= new Dictionary<string, OpenApiSchema>();
+
              context.PushProperty("schemas");
              foreach (var oldSchema in oldSchemas)
              {

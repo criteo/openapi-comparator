@@ -75,16 +75,16 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             context.PushProperty("parameters");
 
-            oldParameters = oldParameters.Select(oldParameter =>
+            oldParameters = (oldParameters ?? Array.Empty<OpenApiParameter>()).Select(oldParameter =>
                 string.IsNullOrWhiteSpace(oldParameter.Reference?.ReferenceV3)
                     ? oldParameter
-                    : oldParameter.Reference.Resolve(oldDocument.Components.Parameters)
+                    : oldParameter.Reference.Resolve(oldDocument.Components?.Parameters)
             ).ToList();
 
-            newParameters = newParameters.Select(newParameter =>
+            newParameters = (newParameters ?? Array.Empty<OpenApiParameter>()).Select(newParameter =>
                 string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3)
                     ? newParameter
-                    : newParameter.Reference.Resolve(newDocument.Components.Parameters)
+                    : newParameter.Reference.Resolve(newDocument.Components?.Parameters)
             ).ToList();
 
             CompareParametersOrder(context, oldParameters, newParameters);
