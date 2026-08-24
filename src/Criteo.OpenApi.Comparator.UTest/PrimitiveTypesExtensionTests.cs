@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Criteo Technology. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
+using System;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Microsoft.OpenApi.Any;
 using NUnit.Framework;
@@ -87,6 +88,22 @@ namespace Criteo.OpenApi.Comparator.UTest
             var oldInteger = new OpenApiInteger(8);
             var newInteger = new OpenApiInteger(1);
             Assert.That(oldInteger.DifferFrom(newInteger), Is.True);
+        }
+
+        [Test]
+        public void DifferFrom_ShouldReturn_false_When_SameOpenApiDate()
+        {
+            var oldDate = new OpenApiDate(new DateTime(2024, 1, 1));
+            var newDate = new OpenApiDate(new DateTime(2024, 1, 1));
+            Assert.That(oldDate.DifferFrom(newDate), Is.False);
+        }
+
+        [Test]
+        public void DifferFrom_ShouldReturn_true_When_DifferentOpenApiDate()
+        {
+            var oldDate = new OpenApiDate(new DateTime(2024, 1, 1));
+            var newDate = new OpenApiDate(new DateTime(2024, 1, 2));
+            Assert.That(oldDate.DifferFrom(newDate), Is.True);
         }
 
         [Test]
