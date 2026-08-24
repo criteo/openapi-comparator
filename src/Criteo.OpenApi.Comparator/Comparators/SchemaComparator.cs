@@ -213,7 +213,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 context.Pop();
             }
 
-            if (oldSchema.UniqueItems != newSchema.UniqueItems)
+            if ((oldSchema.UniqueItems ?? false) != (newSchema.UniqueItems ?? false))
             {
                 context.PushProperty("uniqueItems");
                 context.LogBreakingChange(ComparisonRules.ConstraintChanged, "uniqueItems");
