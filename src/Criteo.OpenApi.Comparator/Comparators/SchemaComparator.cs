@@ -397,14 +397,16 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 || context.Direction == DataDirection.Response && formatChangedFromInt64ToInt32;
         }
 
+        private static bool HasComposition(IList<OpenApiSchema> schemas) => schemas != null && schemas.Count > 0;
+
         private static void CompareAllOf(ComparisonContext context,
             IList<OpenApiSchema> oldAllOf, IList<OpenApiSchema> newAllOf)
         {
-            if (oldAllOf == null && newAllOf == null)
+            if (!HasComposition(oldAllOf) && !HasComposition(newAllOf))
                 return;
 
             context.PushProperty("allOf");
-            if (oldAllOf == null || newAllOf == null)
+            if (!HasComposition(oldAllOf) || !HasComposition(newAllOf))
             {
                 context.LogBreakingChange(ComparisonRules.DifferentAllOf);
                 context.Pop();
@@ -429,11 +431,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
         private void CompareOneOf(
             ComparisonContext context, IList<OpenApiSchema> oldOneOf, IList<OpenApiSchema> newOneOf)
         {
-            if (oldOneOf == null && newOneOf == null)
+            if (!HasComposition(oldOneOf) && !HasComposition(newOneOf))
                 return;
 
             context.PushProperty("oneOf");
-            if (oldOneOf == null || newOneOf == null)
+            if (!HasComposition(oldOneOf) || !HasComposition(newOneOf))
             {
                 context.LogBreakingChange(ComparisonRules.DifferentOneOf);
                 context.Pop();
