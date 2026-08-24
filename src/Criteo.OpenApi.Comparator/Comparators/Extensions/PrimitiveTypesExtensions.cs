@@ -19,7 +19,8 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 
         private static bool DifferFrom(this bool oldBoolean, bool newBoolean) => oldBoolean != newBoolean;
 
-        private static bool DifferFrom(this float oldFloat, float newFloat) => Math.Abs(oldFloat - newFloat) > float.MinValue;
+        private static bool DifferFrom(this float oldFloat, float newFloat) =>
+            Math.Abs(oldFloat - newFloat) > float.Epsilon;
 
         private static bool DifferFrom(this DateTime? oldTime, DateTime? newTime) =>
             oldTime == null && newTime != null || oldTime != null && oldTime.Equals(newTime);
