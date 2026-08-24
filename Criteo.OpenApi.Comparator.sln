@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src\Criteo.OpenApi.Comparat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src\Criteo.OpenApi.Comparator.Cli", "src\Criteo.OpenApi.Comparator.Cli\Criteo.OpenApi.Comparator.Cli.csproj", "{7460EC27-247C-4D31-8CB6-164C949BCD8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src\Criteo.OpenApi.Comparator.Cli.UTest", "src\Criteo.OpenApi.Comparator.Cli.UTest\Criteo.OpenApi.Comparator.Cli.UTest.csproj", "{20C7430A-FCC8-43F1-8985-1BC866DED568}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{7460EC27-247C-4D31-8CB6-164C949BCD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7460EC27-247C-4D31-8CB6-164C949BCD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7460EC27-247C-4D31-8CB6-164C949BCD8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C7430A-FCC8-43F1-8985-1BC866DED568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C7430A-FCC8-43F1-8985-1BC866DED568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C7430A-FCC8-43F1-8985-1BC866DED568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C7430A-FCC8-43F1-8985-1BC866DED568}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
