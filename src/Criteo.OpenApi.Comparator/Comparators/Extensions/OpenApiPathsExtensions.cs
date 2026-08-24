@@ -134,7 +134,9 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 
         private static ISet<string> ToRequiredArray(this OpenApiArray array)
         {
-            return (ISet<string>) array.Select(requiredProperty => (requiredProperty as OpenApiString)?.Value);
+            return new HashSet<string>(array
+                .Select(requiredProperty => (requiredProperty as OpenApiString)?.Value)
+                .Where(value => value != null));
         }
 
         private static OpenApiParameter ToParameter(this OpenApiObject parametersAsObject)
