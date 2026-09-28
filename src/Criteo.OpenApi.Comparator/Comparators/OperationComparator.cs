@@ -5,8 +5,14 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
+#if NET10_0
+using Microsoft.OpenApi;
+using OpenApiParameter = Microsoft.OpenApi.IOpenApiParameter;
+using OpenApiRequestBody = Microsoft.OpenApi.IOpenApiRequestBody;
+#else
 using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -72,20 +78,24 @@ namespace Criteo.OpenApi.Comparator.Comparators
         {
             var oldDocument = context.OldOpenApiDocument;
             var newDocument = context.NewOpenApiDocument;
+            oldParameters ??= new List<OpenApiParameter>();
+            newParameters ??= new List<OpenApiParameter>();
 
             context.PushProperty("parameters");
 
+#if !NET10_0
             oldParameters = oldParameters.Select(oldParameter =>
-                string.IsNullOrWhiteSpace(oldParameter.Reference?.ReferenceV3)
+                string.IsNullOrWhiteSpace(oldParameter.GetReference()?.ReferenceV3)
                     ? oldParameter
-                    : oldParameter.Reference.Resolve(oldDocument.Components.Parameters)
+                    : oldParameter.GetReference().Resolve(oldDocument.Components.Parameters)
             ).ToList();
 
             newParameters = newParameters.Select(newParameter =>
-                string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3)
+                string.IsNullOrWhiteSpace(newParameter.GetReference()?.ReferenceV3)
                     ? newParameter
-                    : newParameter.Reference.Resolve(newDocument.Components.Parameters)
+                    : newParameter.GetReference().Resolve(newDocument.Components.Parameters)
             ).ToList();
+#endif
 
             CompareParametersOrder(context, oldParameters, newParameters);
 
@@ -97,15 +107,21 @@ namespace Criteo.OpenApi.Comparator.Comparators
             IList<OpenApiParameter> oldParameters,
             IList<OpenApiParameter> newParameters)
         {
+#if !NET10_0
             newParameters = newParameters.Select(parameter =>
-                string.IsNullOrWhiteSpace(parameter.Reference?.ReferenceV3)
+                string.IsNullOrWhiteSpace(parameter.GetReference()?.ReferenceV3)
                     ? parameter
-                    : parameter.Reference.Resolve(context.NewOpenApiDocument.Components.Parameters)
-                ).ToList();
+                    : parameter.GetReference().Resolve(context.NewOpenApiDocument.Components.Parameters)
+            ).ToList();
+#endif
 
             for (var i = 0; i < newParameters.Count(); i++)
             {
                 var newParameter = newParameters.ElementAt(i);
+                if (newParameter.GetReference() != null)
+                    newParameter = newParameter.GetReference().Resolve(context.NewOpenApiDocument.Components.Parameters);
+                if (newParameter == null)
+                    continue;
 
                 if (newParameter.In == ParameterLocation.Path) continue;
 
@@ -135,7 +151,29 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                 if (newParameter != null)
                 {
+#if NET10_0
+                    var currentParameter = oldParameter.GetReference() != null
+                        ? oldParameter
+                        : newParameter.GetReference() != null ? newParameter : oldParameter;
+                    var counterpart = oldParameter.GetReference() != null
+                        ? newParameter
+                        : newParameter.GetReference() != null ? oldParameter : newParameter;
+                    _parameter.Compare(context, currentParameter, counterpart);
+#else
                     _parameter.Compare(context, oldParameter, newParameter);
+#endif
+                }
+                else if (oldParameter.GetReference() != null)
+                {
+                    _parameter.Compare(context, oldParameter, oldParameter);
+                    if (oldParameter.Required || oldParameter.In == ParameterLocation.Path)
+                        context.LogBreakingChange(ComparisonRules.RemovedRequiredParameter, oldParameter.Name);
+                }
+                else if (newParameter.GetReference() != null || oldParameter.GetReference() != null)
+                {
+                    _parameter.Compare(context,
+                        oldParameter.GetReference() != null ? oldParameter : newParameter,
+                        newParameter.GetReference() != null ? newParameter : oldParameter);
                 }
                 else if (oldParameter.Required || oldParameter.In == ParameterLocation.Path)
                 {
@@ -153,9 +191,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
         {
             // Check that no parameters were added.
             newParameters = newParameters
-                .Select(parameter => string.IsNullOrWhiteSpace(parameter.Reference?.ReferenceV3)
+                .Select(parameter => string.IsNullOrWhiteSpace(parameter.GetReference()?.ReferenceV3)
                         ? parameter
-                        : parameter.Reference.Resolve(context.NewOpenApiDocument.Components.Parameters)
+                        : parameter.GetReference().Resolve(context.NewOpenApiDocument.Components.Parameters)
                 )
                 .Where(parameter => parameter != null)
                 .ToList();
@@ -229,8 +267,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
             IDictionary<string, IOpenApiExtension> newExtensions)
         {
             const string longRunningOperationExtension = "x-ms-long-running-operation";
-            oldExtensions.TryGetValue(longRunningOperationExtension, out var oldLongRunningOperationValue);
-            newExtensions.TryGetValue(longRunningOperationExtension, out var newLongRunningOperationValue);
+            IOpenApiExtension oldLongRunningOperationValue = default;
+            IOpenApiExtension newLongRunningOperationValue = default;
+            oldExtensions?.TryGetValue(longRunningOperationExtension, out oldLongRunningOperationValue);
+            newExtensions?.TryGetValue(longRunningOperationExtension, out newLongRunningOperationValue);
 
             if (oldLongRunningOperationValue == newLongRunningOperationValue)
                 return;
@@ -278,7 +318,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     candidateParameters.Add(parameter);
                 else
                 {
-                    var referencedParameter = parameter.Reference.Resolve(documentParameters);
+                    var referencedParameter = parameter.GetReference().Resolve(documentParameters);
 
                     if (referencedParameter != null && name.Equals(referencedParameter.Name))
                         candidateParameters.Add(referencedParameter);
@@ -309,7 +349,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 var score = 0;
 
-                score += key.Reference == candidate.Reference ? 1 : 0;
+                score += key.GetReference() == candidate.GetReference() ? 1 : 0;
                 score += key.In == candidate.In ? 1 : 0;
                 score += key.Required == candidate.Required ? 1 : 0;
                 score += key.Deprecated == candidate.Deprecated ? 1 : 0;

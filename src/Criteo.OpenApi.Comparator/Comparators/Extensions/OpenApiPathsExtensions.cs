@@ -3,15 +3,36 @@
 
 using System.Collections.Generic;
 using System.Linq;
+#if NET10_0
+using Criteo.OpenApi.Comparator.Parser;
+using Microsoft.OpenApi;
+using System.Text.Json.Nodes;
+using OpenApiArray = System.Text.Json.Nodes.JsonArray;
+using OpenApiObject = System.Text.Json.Nodes.JsonObject;
+#else
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Exceptions;
 using Microsoft.OpenApi.Models;
 using ParameterLocation = Microsoft.OpenApi.Models.ParameterLocation;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 {
     internal static class OpenApiPathsExtensions
     {
+#if NET10_0
+        internal static OpenApiPaths ToOpenApiPaths(this OpenApiObject rawPaths)
+        {
+            var document = new JsonObject
+            {
+                ["openapi"] = "3.0.0",
+                ["info"] = new JsonObject { ["title"] = "Custom paths", ["version"] = "1" },
+                ["paths"] = rawPaths.DeepClone()
+            };
+
+            return OpenApiParser.Parse(document.ToJsonString(), out _).Typed.Paths;
+        }
+#else
         private static readonly IDictionary<string, OperationType> _operationTypesMap =
             new Dictionary<string, OperationType>
             {
@@ -309,5 +330,6 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 
             return pathItem;
         }
+#endif
     }
 }

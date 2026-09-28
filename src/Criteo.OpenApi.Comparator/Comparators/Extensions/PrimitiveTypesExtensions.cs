@@ -2,7 +2,13 @@
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
 using System;
+#if NET10_0
+using Microsoft.OpenApi;
+using System.Text.Json.Nodes;
+using IOpenApiAny = System.Text.Json.Nodes.JsonNode;
+#else
 using Microsoft.OpenApi.Any;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 {
@@ -24,6 +30,10 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
         private static bool DifferFrom(this DateTime? oldTime, DateTime? newTime) =>
             oldTime == null && newTime != null || oldTime != null && oldTime.Equals(newTime);
 
+#if NET10_0
+        internal static bool DifferFrom(this JsonNode oldOpenApiAny, JsonNode newOpenApiAny) =>
+            !JsonNode.DeepEquals(oldOpenApiAny, newOpenApiAny);
+#else
         internal static bool DifferFrom(this IOpenApiAny oldOpenApiAny, IOpenApiAny newOpenApiAny)
         {
             if (oldOpenApiAny == null || newOpenApiAny == null)
@@ -48,5 +58,6 @@ namespace Criteo.OpenApi.Comparator.Comparators.Extensions
                     return false;
             }
         }
+#endif
     }
 }

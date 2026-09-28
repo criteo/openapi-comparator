@@ -2,7 +2,12 @@
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
+#if NET10_0
+using Microsoft.OpenApi;
+using OpenApiRequestBody = Microsoft.OpenApi.IOpenApiRequestBody;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -36,16 +41,16 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     return;
                 }
 
-                if (!string.IsNullOrWhiteSpace(oldRequestBody.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(oldRequestBody.GetReference()?.ReferenceV3))
                 {
-                    oldRequestBody = oldRequestBody.Reference.Resolve(context.OldOpenApiDocument.Components.RequestBodies);
+                    oldRequestBody = oldRequestBody.GetReference().Resolve(context.OldOpenApiDocument.Components.RequestBodies);
                     if (oldRequestBody == null)
                         return;
                 }
 
-                if (!string.IsNullOrWhiteSpace(newRequestBody.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(newRequestBody.GetReference()?.ReferenceV3))
                 {
-                    newRequestBody = newRequestBody.Reference.Resolve(context.NewOpenApiDocument.Components.RequestBodies);
+                    newRequestBody = newRequestBody.GetReference().Resolve(context.NewOpenApiDocument.Components.RequestBodies);
                     if (newRequestBody == null)
                         return;
                 }
