@@ -5,7 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Criteo.OpenApi.Comparator.Comparators;
 using Criteo.OpenApi.Comparator.Parser;
+#if NET10_0
+using Microsoft.OpenApi;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator
 {

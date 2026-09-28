@@ -1,7 +1,12 @@
 ﻿// Copyright (c) Criteo Technology. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
+#if NET10_0
+using Microsoft.OpenApi;
+using OpenApiParameter = Microsoft.OpenApi.IOpenApiParameter;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 {

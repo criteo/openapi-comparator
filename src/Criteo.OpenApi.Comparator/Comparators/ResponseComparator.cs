@@ -3,7 +3,13 @@
 
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
+#if NET10_0
+using Microsoft.OpenApi;
+using OpenApiHeader = Microsoft.OpenApi.IOpenApiHeader;
+using OpenApiResponse = Microsoft.OpenApi.IOpenApiResponse;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -23,16 +29,16 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             using (context.WithDirection(DataDirection.Response))
             {
-                if (!string.IsNullOrWhiteSpace(oldResponse.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(oldResponse.GetReference()?.ReferenceV3))
                 {
-                    oldResponse = oldResponse.Reference.Resolve(context.OldOpenApiDocument.Components.Responses);
+                    oldResponse = oldResponse.GetReference().Resolve(context.OldOpenApiDocument.Components.Responses);
                     if (oldResponse == null)
                         return;
                 }
 
-                if (!string.IsNullOrWhiteSpace(newResponse.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(newResponse.GetReference()?.ReferenceV3))
                 {
-                    newResponse = newResponse.Reference.Resolve(context.NewOpenApiDocument.Components.Responses);
+                    newResponse = newResponse.GetReference().Resolve(context.NewOpenApiDocument.Components.Responses);
                     if (newResponse == null)
                         return;
                 }
