@@ -28,8 +28,6 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
-            6.x
-            8.x
             10.x
       - name: Build
         run: dotnet build -c Release -p:Version=${{ env.PROJECT_VERSION }}
@@ -46,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Publish packages
     needs: [build]
-    steps:   
+    steps:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v5
       - uses: actions/download-artifact@v7
