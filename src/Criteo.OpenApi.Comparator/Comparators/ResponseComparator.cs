@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -17,22 +17,22 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         internal void Compare(ComparisonContext context,
-            OpenApiResponse oldResponse, OpenApiResponse newResponse)
+            IOpenApiResponse oldResponse, IOpenApiResponse newResponse)
         {
-            ComponentComparator<OpenApiResponse>.Compare(context, oldResponse, newResponse);
+            ComponentComparator<IOpenApiResponse>.Compare(context, oldResponse, newResponse);
 
             using (context.WithDirection(DataDirection.Response))
             {
-                if (!string.IsNullOrWhiteSpace(oldResponse.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(oldResponse.GetReference()?.ReferenceV3))
                 {
-                    oldResponse = oldResponse.Reference.Resolve(context.OldOpenApiDocument.Components.Responses);
+                    oldResponse = oldResponse.GetReference().Resolve(context.OldOpenApiDocument.Components.Responses);
                     if (oldResponse == null)
                         return;
                 }
 
-                if (!string.IsNullOrWhiteSpace(newResponse.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(newResponse.GetReference()?.ReferenceV3))
                 {
-                    newResponse = newResponse.Reference.Resolve(context.NewOpenApiDocument.Components.Responses);
+                    newResponse = newResponse.GetReference().Resolve(context.NewOpenApiDocument.Components.Responses);
                     if (newResponse == null)
                         return;
                 }
@@ -44,11 +44,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CompareHeaders(ComparisonContext context,
-            IDictionary<string, OpenApiHeader> oldHeaders,
-            IDictionary<string, OpenApiHeader> newHeaders)
+            IDictionary<string, IOpenApiHeader> oldHeaders,
+            IDictionary<string, IOpenApiHeader> newHeaders)
         {
-            newHeaders = newHeaders ?? new Dictionary<string, OpenApiHeader>();
-            oldHeaders = oldHeaders ?? new Dictionary<string, OpenApiHeader>();
+            newHeaders ??= new Dictionary<string, IOpenApiHeader>();
+            oldHeaders ??= new Dictionary<string, IOpenApiHeader>();
 
             context.PushProperty("headers");
             foreach (var header in newHeaders)
@@ -60,7 +60,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 }
                 else
                 {
-                    ComponentComparator<OpenApiHeader>.Compare(context, oldHeader, header.Value);
+                    ComponentComparator<IOpenApiHeader>.Compare(context, oldHeader, header.Value);
                 }
                 context.Pop();
             }
