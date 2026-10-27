@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using Criteo.OpenApi.Comparator.Parser;
 using Criteo.OpenApi.Comparator.Logging;
-using Microsoft.OpenApi.Models;
+using Criteo.OpenApi.Comparator.Parser;
+using Microsoft.OpenApi;
 
 namespace Criteo.OpenApi.Comparator
 {

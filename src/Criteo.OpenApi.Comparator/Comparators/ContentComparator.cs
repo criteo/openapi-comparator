@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -17,7 +17,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         internal IEnumerable<ComparisonMessage> Compare(ComparisonContext context,
-            IDictionary<string, OpenApiMediaType> oldContent, 
+            IDictionary<string, OpenApiMediaType> oldContent,
             IDictionary<string, OpenApiMediaType> newContent)
         {
             oldContent = oldContent ?? new Dictionary<string, OpenApiMediaType>();
