@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -12,36 +12,36 @@ namespace Criteo.OpenApi.Comparator.Comparators
         private readonly SchemaComparator _schemaComparator;
         private readonly ContentComparator _contentComparator;
 
-        private readonly LinkedList<OpenApiParameter> _visitedParameters;
+        private readonly LinkedList<IOpenApiParameter> _visitedParameters;
 
         internal ParameterComparator(SchemaComparator schemaComparator, ContentComparator contentComparator)
         {
             _schemaComparator = schemaComparator;
             _contentComparator = contentComparator;
-            _visitedParameters = new LinkedList<OpenApiParameter>();
+            _visitedParameters = new LinkedList<IOpenApiParameter>();
         }
 
         internal void Compare(
             ComparisonContext context,
-            OpenApiParameter oldParameter,
-            OpenApiParameter newParameter)
+            IOpenApiParameter oldParameter,
+            IOpenApiParameter newParameter)
         {
-            ComponentComparator<OpenApiParameter>.Compare(context, oldParameter, newParameter);
+            ComponentComparator<IOpenApiParameter>.Compare(context, oldParameter, newParameter);
 
             using (context.WithDirection(DataDirection.Request))
             {
                 var areParametersReferenced = false;
 
-                if (!string.IsNullOrWhiteSpace(oldParameter.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(oldParameter.GetReference()?.ReferenceV3))
                 {
-                    oldParameter = FindReferencedParameter(oldParameter.Reference, context.OldOpenApiDocument.Components.Parameters);
+                    oldParameter = FindReferencedParameter(oldParameter.GetReference(), context.OldOpenApiDocument.Components.Parameters);
                     areParametersReferenced = true;
                     if (oldParameter == null)
                         return;
                 }
-                if (!string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(newParameter.GetReference()?.ReferenceV3))
                 {
-                    newParameter = FindReferencedParameter(newParameter.Reference, context.NewOpenApiDocument.Components.Parameters);
+                    newParameter = FindReferencedParameter(newParameter.GetReference(), context.NewOpenApiDocument.Components.Parameters);
                     areParametersReferenced = true;
                     if (newParameter == null)
                         return;
@@ -85,8 +85,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CompareConstantStatus(ComparisonContext context,
-            OpenApiParameter oldParameter,
-            OpenApiParameter newParameter)
+            IOpenApiParameter oldParameter,
+            IOpenApiParameter newParameter)
         {
             if (newParameter.IsConstant() != oldParameter.IsConstant())
             {
@@ -97,7 +97,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CompareRequiredStatus(ComparisonContext context,
-            OpenApiParameter oldParameter, OpenApiParameter newParameter)
+            IOpenApiParameter oldParameter, IOpenApiParameter newParameter)
         {
             if (oldParameter.IsRequired() == newParameter.IsRequired() || context.Direction == DataDirection.Response)
                 return;
@@ -115,8 +115,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CompareStyle(ComparisonContext context,
-            OpenApiParameter oldParameter,
-            OpenApiParameter newParameter)
+            IOpenApiParameter oldParameter,
+            IOpenApiParameter newParameter)
         {
             if (oldParameter.Style != newParameter.Style)
             {
@@ -127,7 +127,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private void CompareSchema(ComparisonContext context,
-            OpenApiSchema oldSchema, OpenApiSchema newSchema)
+            IOpenApiSchema oldSchema, IOpenApiSchema newSchema)
         {
             if (oldSchema == null || newSchema == null)
                 return;
@@ -137,8 +137,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private static OpenApiParameter FindReferencedParameter(
-            OpenApiReference reference, IDictionary<string, OpenApiParameter> parameters
+        private static IOpenApiParameter FindReferencedParameter(
+            BaseOpenApiReference reference, IDictionary<string, IOpenApiParameter> parameters
         )
         {
             if (parameters == null || reference == null || !reference.IsLocal)

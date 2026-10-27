@@ -2,8 +2,8 @@
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
 using System;
-using Microsoft.OpenApi.Interfaces;
-using Microsoft.OpenApi.Models;
+using Criteo.OpenApi.Comparator.Comparators.Extensions;
+using Microsoft.OpenApi;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -17,12 +17,12 @@ namespace Criteo.OpenApi.Comparator.Comparators
             if (newComponent == null)
                 throw new ArgumentNullException(nameof(newComponent));
 
-            CompareReference(context, oldComponent.Reference, newComponent.Reference);
+            CompareReference(context, oldComponent.GetReference(), newComponent.GetReference());
         }
 
         private static void CompareReference(ComparisonContext context,
-            OpenApiReference oldReference,
-            OpenApiReference newReference)
+            BaseOpenApiReference oldReference,
+            BaseOpenApiReference newReference)
         {
             if (newReference?.ReferenceV3 != null && !newReference.ReferenceV3.Equals(oldReference?.ReferenceV3))
             {

@@ -3,27 +3,27 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Nodes;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
     internal class SchemaComparator
     {
-        private readonly LinkedList<OpenApiSchema> _visitedSchemas;
+        private readonly LinkedList<IOpenApiSchema> _visitedSchemas;
 
-        private readonly IDictionary<OpenApiSchema, DataDirection> _compareDirections;
+        private readonly IDictionary<IOpenApiSchema, DataDirection> _compareDirections;
 
         internal SchemaComparator()
         {
-            _visitedSchemas = new LinkedList<OpenApiSchema>();
-            _compareDirections = new Dictionary<OpenApiSchema, DataDirection>();
+            _visitedSchemas = new LinkedList<IOpenApiSchema>();
+            _compareDirections = new Dictionary<IOpenApiSchema, DataDirection>();
         }
 
         internal void Compare(ComparisonContext context,
-            OpenApiSchema oldSchema,
-            OpenApiSchema newSchema,
+            IOpenApiSchema oldSchema,
+            IOpenApiSchema newSchema,
             bool isSchemaReferenced = true)
         {
             if (oldSchema == null && newSchema == null)
@@ -41,24 +41,24 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
             }
 
-            if (newSchema.Reference?.ReferenceV3 != null
-                && !newSchema.Reference.ReferenceV3.Equals(oldSchema.Reference?.ReferenceV3))
+            if (newSchema.GetReference()?.ReferenceV3 != null
+                && !newSchema.GetReference().ReferenceV3.Equals(oldSchema.GetReference()?.ReferenceV3))
             {
                 context.LogBreakingChange(ComparisonRules.ReferenceRedirection);
             }
 
             var areSchemasReferenced = false;
-            if (!string.IsNullOrWhiteSpace(newSchema.Reference?.ReferenceV3))
+            if (!string.IsNullOrWhiteSpace(newSchema.GetReference()?.ReferenceV3))
             {
-                newSchema = newSchema.Reference.Resolve(context.NewOpenApiDocument.Components.Schemas);
+                newSchema = newSchema.GetReference().Resolve(context.NewOpenApiDocument.Components.Schemas);
                 areSchemasReferenced = true;
                 if (newSchema == null)
                     return;
             }
 
-            if (!string.IsNullOrWhiteSpace(oldSchema.Reference?.ReferenceV3))
+            if (!string.IsNullOrWhiteSpace(oldSchema.GetReference()?.ReferenceV3))
             {
-                oldSchema = oldSchema.Reference.Resolve(context.OldOpenApiDocument.Components.Schemas);
+                oldSchema = oldSchema.GetReference().Resolve(context.OldOpenApiDocument.Components.Schemas);
                 areSchemasReferenced = true;
                 if (oldSchema == null)
                     return;
@@ -96,8 +96,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             CompareItems(context, oldSchema.Items, newSchema.Items);
 
-            oldSchema.Extensions.TryGetValue("x-ms-enum", out var enumExtension);
-            CompareEnum(context, oldSchema.Enum, newSchema.Enum, enumExtension as OpenApiObject);
+            IOpenApiExtension enumExtension = null;
+            oldSchema.Extensions?.TryGetValue("x-ms-enum", out enumExtension);
+            CompareEnum(context, oldSchema.Enum, newSchema.Enum, enumExtension.AsJsonNode() as JsonObject);
 
             CompareFormat(context, oldSchema, newSchema);
 
@@ -109,8 +110,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             CompareRequired(context, oldSchema.Required, newSchema.Required);
 
-            CompareNullable(context, oldSchema.Nullable, newSchema.Nullable);
+            CompareNullable(context, IsNullable(oldSchema), IsNullable(newSchema));
         }
+
+        private static bool IsNullable(IOpenApiSchema schema) =>
+            schema.Type?.HasFlag(JsonSchemaType.Null) == true;
 
         private static void CompareNullable(ComparisonContext context,
             bool oldNullable,
@@ -155,8 +159,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CompareDefault(ComparisonContext context,
-            IOpenApiAny oldDefault,
-            IOpenApiAny newDefault)
+            JsonNode oldDefault,
+            JsonNode newDefault)
         {
             if (oldDefault == null && newDefault == null)
                 return;
@@ -170,7 +174,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
          private static void CompareConstraints(ComparisonContext context,
-             OpenApiSchema oldSchema, OpenApiSchema newSchema)
+             IOpenApiSchema oldSchema, IOpenApiSchema newSchema)
         {
             if (oldSchema.Maximum.DifferFrom(newSchema.Maximum)
                 || oldSchema.ExclusiveMaximum != newSchema.ExclusiveMaximum)
@@ -227,6 +231,23 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 context.Pop();
             }
         }
+
+         private static void CompareConstraint(ComparisonContext context, string oldConstraint,
+             string newConstraint, string attributeName, bool isLowerBound, bool additionalCondition = false)
+         {
+             var oldParsed = decimal.TryParse(oldConstraint, out var oldValue);
+             var newParsed = decimal.TryParse(newConstraint, out var newValue);
+             var hasOpaqueChange = oldConstraint.DifferFrom(newConstraint)
+                 && (oldConstraint != null && !oldParsed || newConstraint != null && !newParsed);
+
+             CompareConstraint(
+                 context,
+                 oldParsed ? oldValue : null,
+                 newParsed ? newValue : null,
+                 attributeName,
+                 isLowerBound,
+                 additionalCondition || hasOpaqueChange);
+         }
 
          private static void CompareConstraint(ComparisonContext context, decimal? oldConstraint,
              decimal? newConstraint, string attributeName, bool isLowerBound, bool additionalCondition = false)
@@ -285,16 +306,19 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 : newConstraint > oldConstraint;
         }
 
-        private static void CompareType(ComparisonContext context, string oldType, string newType)
+        private static void CompareType(ComparisonContext context, JsonSchemaType? oldType, JsonSchemaType? newType)
         {
+            oldType = WithoutNullType(oldType);
+            newType = WithoutNullType(newType);
+
             if (oldType == null && newType == null)
                 return;
 
             // Are the types the same?
             if (oldType == null || newType == null || !oldType.Equals(newType))
             {
-                var oldTypeString = oldType == null ? "" : oldType.ToLower();
-                var newTypeString = newType == null ? "" : newType.ToLower();
+                var oldTypeString = oldType == null ? "" : OpenApiTypeMapper.ToIdentifiers(oldType).FirstOrDefault() ?? "";
+                var newTypeString = newType == null ? "" : OpenApiTypeMapper.ToIdentifiers(newType).FirstOrDefault() ?? "";
 
                 context.PushProperty("type");
                 context.LogBreakingChange(ComparisonRules.TypeChanged, newTypeString, oldTypeString);
@@ -302,9 +326,18 @@ namespace Criteo.OpenApi.Comparator.Comparators
             }
         }
 
+        private static JsonSchemaType? WithoutNullType(JsonSchemaType? type)
+        {
+            if (type == null)
+                return null;
+
+            var nonNullType = type.Value & ~JsonSchemaType.Null;
+            return nonNullType == 0 ? null : nonNullType;
+        }
+
         private void CompareItems(ComparisonContext context,
-            OpenApiSchema oldItems,
-            OpenApiSchema newItems)
+            IOpenApiSchema oldItems,
+            IOpenApiSchema newItems)
         {
             if (oldItems == null || newItems == null) return;
 
@@ -314,9 +347,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CompareEnum(ComparisonContext context,
-            ICollection<IOpenApiAny> oldEnum,
-            ICollection<IOpenApiAny> newEnum,
-            OpenApiObject enumExtension)
+            ICollection<JsonNode> oldEnum,
+            ICollection<JsonNode> newEnum,
+            JsonObject enumExtension)
         {
             if (oldEnum == null && newEnum == null) return;
 
@@ -358,20 +391,15 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private static bool IsEnumModelAsString(OpenApiObject enumExtension)
+        private static bool IsEnumModelAsString(JsonObject enumExtension)
         {
-            var isEnumModelAsString = false;
-            if (enumExtension?["modelAsString"] != null && enumExtension.TryGetValue("modelAsString", out var modelAsString))
-            {
-                isEnumModelAsString = (modelAsString as OpenApiBoolean)?.Value ?? false;
-            }
-
-            return isEnumModelAsString;
+            return enumExtension?.TryGetPropertyValue("modelAsString", out var modelAsString) == true
+                   && modelAsString.JsonBoolean() == true;
         }
 
         private static void CompareFormat(ComparisonContext context,
-            OpenApiSchema oldSchema,
-            OpenApiSchema newSchema)
+            IOpenApiSchema oldSchema,
+            IOpenApiSchema newSchema)
         {
             if (!oldSchema.Format.DifferFrom(newSchema.Format)
                 || IsFormatChangeAllowed(context, oldSchema, newSchema))
@@ -383,10 +411,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static bool IsFormatChangeAllowed(ComparisonContext context,
-            OpenApiSchema oldSchema,
-            OpenApiSchema newSchema)
+            IOpenApiSchema oldSchema,
+            IOpenApiSchema newSchema)
         {
-            if (newSchema.Type == null || !newSchema.Type.Equals("integer") || context.Strict
+            if (newSchema.Type == null || !newSchema.Type.Value.HasFlag(JsonSchemaType.Integer) || context.Strict
                 || oldSchema.Format == null || newSchema.Format == null)
                 return false;
 
@@ -398,7 +426,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CompareAllOf(ComparisonContext context,
-            IList<OpenApiSchema> oldAllOf, IList<OpenApiSchema> newAllOf)
+            IList<IOpenApiSchema> oldAllOf, IList<IOpenApiSchema> newAllOf)
         {
             if (oldAllOf == null && newAllOf == null)
                 return;
@@ -411,10 +439,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
             }
 
-            var newAllOfReferences = newAllOf.Where(schema => schema.Reference != null)
-                .Select(schema => schema.Reference.ReferenceV3).ToList();
-            var oldAllOfReferences = oldAllOf.Where(schema => schema.Reference != null)
-                .Select(schema => schema.Reference.ReferenceV3).ToList();
+            var newAllOfReferences = newAllOf.Where(schema => schema.GetReference() != null)
+                .Select(schema => schema.GetReference().ReferenceV3).ToList();
+            var oldAllOfReferences = oldAllOf.Where(schema => schema.GetReference() != null)
+                .Select(schema => schema.GetReference().ReferenceV3).ToList();
 
             var differenceCount = newAllOfReferences.Except(oldAllOfReferences).Count();
             differenceCount += oldAllOfReferences.Except(newAllOfReferences).Count();
@@ -427,7 +455,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private void CompareOneOf(
-            ComparisonContext context, IList<OpenApiSchema> oldOneOf, IList<OpenApiSchema> newOneOf)
+            ComparisonContext context, IList<IOpenApiSchema> oldOneOf, IList<IOpenApiSchema> newOneOf)
         {
             if (oldOneOf == null && newOneOf == null)
                 return;
@@ -440,10 +468,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
             }
 
-            var newOneOfReferences = newOneOf.Where(schema => schema.Reference != null)
-                .Select(schema => schema.Reference.ReferenceV3).ToList();
-            var oldOneOfReferences = oldOneOf.Where(schema => schema.Reference != null)
-                .Select(schema => schema.Reference.ReferenceV3).ToList();
+            var newOneOfReferences = newOneOf.Where(schema => schema.GetReference() != null)
+                .Select(schema => schema.GetReference().ReferenceV3).ToList();
+            var oldOneOfReferences = oldOneOf.Where(schema => schema.GetReference() != null)
+                .Select(schema => schema.GetReference().ReferenceV3).ToList();
 
             var differenceCount = newOneOfReferences.Except(oldOneOfReferences).Count();
             differenceCount += oldOneOfReferences.Except(newOneOfReferences).Count();
@@ -468,8 +496,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private void CompareProperties(ComparisonContext context,
-            OpenApiSchema oldSchema,
-            OpenApiSchema newSchema,
+            IOpenApiSchema oldSchema,
+            IOpenApiSchema newSchema,
             bool isSchemaReferenced)
         {
             CompareAdditionalProperties(context, oldSchema.AdditionalProperties, newSchema.AdditionalProperties);
@@ -486,7 +514,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CompareRemovedProperties(ComparisonContext context,
-            OpenApiSchema oldSchema, OpenApiSchema newSchema)
+            IOpenApiSchema oldSchema, IOpenApiSchema newSchema)
         {
             if (oldSchema.Properties == null)
                 return;
@@ -503,7 +531,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CompareAddedProperties(ComparisonContext context,
-            OpenApiSchema oldSchema, OpenApiSchema newSchema, bool isSchemaReferenced)
+            IOpenApiSchema oldSchema, IOpenApiSchema newSchema, bool isSchemaReferenced)
         {
             if (newSchema.Properties == null)
                 return;
@@ -539,7 +567,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private void CompareCommonProperties(ComparisonContext context,
-            OpenApiSchema oldSchema, OpenApiSchema newSchema)
+            IOpenApiSchema oldSchema, IOpenApiSchema newSchema)
         {
             if (oldSchema.Properties == null || newSchema.Properties == null)
                 return;
@@ -555,7 +583,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private void CompareAdditionalProperties(ComparisonContext context,
-            OpenApiSchema oldAdditionalProperties, OpenApiSchema newAdditionalProperties)
+            IOpenApiSchema oldAdditionalProperties, IOpenApiSchema newAdditionalProperties)
         {
             context.PushProperty("additionalProperties");
             if (oldAdditionalProperties == null && newAdditionalProperties != null)

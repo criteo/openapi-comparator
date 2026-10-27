@@ -2,9 +2,9 @@
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
 using Newtonsoft.Json.Linq;
-using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Readers;
-using Microsoft.OpenApi.Writers;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Reader;
+using Microsoft.OpenApi.YamlReader;
 using System.IO;
 
 namespace Criteo.OpenApi.Comparator.Parser
@@ -18,12 +18,15 @@ namespace Criteo.OpenApi.Comparator.Parser
         /// <param name="diagnostic"></param>
         internal static JsonDocument<OpenApiDocument> Parse(string openApiDocumentAsString, out OpenApiDiagnostic diagnostic)
         {
-            var openApiReaderSettings = new OpenApiReaderSettings
+            var openApiReaderSettings = new OpenApiReaderSettings();
+            openApiReaderSettings.AddYamlReader();
+            var readResult = OpenApiDocument.Parse(openApiDocumentAsString, settings: openApiReaderSettings);
+            var openApiDocument = readResult.Document;
+            diagnostic = readResult.Diagnostic;
+            if (openApiDocument is null)
             {
-                ReferenceResolution = ReferenceResolutionSetting.DoNotResolveReferences
-            };
-            var openApiReader = new OpenApiStringReader(openApiReaderSettings);
-            var openApiDocument = openApiReader.Read(openApiDocumentAsString, out diagnostic);
+                throw new OpenApiUnsupportedSpecVersionException("unknown");
+            }
 
             var textWriter = new StringWriter();
             var openApiWriter = new OpenApiJsonWriter(textWriter);

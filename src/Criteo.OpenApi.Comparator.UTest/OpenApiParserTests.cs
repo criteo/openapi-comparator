@@ -4,8 +4,7 @@
 using System.IO;
 using System.Reflection;
 using Criteo.OpenApi.Comparator.Parser;
-using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Readers.Exceptions;
+using Microsoft.OpenApi;
 using NUnit.Framework;
 
 namespace Criteo.OpenApi.Comparator.UTest

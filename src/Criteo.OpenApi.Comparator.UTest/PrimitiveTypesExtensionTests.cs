@@ -2,7 +2,7 @@
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
-using Microsoft.OpenApi.Any;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 
 namespace Criteo.OpenApi.Comparator.UTest
@@ -76,48 +76,48 @@ namespace Criteo.OpenApi.Comparator.UTest
         [Test]
         public void DifferFrom_ShouldReturn_false_When_SameOpenApiInteger()
         {
-            var oldInteger = new OpenApiInteger(8);
-            var newInteger = new OpenApiInteger(8);
+            var oldInteger = JsonValue.Create(8);
+            var newInteger = JsonValue.Create(8);
             Assert.That(oldInteger.DifferFrom(newInteger), Is.False);
         }
 
         [Test]
         public void DifferFrom_ShouldReturn_true_When_DifferentOpenApiInteger()
         {
-            var oldInteger = new OpenApiInteger(8);
-            var newInteger = new OpenApiInteger(1);
+            var oldInteger = JsonValue.Create(8);
+            var newInteger = JsonValue.Create(1);
             Assert.That(oldInteger.DifferFrom(newInteger), Is.True);
         }
 
         [Test]
         public void DifferFrom_ShouldReturn_false_When_SameOpenApiBoolean()
         {
-            var oldBoolean = new OpenApiBoolean(false);
-            var newBoolean = new OpenApiBoolean(false);
+            var oldBoolean = JsonValue.Create(false);
+            var newBoolean = JsonValue.Create(false);
             Assert.That(oldBoolean.DifferFrom(newBoolean), Is.False);
         }
 
         [Test]
         public void DifferFrom_ShouldReturn_true_When_DifferentOpenApiBoolean()
         {
-            var oldBoolean = new OpenApiBoolean(false);
-            var newBoolean = new OpenApiBoolean(true);
+            var oldBoolean = JsonValue.Create(false);
+            var newBoolean = JsonValue.Create(true);
             Assert.That(oldBoolean.DifferFrom(newBoolean), Is.True);
         }
 
         [Test]
         public void DifferFrom_ShouldReturn_false_When_SameOpenApiString()
         {
-            var oldString = new OpenApiString("string");
-            var newString = new OpenApiString("string");
+            var oldString = JsonValue.Create("string");
+            var newString = JsonValue.Create("string");
             Assert.That(oldString.DifferFrom(newString), Is.False);
         }
 
         [Test]
         public void DifferFrom_ShouldReturn_true_When_DifferentOpenApiString()
         {
-            var oldString = new OpenApiString("oldString");
-            var newString = new OpenApiString("newString");
+            var oldString = JsonValue.Create("oldString");
+            var newString = JsonValue.Create("newString");
             Assert.That(oldString.DifferFrom(newString), Is.True);
         }
     }

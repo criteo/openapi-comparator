@@ -5,8 +5,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
-using Microsoft.OpenApi.Interfaces;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -67,24 +66,27 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="oldParameters">Old Operation's parameters</param>
         /// <param name="newParameters">New Operation's parameters</param>
         internal void CompareParameters(ComparisonContext context,
-            IList<OpenApiParameter> oldParameters,
-            IList<OpenApiParameter> newParameters)
+            IList<IOpenApiParameter> oldParameters,
+            IList<IOpenApiParameter> newParameters)
         {
             var oldDocument = context.OldOpenApiDocument;
             var newDocument = context.NewOpenApiDocument;
 
             context.PushProperty("parameters");
 
+            oldParameters ??= [];
+            newParameters ??= [];
+
             oldParameters = oldParameters.Select(oldParameter =>
-                string.IsNullOrWhiteSpace(oldParameter.Reference?.ReferenceV3)
+                string.IsNullOrWhiteSpace(oldParameter.GetReference()?.ReferenceV3)
                     ? oldParameter
-                    : oldParameter.Reference.Resolve(oldDocument.Components.Parameters)
+                    : oldParameter.GetReference().Resolve(oldDocument.Components.Parameters)
             ).ToList();
 
             newParameters = newParameters.Select(newParameter =>
-                string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3)
+                string.IsNullOrWhiteSpace(newParameter.GetReference()?.ReferenceV3)
                     ? newParameter
-                    : newParameter.Reference.Resolve(newDocument.Components.Parameters)
+                    : newParameter.GetReference().Resolve(newDocument.Components.Parameters)
             ).ToList();
 
             CompareParametersOrder(context, oldParameters, newParameters);
@@ -94,13 +96,13 @@ namespace Criteo.OpenApi.Comparator.Comparators
             CheckRequiredParametersAddition(context, oldParameters, newParameters);
         }
         private static void CompareParametersOrder(ComparisonContext context,
-            IList<OpenApiParameter> oldParameters,
-            IList<OpenApiParameter> newParameters)
+            IList<IOpenApiParameter> oldParameters,
+            IList<IOpenApiParameter> newParameters)
         {
             newParameters = newParameters.Select(parameter =>
-                string.IsNullOrWhiteSpace(parameter.Reference?.ReferenceV3)
+                string.IsNullOrWhiteSpace(parameter.GetReference()?.ReferenceV3)
                     ? parameter
-                    : parameter.Reference.Resolve(context.NewOpenApiDocument.Components.Parameters)
+                    : parameter.GetReference().Resolve(context.NewOpenApiDocument.Components.Parameters)
                 ).ToList();
 
             for (var i = 0; i < newParameters.Count(); i++)
@@ -122,8 +124,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
 
         private void CheckRequiredParametersRemoval(ComparisonContext context,
-            IEnumerable<OpenApiParameter> oldParameters,
-            IList<OpenApiParameter> newParameters)
+            IEnumerable<IOpenApiParameter> oldParameters,
+            IList<IOpenApiParameter> newParameters)
         {
             foreach (var oldParameter in oldParameters)
             {
@@ -148,21 +150,21 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private static void CheckRequiredParametersAddition(ComparisonContext context,
-            IList<OpenApiParameter> oldParameters,
-            IList<OpenApiParameter> newParameters)
+            IList<IOpenApiParameter> oldParameters,
+            IList<IOpenApiParameter> newParameters)
         {
             // Check that no parameters were added.
             newParameters = newParameters
-                .Select(parameter => string.IsNullOrWhiteSpace(parameter.Reference?.ReferenceV3)
+                .Select(parameter => string.IsNullOrWhiteSpace(parameter.GetReference()?.ReferenceV3)
                         ? parameter
-                        : parameter.Reference.Resolve(context.NewOpenApiDocument.Components.Parameters)
+                        : parameter.GetReference().Resolve(context.NewOpenApiDocument.Components.Parameters)
                 )
                 .Where(parameter => parameter != null)
                 .ToList();
 
             foreach (var newParameter in newParameters)
             {
-                OpenApiParameter oldParameter = FindParameter(
+                IOpenApiParameter oldParameter = FindParameter(
                     newParameter,
                     oldParameters,
                     context.OldOpenApiDocument.Components?.Parameters
@@ -217,7 +219,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private void CompareRequestBody(ComparisonContext context,
-            OpenApiRequestBody oldRequestBody, OpenApiRequestBody newRequestBody)
+            IOpenApiRequestBody oldRequestBody, IOpenApiRequestBody newRequestBody)
         {
             context.PushProperty("requestBody");
             _requestBody.Compare(context, oldRequestBody, newRequestBody);
@@ -229,6 +231,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
             IDictionary<string, IOpenApiExtension> newExtensions)
         {
             const string longRunningOperationExtension = "x-ms-long-running-operation";
+            oldExtensions ??= new Dictionary<string, IOpenApiExtension>();
+            newExtensions ??= new Dictionary<string, IOpenApiExtension>();
+
             oldExtensions.TryGetValue(longRunningOperationExtension, out var oldLongRunningOperationValue);
             newExtensions.TryGetValue(longRunningOperationExtension, out var newLongRunningOperationValue);
 
@@ -240,7 +245,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-        private static int FindParameterIndex(OpenApiParameter parameter, IList<OpenApiParameter> operationParameters)
+        private static int FindParameterIndex(IOpenApiParameter parameter, IList<IOpenApiParameter> operationParameters)
         {
             for (var index = 0; index < operationParameters.Count(); index++)
             {
@@ -262,23 +267,23 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="operationParameters">list of operation parameters to search</param>
         /// <param name="documentParameters">Dictionary of global parameters to search</param>
         /// <returns>Swagger Parameter if found; otherwise null</returns>
-        private static OpenApiParameter FindParameter(
-            OpenApiParameter key,
-            IEnumerable<OpenApiParameter> operationParameters,
-            IDictionary<string, OpenApiParameter> documentParameters)
+        private static IOpenApiParameter FindParameter(
+            IOpenApiParameter key,
+            IEnumerable<IOpenApiParameter> operationParameters,
+            IDictionary<string, IOpenApiParameter> documentParameters)
         {
             string name = key.Name;
             if (name == null || operationParameters == null)
                 return null;
 
-            var candidateParameters = new List<OpenApiParameter>();
+            var candidateParameters = new List<IOpenApiParameter>();
             foreach (var parameter in operationParameters)
             {
                 if (name.Equals(parameter.Name))
                     candidateParameters.Add(parameter);
                 else
                 {
-                    var referencedParameter = parameter.Reference.Resolve(documentParameters);
+                    var referencedParameter = parameter.GetReference().Resolve(documentParameters);
 
                     if (referencedParameter != null && name.Equals(referencedParameter.Name))
                         candidateParameters.Add(referencedParameter);
@@ -300,16 +305,16 @@ namespace Criteo.OpenApi.Comparator.Comparators
         /// <param name="key">The parameter to score against for functional similarity</param>
         /// <param name="candidateParameters">The candidates. One of these will be selected as the most similar</param>
         /// <returns>The most similar parameter functionally to the key parameter</returns>
-        private static OpenApiParameter GetClosestFunctionally(OpenApiParameter key, List<OpenApiParameter> candidateParameters)
+        private static IOpenApiParameter GetClosestFunctionally(IOpenApiParameter key, List<IOpenApiParameter> candidateParameters)
         {
-            OpenApiParameter bestMatch = null;
+            IOpenApiParameter bestMatch = null;
             var bestMatchScore = 0;
 
             foreach (var candidate in candidateParameters)
             {
                 var score = 0;
 
-                score += key.Reference == candidate.Reference ? 1 : 0;
+                score += key.GetReference() == candidate.GetReference() ? 1 : 0;
                 score += key.In == candidate.In ? 1 : 0;
                 score += key.Required == candidate.Required ? 1 : 0;
                 score += key.Deprecated == candidate.Deprecated ? 1 : 0;
