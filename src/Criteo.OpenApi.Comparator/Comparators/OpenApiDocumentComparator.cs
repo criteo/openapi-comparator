@@ -2,13 +2,13 @@
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text.Json.Nodes;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Criteo.OpenApi.Comparator.Logging;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Exceptions;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -19,7 +19,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         private readonly ParameterComparator _parameterComparator;
         private readonly ResponseComparator _responseComparator;
 
-        private readonly IDictionary<OpenApiSchema, bool> _isSchemaReferenced = new Dictionary<OpenApiSchema, bool>();
+        private readonly IDictionary<IOpenApiSchema, bool> _isSchemaReferenced = new Dictionary<IOpenApiSchema, bool>();
 
         internal OpenApiDocumentComparator()
         {
@@ -223,9 +223,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         private void CompareOperations(ComparisonContext context,
-            IDictionary<OperationType,OpenApiOperation> oldOperations,
-            IDictionary<OperationType,OpenApiOperation> newOperations)
+            IDictionary<HttpMethod, OpenApiOperation> oldOperations,
+            IDictionary<HttpMethod, OpenApiOperation> newOperations)
         {
+            oldOperations ??= new Dictionary<HttpMethod, OpenApiOperation>();
+            newOperations ??= new Dictionary<HttpMethod, OpenApiOperation>();
             var commonOperations = newOperations.Keys.Where(oldOperations.Keys.Contains).ToList();
 
             foreach (var removedOperationName in oldOperations.Keys.Except(commonOperations))
@@ -270,21 +272,17 @@ namespace Criteo.OpenApi.Comparator.Comparators
             OpenApiDocument newDocument)
         {
             const string customPathsName = "x-ms-paths";
-            oldDocument.Extensions.TryGetValue(customPathsName, out var oldCustomPathsAsObject);
-            newDocument.Extensions.TryGetValue(customPathsName, out var newCustomPathsAsObject);
-
-            if (oldCustomPathsAsObject == null || newCustomPathsAsObject == null)
+            if (oldDocument.Extensions == null
+                || newDocument.Extensions == null
+                || !oldDocument.Extensions.TryGetValue(customPathsName, out var oldPathsExtension)
+                || !newDocument.Extensions.TryGetValue(customPathsName, out var newPathsExtension))
                 return;
 
-            try
-            {
-                ComparePaths(context, ((OpenApiObject) oldCustomPathsAsObject).ToOpenApiPaths(),
-                    ((OpenApiObject) newCustomPathsAsObject).ToOpenApiPaths(), true);
-            }
-            catch (InvalidCastException)
-            {
+            if (oldPathsExtension is not JsonNodeExtension { Node: JsonObject oldPaths }
+                || newPathsExtension is not JsonNodeExtension { Node: JsonObject newPaths })
                 throw new OpenApiException($"Invalid format for {customPathsName} extension. It should have an OpenApi path format.");
-            }
+
+            ComparePaths(context, oldPaths.ToOpenApiPaths(oldDocument), newPaths.ToOpenApiPaths(newDocument), true);
         }
 
         private void CompareComponents(ComparisonContext context,
@@ -296,6 +294,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             oldDocument.Components = oldDocument.Components ?? new OpenApiComponents();
             newDocument.Components = newDocument.Components ?? new OpenApiComponents();
+
+            InitializeComponents(oldDocument.Components);
+            InitializeComponents(newDocument.Components);
 
             TrackSchemasReference(oldDocument);
             TrackSchemasReference(newDocument);
@@ -309,233 +310,241 @@ namespace Criteo.OpenApi.Comparator.Comparators
             CompareResponses(context, oldDocument.Components.Responses, newDocument.Components.Responses);
         }
 
+        private static void InitializeComponents(OpenApiComponents components)
+        {
+            components.Schemas ??= new Dictionary<string, IOpenApiSchema>();
+            components.Parameters ??= new Dictionary<string, IOpenApiParameter>();
+            components.Responses ??= new Dictionary<string, IOpenApiResponse>();
+            components.RequestBodies ??= new Dictionary<string, IOpenApiRequestBody>();
+        }
+
         /// <summary>
         /// In order to avoid comparing schemas that are not used, we go through all references that are
         /// found in operations, global parameters, and global responses.
         /// Schemas that are referenced from other schemas are included only by transitive closure.
         /// </summary>
         private void TrackSchemasReference(OpenApiDocument document)
-         {
-             if (document.Components.Schemas == null)
-                 return;
+        {
+            if (document.Components.Schemas == null)
+                return;
 
-             InitSchemasReference(document);
+            InitSchemasReference(document);
 
-             TrackSchemasReferenceInPaths(document);
+            TrackSchemasReferenceInPaths(document);
 
-             TrackSchemasReferenceInComponents(document);
-         }
+            TrackSchemasReferenceInComponents(document);
+        }
 
-         private void InitSchemasReference(OpenApiDocument document)
-         {
-             foreach (var schema in document.Components.Schemas.Values)
-             {
-                 if (!_isSchemaReferenced.ContainsKey(schema))
-                 {
-                     _isSchemaReferenced[schema] = false;
-                 }
-             }
-         }
+        private void InitSchemasReference(OpenApiDocument document)
+        {
+            foreach (var schema in document.Components.Schemas.Values)
+            {
+                if (!_isSchemaReferenced.ContainsKey(schema))
+                {
+                    _isSchemaReferenced[schema] = false;
+                }
+            }
+        }
 
-         private void TrackSchemasReferenceInPaths(OpenApiDocument document)
-         {
-             foreach (var pathItem in document.Paths.Values)
-             {
-                 if (pathItem.Operations == null)
-                     continue;
+        private void TrackSchemasReferenceInPaths(OpenApiDocument document)
+        {
+            foreach (var pathItem in (document.Paths ?? new OpenApiPaths()).Values)
+            {
+                if (pathItem.Operations == null)
+                    continue;
 
-                 foreach (var operation in pathItem.Operations.Values)
-                 {
-                     TrackSchemasReferenceInParameters(operation.Parameters, document.Components.Schemas);
+                foreach (var operation in pathItem.Operations.Values)
+                {
+                    TrackSchemasReferenceInParameters(operation.Parameters, document.Components.Schemas);
 
-                     TrackSchemasReferenceInRequestBody(operation.RequestBody, document.Components.Schemas);
+                    TrackSchemasReferenceInRequestBody(operation.RequestBody, document.Components.Schemas);
 
-                     TrackSchemasReferenceInResponses(operation.Responses.Values, document.Components.Schemas);
-                 }
-             }
-         }
+                    TrackSchemasReferenceInResponses(operation.Responses?.Values, document.Components.Schemas);
+                }
+            }
+        }
 
-         private void TrackSchemasReferenceInComponents(OpenApiDocument document)
-         {
-             TrackSchemasReferenceInParameters(document.Components.Parameters.Values, document.Components.Schemas);
+        private void TrackSchemasReferenceInComponents(OpenApiDocument document)
+        {
+            TrackSchemasReferenceInParameters(document.Components.Parameters.Values, document.Components.Schemas);
 
-             foreach (var requestBody in document.Components.RequestBodies.Values)
-             {
-                 TrackSchemasReferenceInRequestBody(requestBody, document.Components.Schemas);
-             }
+            foreach (var requestBody in document.Components.RequestBodies.Values)
+            {
+                TrackSchemasReferenceInRequestBody(requestBody, document.Components.Schemas);
+            }
 
-             TrackSchemasReferenceInResponses(document.Components.Responses.Values, document.Components.Schemas);
+            TrackSchemasReferenceInResponses(document.Components.Responses.Values, document.Components.Schemas);
 
-             DetectPolymorphicSchemas(document.Components.Schemas);
-         }
+            DetectPolymorphicSchemas(document.Components.Schemas);
+        }
 
-         private void TrackSchemasReferenceInParameters(IEnumerable<OpenApiParameter> parameters,
-             IDictionary<string, OpenApiSchema> commonSchemas)
-         {
-             if (parameters == null)
-                 return;
+        private void TrackSchemasReferenceInParameters(IEnumerable<IOpenApiParameter> parameters,
+            IDictionary<string, IOpenApiSchema> commonSchemas)
+        {
+            if (parameters == null)
+                return;
 
-             foreach (var parameter in parameters)
-             {
-                 if (parameter.Schema != null
-                     && !string.IsNullOrWhiteSpace(parameter.Schema.Reference?.ReferenceV3))
-                 {
-                     var schema = parameter.Schema.Reference.Resolve(commonSchemas);
-                     _isSchemaReferenced[schema ?? parameter.Schema] = true;
-                 }
-             }
-         }
+            foreach (var parameter in parameters)
+            {
+                if (parameter.Schema != null
+                    && !string.IsNullOrWhiteSpace(parameter.Schema.GetReference()?.ReferenceV3))
+                {
+                    var schema = parameter.Schema.GetReference().Resolve(commonSchemas);
+                    _isSchemaReferenced[schema ?? parameter.Schema] = true;
+                }
+            }
+        }
 
-         private void TrackSchemasReferenceInRequestBody(OpenApiRequestBody requestBody,
-             IDictionary<string, OpenApiSchema> commonSchemas)
-         {
-             if (requestBody?.Content == null)
-                 return;
+        private void TrackSchemasReferenceInRequestBody(IOpenApiRequestBody requestBody,
+            IDictionary<string, IOpenApiSchema> commonSchemas)
+        {
+            if (requestBody?.Content == null)
+                return;
 
-             foreach (var requestBodyType in requestBody.Content.Values)
-             {
-                 if (!string.IsNullOrWhiteSpace(requestBodyType.Schema?.Reference?.ReferenceV3))
-                 {
-                     var schema = requestBodyType.Schema.Reference.Resolve(commonSchemas);
-                     _isSchemaReferenced[schema] = true;
-                 }
-             }
-         }
+            foreach (var requestBodyType in requestBody.Content.Values)
+            {
+                if (!string.IsNullOrWhiteSpace(requestBodyType.Schema?.GetReference()?.ReferenceV3))
+                {
+                    var schema = requestBodyType.Schema.GetReference().Resolve(commonSchemas);
+                    _isSchemaReferenced[schema ?? requestBodyType.Schema] = true;
+                }
+            }
+        }
 
-         private void TrackSchemasReferenceInResponses(ICollection<OpenApiResponse> responses,
-             IDictionary<string, OpenApiSchema> commonSchemas)
-         {
-             if (responses == null)
-                 return;
+        private void TrackSchemasReferenceInResponses(ICollection<IOpenApiResponse> responses,
+            IDictionary<string, IOpenApiSchema> commonSchemas)
+        {
+            if (responses == null)
+                return;
 
-             foreach (var responseStatus in responses)
-             {
-                 foreach (var responseMediaType in responseStatus.Content.Values)
-                 {
-                     if (!string.IsNullOrWhiteSpace(responseMediaType?.Schema?.Reference?.ReferenceV3))
-                     {
-                         var schema = responseMediaType.Schema.Reference.Resolve(commonSchemas);
-                         _isSchemaReferenced[schema ?? responseMediaType.Schema] = true;
-                     }
-                 }
-             }
-         }
+            foreach (var responseStatus in responses)
+            {
+                foreach (var responseMediaType in (responseStatus.Content ?? new Dictionary<string, OpenApiMediaType>()).Values)
+                {
+                    if (!string.IsNullOrWhiteSpace(responseMediaType?.Schema?.GetReference()?.ReferenceV3))
+                    {
+                        var schema = responseMediaType.Schema.GetReference().Resolve(commonSchemas);
+                        _isSchemaReferenced[schema ?? responseMediaType.Schema] = true;
+                    }
+                }
+            }
+        }
 
-         /// <summary>
-         /// If a schema has an allOf property which has a discriminator,
-         /// then the schema is considered has referenced after all.
-         /// </summary>
-         private void DetectPolymorphicSchemas(IDictionary<string, OpenApiSchema> schemas)
-         {
-             var unReferencedSchemas = schemas.Values
+        /// <summary>
+        /// If a schema has an allOf property which has a discriminator,
+        /// then the schema is considered has referenced after all.
+        /// </summary>
+        private void DetectPolymorphicSchemas(IDictionary<string, IOpenApiSchema> schemas)
+        {
+            var unReferencedSchemas = schemas.Values
                  .Where(schema => !_isSchemaReferenced[schema]);
-             foreach (var schema in unReferencedSchemas)
-             {
-                 if (schema.Extensions != null && schema.Extensions.ContainsKey("x-ms-discriminator-value"))
-                 {
-                     _isSchemaReferenced[schema] = true;
-                     continue;
-                 }
+            foreach (var schema in unReferencedSchemas)
+            {
+                if (schema.Extensions != null && schema.Extensions.ContainsKey("x-ms-discriminator-value"))
+                {
+                    _isSchemaReferenced[schema] = true;
+                    continue;
+                }
 
-                 if (schema.AllOf == null)
-                     continue;
+                if (schema.AllOf == null)
+                    continue;
 
-                 var referencedAllOffProperties = schema.AllOf.Where(property =>
-                     !string.IsNullOrWhiteSpace(property.Reference?.ReferenceV3));
-                 foreach (var property in referencedAllOffProperties)
-                 {
-                     _isSchemaReferenced[schema] = FindDiscriminator(property.Reference, schemas);
+                var referencedAllOffProperties = schema.AllOf.Where(property =>
+                     !string.IsNullOrWhiteSpace(property.GetReference()?.ReferenceV3));
+                foreach (var property in referencedAllOffProperties)
+                {
+                    _isSchemaReferenced[schema] = FindDiscriminator(property.GetReference(), schemas);
 
-                     if (_isSchemaReferenced[schema])
-                         break;
-                 }
-             }
-         }
+                    if (_isSchemaReferenced[schema])
+                        break;
+                }
+            }
+        }
 
-         /// <summary>
-         /// Detect if a schema's hierarchy contains a discriminator.
-         /// </summary>
-         /// <param name="reference">A document-relative reference object</param>
-         /// <param name="schemas">The schemas dictionary to use</param>
-         /// <returns></returns>
-         private static bool FindDiscriminator(OpenApiReference reference, IDictionary<string, OpenApiSchema> schemas)
-         {
-             var schema = reference.Resolve(schemas);
-             if (schema?.Discriminator != null)
-                 return true;
+        /// <summary>
+        /// Detect if a schema's hierarchy contains a discriminator.
+        /// </summary>
+        /// <param name="reference">A document-relative reference object</param>
+        /// <param name="schemas">The schemas dictionary to use</param>
+        /// <returns></returns>
+        private static bool FindDiscriminator(BaseOpenApiReference reference, IDictionary<string, IOpenApiSchema> schemas)
+        {
+            var schema = reference.Resolve(schemas);
+            if (schema?.Discriminator != null)
+                return true;
 
-             if (schema?.AllOf == null)
-                 return false;
+            if (schema?.AllOf == null)
+                return false;
 
-             return schema.AllOf.Any(subSchema =>
-                 subSchema.Reference != null && FindDiscriminator(subSchema.Reference, schemas));
-         }
+            return schema.AllOf.Any(subSchema =>
+                subSchema.GetReference() != null && FindDiscriminator(subSchema.GetReference(), schemas));
+        }
 
-         private void CompareSchemas(ComparisonContext context,
-             IDictionary<string, OpenApiSchema> oldSchemas,
-             IDictionary<string, OpenApiSchema> newSchemas)
-         {
-             context.PushProperty("schemas");
-             foreach (var oldSchema in oldSchemas)
-             {
-                 context.PushProperty(oldSchema.Key);
-                 if (!newSchemas.TryGetValue(oldSchema.Key, out var newSchema))
-                 {
-                     if (!_isSchemaReferenced[oldSchema.Value])
-                     {
-                         // It's only an error if the schema is referenced in the old service.
-                         context.LogBreakingChange(ComparisonRules.RemovedDefinition, oldSchema.Key);
-                     }
-                 }
-                 else
-                 {
-                     _schemaComparator.Compare(context, oldSchema.Value, newSchema, _isSchemaReferenced[oldSchema.Value]);
-                 }
-                 context.Pop();
-             }
-             context.Pop();
-         }
+        private void CompareSchemas(ComparisonContext context,
+            IDictionary<string, IOpenApiSchema> oldSchemas,
+            IDictionary<string, IOpenApiSchema> newSchemas)
+        {
+            context.PushProperty("schemas");
+            foreach (var oldSchema in oldSchemas)
+            {
+                context.PushProperty(oldSchema.Key);
+                if (!newSchemas.TryGetValue(oldSchema.Key, out var newSchema))
+                {
+                    if (!_isSchemaReferenced[oldSchema.Value])
+                    {
+                        // It's only an error if the schema is referenced in the old service.
+                        context.LogBreakingChange(ComparisonRules.RemovedDefinition, oldSchema.Key);
+                    }
+                }
+                else
+                {
+                    _schemaComparator.Compare(context, oldSchema.Value, newSchema, _isSchemaReferenced[oldSchema.Value]);
+                }
+                context.Pop();
+            }
+            context.Pop();
+        }
 
-         private void CompareParameters(ComparisonContext context,
-             IDictionary<string, OpenApiParameter> oldParameters,
-             IDictionary<string, OpenApiParameter> newParameters)
-         {
-             context.PushProperty("parameters");
-             foreach (var oldParameterName in oldParameters.Keys)
-             {
-                 context.PushProperty(oldParameterName);
-                 if (!newParameters.TryGetValue(oldParameterName, out var newParameter))
-                 {
-                     context.LogBreakingChange(ComparisonRules.RemovedClientParameter, oldParameterName);
-                 }
-                 else
-                 {
-                     _parameterComparator.Compare(context, oldParameters[oldParameterName], newParameter);
-                 }
-                 context.Pop();
-             }
-             context.Pop();
-         }
+        private void CompareParameters(ComparisonContext context,
+            IDictionary<string, IOpenApiParameter> oldParameters,
+            IDictionary<string, IOpenApiParameter> newParameters)
+        {
+            context.PushProperty("parameters");
+            foreach (var oldParameterName in oldParameters.Keys)
+            {
+                context.PushProperty(oldParameterName);
+                if (!newParameters.TryGetValue(oldParameterName, out var newParameter))
+                {
+                    context.LogBreakingChange(ComparisonRules.RemovedClientParameter, oldParameterName);
+                }
+                else
+                {
+                    _parameterComparator.Compare(context, oldParameters[oldParameterName], newParameter);
+                }
+                context.Pop();
+            }
+            context.Pop();
+        }
 
-         private void CompareResponses(ComparisonContext context,
-             IDictionary<string, OpenApiResponse> oldResponses,
-             IDictionary<string, OpenApiResponse> newResponses)
-         {
-             context.PushProperty("responses");
-             foreach (var oldDefinition in oldResponses.Keys)
-             {
-                 if (!newResponses.TryGetValue(oldDefinition, out var response))
-                 {
-                     context.LogBreakingChange(ComparisonRules.RemovedDefinition, oldDefinition);
-                 }
-                 else
-                 {
-                     context.PushProperty(oldDefinition);
-                     _responseComparator.Compare(context, oldResponses[oldDefinition], response);
-                     context.Pop();
-                 }
-             }
-             context.Pop();
-         }
+        private void CompareResponses(ComparisonContext context,
+            IDictionary<string, IOpenApiResponse> oldResponses,
+            IDictionary<string, IOpenApiResponse> newResponses)
+        {
+            context.PushProperty("responses");
+            foreach (var oldDefinition in oldResponses.Keys)
+            {
+                if (!newResponses.TryGetValue(oldDefinition, out var response))
+                {
+                    context.LogBreakingChange(ComparisonRules.RemovedDefinition, oldDefinition);
+                }
+                else
+                {
+                    context.PushProperty(oldDefinition);
+                    _responseComparator.Compare(context, oldResponses[oldDefinition], response);
+                    context.Pop();
+                }
+            }
+            context.Pop();
+        }
     }
 }

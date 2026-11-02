@@ -4,8 +4,7 @@
 using System.IO;
 using System.Reflection;
 using Criteo.OpenApi.Comparator.Parser;
-using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Readers.Exceptions;
+using Microsoft.OpenApi;
 using NUnit.Framework;
 
 namespace Criteo.OpenApi.Comparator.UTest
@@ -29,7 +28,7 @@ namespace Criteo.OpenApi.Comparator.UTest
         {
             const string fileName = "invalid_json_file.txt";
             var documentAsString = ReadOpenApiFile(fileName);
-            Assert.Throws<OpenApiUnsupportedSpecVersionException>(() => OpenApiParser.Parse(documentAsString, out _));
+            Assert.Throws<OpenApiException>(() => OpenApiParser.Parse(documentAsString, out _));
         }
 
         /// <summary>

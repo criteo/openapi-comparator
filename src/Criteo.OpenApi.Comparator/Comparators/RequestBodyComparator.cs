@@ -2,7 +2,7 @@
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -16,7 +16,7 @@ namespace Criteo.OpenApi.Comparator.Comparators
         }
 
         internal void Compare(ComparisonContext context,
-            OpenApiRequestBody oldRequestBody, OpenApiRequestBody newRequestBody)
+            IOpenApiRequestBody oldRequestBody, IOpenApiRequestBody newRequestBody)
         {
             using (context.WithDirection(DataDirection.Request))
             {
@@ -36,16 +36,16 @@ namespace Criteo.OpenApi.Comparator.Comparators
                     return;
                 }
 
-                if (!string.IsNullOrWhiteSpace(oldRequestBody.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(oldRequestBody.GetReference()?.ReferenceV3))
                 {
-                    oldRequestBody = oldRequestBody.Reference.Resolve(context.OldOpenApiDocument.Components.RequestBodies);
+                    oldRequestBody = oldRequestBody.GetReference().Resolve(context.OldOpenApiDocument.Components.RequestBodies);
                     if (oldRequestBody == null)
                         return;
                 }
 
-                if (!string.IsNullOrWhiteSpace(newRequestBody.Reference?.ReferenceV3))
+                if (!string.IsNullOrWhiteSpace(newRequestBody.GetReference()?.ReferenceV3))
                 {
-                    newRequestBody = newRequestBody.Reference.Resolve(context.NewOpenApiDocument.Components.RequestBodies);
+                    newRequestBody = newRequestBody.GetReference().Resolve(context.NewOpenApiDocument.Components.RequestBodies);
                     if (newRequestBody == null)
                         return;
                 }

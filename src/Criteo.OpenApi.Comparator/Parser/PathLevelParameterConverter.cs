@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Criteo Technology. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.OpenApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using Microsoft.OpenApi.Models;
 
 namespace Criteo.OpenApi.Comparator.Parser
 {
@@ -116,7 +116,8 @@ namespace Criteo.OpenApi.Comparator.Parser
             {
                 var operation = (JProperty) jToken;
 
-                if (operation.Name == null || operation.Name.StartsWith("x-", StringComparison.InvariantCultureIgnoreCase)) continue;
+                if (operation.Name == null || operation.Name.StartsWith("x-", StringComparison.InvariantCultureIgnoreCase))
+                    continue;
 
                 result[operation.Name] = JsonConvert.DeserializeObject<OpenApiOperation>(
                     operation.Value.ToString(),
@@ -132,7 +133,7 @@ namespace Criteo.OpenApi.Comparator.Parser
         /// </summary>
         private static string GetParameterKey(JObject param)
         {
-            return (string) (param["$ref"] ?? param["name"] + "+" + param["in"]);
+            return (string)(param["$ref"] ?? param["name"] + "+" + param["in"]);
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Criteo Technology. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
-using Newtonsoft.Json.Linq;
-using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Readers;
-using Microsoft.OpenApi.Writers;
+using System.Globalization;
 using System.IO;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Reader;
+using Newtonsoft.Json.Linq;
 
 namespace Criteo.OpenApi.Comparator.Parser
 {
@@ -18,14 +18,15 @@ namespace Criteo.OpenApi.Comparator.Parser
         /// <param name="diagnostic"></param>
         internal static JsonDocument<OpenApiDocument> Parse(string openApiDocumentAsString, out OpenApiDiagnostic diagnostic)
         {
-            var openApiReaderSettings = new OpenApiReaderSettings
-            {
-                ReferenceResolution = ReferenceResolutionSetting.DoNotResolveReferences
-            };
-            var openApiReader = new OpenApiStringReader(openApiReaderSettings);
-            var openApiDocument = openApiReader.Read(openApiDocumentAsString, out diagnostic);
+            var settings = new OpenApiReaderSettings();
+            settings.AddYamlReader();
+            var result = OpenApiDocument.Parse(openApiDocumentAsString, settings: settings);
+            diagnostic = result.Diagnostic ?? new OpenApiDiagnostic();
+            var openApiDocument = result.Document
+                ?? throw new OpenApiException("Unable to parse the OpenAPI document: " +
+                    string.Join("; ", diagnostic.Errors));
 
-            var textWriter = new StringWriter();
+            using var textWriter = new StringWriter(CultureInfo.InvariantCulture);
             var openApiWriter = new OpenApiJsonWriter(textWriter);
             openApiDocument.SerializeAsV3(openApiWriter);
             var openApiDocumentAsJson = textWriter.ToString();
