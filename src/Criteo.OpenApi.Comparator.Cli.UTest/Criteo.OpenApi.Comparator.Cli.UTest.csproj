@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net6;net8;</TargetFrameworks>
+    <RootNamespace>Criteo.OpenApi.Comparator.Cli.UTest</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Criteo.OpenApi.Comparator.Cli\Criteo.OpenApi.Comparator.Cli.csproj" />
+  </ItemGroup>
+</Project>
