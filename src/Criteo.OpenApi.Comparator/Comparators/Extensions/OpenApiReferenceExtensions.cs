@@ -3,12 +3,38 @@
 
 using System.Collections.Generic;
 using System.Linq;
+#if NET10_0
+using Microsoft.OpenApi;
+using OpenApiParameter = Microsoft.OpenApi.IOpenApiParameter;
+using OpenApiReference = Microsoft.OpenApi.BaseOpenApiReference;
+using OpenApiRequestBody = Microsoft.OpenApi.IOpenApiRequestBody;
+using OpenApiResponse = Microsoft.OpenApi.IOpenApiResponse;
+using OpenApiSchema = Microsoft.OpenApi.IOpenApiSchema;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators.Extensions
 {
     internal static class OpenApiReferenceExtensions
     {
+#if NET10_0
+        internal static OpenApiReference GetReference(this OpenApiSchema schema) =>
+            (schema as IOpenApiReferenceHolder<JsonSchemaReference>)?.Reference;
+
+        internal static OpenApiReference GetReference(this OpenApiParameter parameter) =>
+            parameter as OpenApiReference;
+        internal static OpenApiReference GetReference(this OpenApiResponse response) =>
+            response as OpenApiReference;
+        internal static OpenApiReference GetReference(this OpenApiRequestBody requestBody) =>
+            requestBody as OpenApiReference;
+#else
+        internal static OpenApiReference GetReference(this OpenApiSchema schema) => schema?.Reference;
+        internal static OpenApiReference GetReference(this OpenApiParameter parameter) => parameter?.Reference;
+        internal static OpenApiReference GetReference(this OpenApiResponse response) => response?.Reference;
+        internal static OpenApiReference GetReference(this OpenApiRequestBody requestBody) => requestBody?.Reference;
+#endif
+
         /// <summary>
         /// Retrieve a parameter from the components/parameters section.
         /// </summary>

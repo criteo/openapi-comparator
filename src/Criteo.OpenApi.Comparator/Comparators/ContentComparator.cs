@@ -3,7 +3,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
+#if NET10_0
+using Microsoft.OpenApi;
+using OpenApiMediaType = Microsoft.OpenApi.IOpenApiMediaType;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {

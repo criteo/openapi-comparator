@@ -2,8 +2,16 @@
 // Licensed under the Apache 2.0 License. See LICENSE in the project root for license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
+#if NET10_0
+using Microsoft.OpenApi;
+using OpenApiParameter = Microsoft.OpenApi.IOpenApiParameter;
+using OpenApiReference = Microsoft.OpenApi.BaseOpenApiReference;
+using OpenApiSchema = Microsoft.OpenApi.IOpenApiSchema;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -13,6 +21,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
         private readonly ContentComparator _contentComparator;
 
         private readonly LinkedList<OpenApiParameter> _visitedParameters;
+
+        internal bool WasVisited(OpenApiParameter parameter) => _visitedParameters.Contains(parameter);
 
         internal ParameterComparator(SchemaComparator schemaComparator, ContentComparator contentComparator)
         {
@@ -32,16 +42,18 @@ namespace Criteo.OpenApi.Comparator.Comparators
             {
                 var areParametersReferenced = false;
 
-                if (!string.IsNullOrWhiteSpace(oldParameter.Reference?.ReferenceV3))
+                var oldReference = oldParameter.GetReference();
+                if (oldReference != null)
                 {
-                    oldParameter = FindReferencedParameter(oldParameter.Reference, context.OldOpenApiDocument.Components.Parameters);
+                    oldParameter = FindReferencedParameter(oldReference, context.OldOpenApiDocument.Components.Parameters);
                     areParametersReferenced = true;
                     if (oldParameter == null)
                         return;
                 }
-                if (!string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3))
+                var newReference = newParameter.GetReference();
+                if (newReference != null)
                 {
-                    newParameter = FindReferencedParameter(newParameter.Reference, context.NewOpenApiDocument.Components.Parameters);
+                    newParameter = FindReferencedParameter(newReference, context.NewOpenApiDocument.Components.Parameters);
                     areParametersReferenced = true;
                     if (newParameter == null)
                         return;
@@ -57,7 +69,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                 CompareIn(context, oldParameter.In, newParameter.In);
 
-                CompareConstantStatus(context, oldParameter, newParameter);
+                if (oldParameter.Schema?.GetReference() == null && newParameter.Schema?.GetReference() == null)
+                    CompareConstantStatus(context, oldParameter, newParameter);
 
                 CompareRequiredStatus(context, oldParameter, newParameter);
 
@@ -141,15 +154,13 @@ namespace Criteo.OpenApi.Comparator.Comparators
             OpenApiReference reference, IDictionary<string, OpenApiParameter> parameters
         )
         {
-            if (parameters == null || reference == null || !reference.IsLocal)
+            if (parameters == null || reference == null)
                 return null;
 
-            var parts = reference.ReferenceV3.Split('/');
-            var isPathToParameter = parts.Length == 4 && parts[1].Equals("components") && parts[2].Equals("parameters");
-            if (!isPathToParameter)
-                return null;
-
-            if (parameters.TryGetValue(parts[3], out var parameter))
+            var name = !string.IsNullOrWhiteSpace(reference.ReferenceV3)
+                ? reference.ReferenceV3.Split('/').LastOrDefault()
+                : reference.Id;
+            if (name != null && parameters.TryGetValue(name, out var parameter))
                 return parameter;
 
             return null;

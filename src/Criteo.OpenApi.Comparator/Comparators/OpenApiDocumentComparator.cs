@@ -6,9 +6,20 @@ using System.Linq;
 using System.Collections.Generic;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
 using Criteo.OpenApi.Comparator.Logging;
+#if NET10_0
+using Microsoft.OpenApi;
+using OpenApiObject = System.Text.Json.Nodes.JsonObject;
+using OpenApiParameter = Microsoft.OpenApi.IOpenApiParameter;
+using OpenApiReference = Microsoft.OpenApi.BaseOpenApiReference;
+using OpenApiRequestBody = Microsoft.OpenApi.IOpenApiRequestBody;
+using OpenApiResponse = Microsoft.OpenApi.IOpenApiResponse;
+using OpenApiSchema = Microsoft.OpenApi.IOpenApiSchema;
+using OperationType = System.Net.Http.HttpMethod;
+#else
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Exceptions;
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -270,16 +281,31 @@ namespace Criteo.OpenApi.Comparator.Comparators
             OpenApiDocument newDocument)
         {
             const string customPathsName = "x-ms-paths";
-            oldDocument.Extensions.TryGetValue(customPathsName, out var oldCustomPathsAsObject);
-            newDocument.Extensions.TryGetValue(customPathsName, out var newCustomPathsAsObject);
+            var oldCustomPathsAsObject = oldDocument.Extensions != null
+                && oldDocument.Extensions.TryGetValue(customPathsName, out var oldExtension)
+                ? oldExtension
+                : null;
+            var newCustomPathsAsObject = newDocument.Extensions != null
+                && newDocument.Extensions.TryGetValue(customPathsName, out var newExtension)
+                ? newExtension
+                : null;
 
             if (oldCustomPathsAsObject == null || newCustomPathsAsObject == null)
                 return;
 
             try
             {
+#if NET10_0
+                var oldCustomPaths = oldCustomPathsAsObject.ToJsonNode() as OpenApiObject;
+                var newCustomPaths = newCustomPathsAsObject.ToJsonNode() as OpenApiObject;
+                if (oldCustomPaths == null || newCustomPaths == null)
+                    throw new InvalidCastException();
+
+                ComparePaths(context, oldCustomPaths.ToOpenApiPaths(), newCustomPaths.ToOpenApiPaths(), true);
+#else
                 ComparePaths(context, ((OpenApiObject) oldCustomPathsAsObject).ToOpenApiPaths(),
                     ((OpenApiObject) newCustomPathsAsObject).ToOpenApiPaths(), true);
+#endif
             }
             catch (InvalidCastException)
             {
@@ -304,10 +330,61 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             CompareSchemas(context, oldDocument.Components.Schemas, newDocument.Components.Schemas);
 
-            CompareParameters(context, oldDocument.Components.Parameters, newDocument.Components.Parameters);
+#if NET10_0
+            var oldReferencedParameters = GetReferencedParameterNames(oldDocument);
+            var newReferencedParameters = GetReferencedParameterNames(newDocument);
+            var oldParameters = oldDocument.Components.Parameters?
+                .Where(parameter => oldReferencedParameters.Contains(parameter.Key)
+                    && !newDocument.Components.Parameters.ContainsKey(parameter.Key))
+                .ToDictionary(parameter => parameter.Key, parameter => parameter.Value);
+            var newParameters = new Dictionary<string, OpenApiParameter>();
+#else
+            var oldParameters = oldDocument.Components.Parameters;
+            var newParameters = newDocument.Components.Parameters;
+#endif
+            CompareParameters(context, oldParameters, newParameters);
 
             CompareResponses(context, oldDocument.Components.Responses, newDocument.Components.Responses);
         }
+
+#if NET10_0
+        private static HashSet<string> GetReferencedParameterNames(OpenApiDocument document)
+        {
+            var referencedParameters = new HashSet<string>();
+            if (document.Components.Parameters == null)
+                return referencedParameters;
+
+            foreach (var path in document.Paths.Values)
+            {
+                if (path.Operations == null)
+                    continue;
+
+                foreach (var operation in path.Operations.Values)
+                {
+                    if (operation.Parameters == null)
+                        continue;
+
+                    foreach (var parameter in operation.Parameters)
+                    {
+                        var reference = parameter.GetReference();
+                        if (reference?.ReferenceV3 == null)
+                        {
+                            var parameterName = parameter.Name;
+                            if (document.Components.Parameters.ContainsKey(parameterName))
+                                referencedParameters.Add(parameterName);
+                            continue;
+                        }
+
+                        var componentName = reference.ReferenceV3.Split('/').Last();
+                        if (document.Components.Parameters.ContainsKey(componentName))
+                            referencedParameters.Add(componentName);
+                    }
+                }
+            }
+
+            return referencedParameters;
+        }
+#endif
 
         /// <summary>
         /// In order to avoid comparing schemas that are not used, we go through all references that are
@@ -350,21 +427,24 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                      TrackSchemasReferenceInRequestBody(operation.RequestBody, document.Components.Schemas);
 
-                     TrackSchemasReferenceInResponses(operation.Responses.Values, document.Components.Schemas);
+                     if (operation.Responses != null)
+                         TrackSchemasReferenceInResponses(operation.Responses.Values, document.Components.Schemas);
                  }
              }
          }
 
          private void TrackSchemasReferenceInComponents(OpenApiDocument document)
          {
-             TrackSchemasReferenceInParameters(document.Components.Parameters.Values, document.Components.Schemas);
+             if (document.Components.Parameters != null)
+                 TrackSchemasReferenceInParameters(document.Components.Parameters.Values, document.Components.Schemas);
 
-             foreach (var requestBody in document.Components.RequestBodies.Values)
+             foreach (var requestBody in document.Components.RequestBodies?.Values ?? Enumerable.Empty<OpenApiRequestBody>())
              {
                  TrackSchemasReferenceInRequestBody(requestBody, document.Components.Schemas);
              }
 
-             TrackSchemasReferenceInResponses(document.Components.Responses.Values, document.Components.Schemas);
+             if (document.Components.Responses != null)
+                 TrackSchemasReferenceInResponses(document.Components.Responses.Values, document.Components.Schemas);
 
              DetectPolymorphicSchemas(document.Components.Schemas);
          }
@@ -377,10 +457,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
              foreach (var parameter in parameters)
              {
-                 if (parameter.Schema != null
-                     && !string.IsNullOrWhiteSpace(parameter.Schema.Reference?.ReferenceV3))
+                 var reference = parameter.Schema?.GetReference();
+                 if (!string.IsNullOrWhiteSpace(reference?.ReferenceV3))
                  {
-                     var schema = parameter.Schema.Reference.Resolve(commonSchemas);
+                     var schema = reference.Resolve(commonSchemas);
                      _isSchemaReferenced[schema ?? parameter.Schema] = true;
                  }
              }
@@ -394,10 +474,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
              foreach (var requestBodyType in requestBody.Content.Values)
              {
-                 if (!string.IsNullOrWhiteSpace(requestBodyType.Schema?.Reference?.ReferenceV3))
+                 var reference = requestBodyType.Schema?.GetReference();
+                 if (!string.IsNullOrWhiteSpace(reference?.ReferenceV3))
                  {
-                     var schema = requestBodyType.Schema.Reference.Resolve(commonSchemas);
-                     _isSchemaReferenced[schema] = true;
+                     var schema = reference.Resolve(commonSchemas);
+                     _isSchemaReferenced[schema ?? requestBodyType.Schema] = true;
                  }
              }
          }
@@ -410,11 +491,15 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
              foreach (var responseStatus in responses)
              {
+                 if (responseStatus.Content == null)
+                     continue;
+
                  foreach (var responseMediaType in responseStatus.Content.Values)
                  {
-                     if (!string.IsNullOrWhiteSpace(responseMediaType?.Schema?.Reference?.ReferenceV3))
+                     var reference = responseMediaType?.Schema?.GetReference();
+                     if (!string.IsNullOrWhiteSpace(reference?.ReferenceV3))
                      {
-                         var schema = responseMediaType.Schema.Reference.Resolve(commonSchemas);
+                         var schema = reference.Resolve(commonSchemas);
                          _isSchemaReferenced[schema ?? responseMediaType.Schema] = true;
                      }
                  }
@@ -441,10 +526,11 @@ namespace Criteo.OpenApi.Comparator.Comparators
                      continue;
 
                  var referencedAllOffProperties = schema.AllOf.Where(property =>
-                     !string.IsNullOrWhiteSpace(property.Reference?.ReferenceV3));
+                     !string.IsNullOrWhiteSpace(property.GetReference()?.ReferenceV3));
                  foreach (var property in referencedAllOffProperties)
                  {
-                     _isSchemaReferenced[schema] = FindDiscriminator(property.Reference, schemas);
+                     var reference = property.GetReference();
+                     _isSchemaReferenced[schema] = FindDiscriminator(reference, schemas);
 
                      if (_isSchemaReferenced[schema])
                          break;
@@ -468,20 +554,22 @@ namespace Criteo.OpenApi.Comparator.Comparators
                  return false;
 
              return schema.AllOf.Any(subSchema =>
-                 subSchema.Reference != null && FindDiscriminator(subSchema.Reference, schemas));
+                 subSchema.GetReference() != null && FindDiscriminator(subSchema.GetReference(), schemas));
          }
 
          private void CompareSchemas(ComparisonContext context,
              IDictionary<string, OpenApiSchema> oldSchemas,
              IDictionary<string, OpenApiSchema> newSchemas)
          {
+             oldSchemas ??= new Dictionary<string, OpenApiSchema>();
+             newSchemas ??= new Dictionary<string, OpenApiSchema>();
              context.PushProperty("schemas");
              foreach (var oldSchema in oldSchemas)
              {
                  context.PushProperty(oldSchema.Key);
                  if (!newSchemas.TryGetValue(oldSchema.Key, out var newSchema))
                  {
-                     if (!_isSchemaReferenced[oldSchema.Value])
+                 if (!_isSchemaReferenced[oldSchema.Value])
                      {
                          // It's only an error if the schema is referenced in the old service.
                          context.LogBreakingChange(ComparisonRules.RemovedDefinition, oldSchema.Key);
@@ -489,7 +577,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
                  }
                  else
                  {
-                     _schemaComparator.Compare(context, oldSchema.Value, newSchema, _isSchemaReferenced[oldSchema.Value]);
+                     if (!_schemaComparator.WasVisited(oldSchema.Value))
+                         _schemaComparator.Compare(context, oldSchema.Value, newSchema, _isSchemaReferenced[oldSchema.Value]);
                  }
                  context.Pop();
              }
@@ -500,6 +589,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
              IDictionary<string, OpenApiParameter> oldParameters,
              IDictionary<string, OpenApiParameter> newParameters)
          {
+             oldParameters ??= new Dictionary<string, OpenApiParameter>();
+             newParameters ??= new Dictionary<string, OpenApiParameter>();
              context.PushProperty("parameters");
              foreach (var oldParameterName in oldParameters.Keys)
              {
@@ -521,6 +612,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
              IDictionary<string, OpenApiResponse> oldResponses,
              IDictionary<string, OpenApiResponse> newResponses)
          {
+             oldResponses ??= new Dictionary<string, OpenApiResponse>();
+             newResponses ??= new Dictionary<string, OpenApiResponse>();
              context.PushProperty("responses");
              foreach (var oldDefinition in oldResponses.Keys)
              {

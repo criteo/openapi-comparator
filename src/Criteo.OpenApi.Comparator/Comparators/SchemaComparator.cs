@@ -4,8 +4,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using Criteo.OpenApi.Comparator.Comparators.Extensions;
+#if NET10_0
+using Microsoft.OpenApi;
+using System.Text.Json.Nodes;
+using IOpenApiAny = System.Text.Json.Nodes.JsonNode;
+using OpenApiObject = System.Text.Json.Nodes.JsonObject;
+using OpenApiSchema = Microsoft.OpenApi.IOpenApiSchema;
+#else
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Criteo.OpenApi.Comparator.Comparators
 {
@@ -20,6 +28,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
             _visitedSchemas = new LinkedList<OpenApiSchema>();
             _compareDirections = new Dictionary<OpenApiSchema, DataDirection>();
         }
+
+        internal bool WasVisited(OpenApiSchema schema) => _visitedSchemas.Contains(schema);
 
         internal void Compare(ComparisonContext context,
             OpenApiSchema oldSchema,
@@ -41,24 +51,26 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
             }
 
-            if (newSchema.Reference?.ReferenceV3 != null
-                && !newSchema.Reference.ReferenceV3.Equals(oldSchema.Reference?.ReferenceV3))
+            var newSchemaReference = newSchema.GetReference();
+            var oldSchemaReference = oldSchema.GetReference();
+            if (newSchemaReference?.ReferenceV3 != null
+                && !newSchemaReference.ReferenceV3.Equals(oldSchemaReference?.ReferenceV3))
             {
                 context.LogBreakingChange(ComparisonRules.ReferenceRedirection);
             }
 
             var areSchemasReferenced = false;
-            if (!string.IsNullOrWhiteSpace(newSchema.Reference?.ReferenceV3))
+            if (!string.IsNullOrWhiteSpace(newSchemaReference?.ReferenceV3))
             {
-                newSchema = newSchema.Reference.Resolve(context.NewOpenApiDocument.Components.Schemas);
+                newSchema = newSchemaReference.Resolve(context.NewOpenApiDocument.Components.Schemas);
                 areSchemasReferenced = true;
                 if (newSchema == null)
                     return;
             }
 
-            if (!string.IsNullOrWhiteSpace(oldSchema.Reference?.ReferenceV3))
+            if (!string.IsNullOrWhiteSpace(oldSchemaReference?.ReferenceV3))
             {
-                oldSchema = oldSchema.Reference.Resolve(context.OldOpenApiDocument.Components.Schemas);
+                oldSchema = oldSchemaReference.Resolve(context.OldOpenApiDocument.Components.Schemas);
                 areSchemasReferenced = true;
                 if (oldSchema == null)
                     return;
@@ -76,13 +88,8 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 _compareDirections[newSchema] = context.Direction;
             }
 
-            if (areSchemasReferenced)
-            {
-                if (_visitedSchemas.Contains(oldSchema) && context.Direction != DataDirection.Both)
-                    return;
-
+            if (areSchemasReferenced && !_visitedSchemas.Contains(oldSchema))
                 _visitedSchemas.AddFirst(oldSchema);
-            }
 
             CompareReadOnly(context, oldSchema.ReadOnly, newSchema.ReadOnly);
 
@@ -92,12 +99,21 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             CompareConstraints(context, oldSchema, newSchema);
 
+#if NET10_0
+            CompareNullable(context, oldSchema.Type, newSchema.Type);
+#endif
             CompareType(context, oldSchema.Type, newSchema.Type);
 
             CompareItems(context, oldSchema.Items, newSchema.Items);
 
-            oldSchema.Extensions.TryGetValue("x-ms-enum", out var enumExtension);
+            var enumExtension = oldSchema.Extensions != null && oldSchema.Extensions.ContainsKey("x-ms-enum")
+                ? oldSchema.Extensions["x-ms-enum"]
+                : null;
+#if NET10_0
+            CompareEnum(context, oldSchema.Enum, newSchema.Enum, enumExtension?.ToJsonNode() as OpenApiObject);
+#else
             CompareEnum(context, oldSchema.Enum, newSchema.Enum, enumExtension as OpenApiObject);
+#endif
 
             CompareFormat(context, oldSchema, newSchema);
 
@@ -109,7 +125,9 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
             CompareRequired(context, oldSchema.Required, newSchema.Required);
 
+#if !NET10_0
             CompareNullable(context, oldSchema.Nullable, newSchema.Nullable);
+#endif
         }
 
         private static void CompareNullable(ComparisonContext context,
@@ -169,9 +187,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
             context.Pop();
         }
 
-         private static void CompareConstraints(ComparisonContext context,
+        private static void CompareConstraints(ComparisonContext context,
              OpenApiSchema oldSchema, OpenApiSchema newSchema)
         {
+#if NET10_0
             if (oldSchema.Maximum.DifferFrom(newSchema.Maximum)
                 || oldSchema.ExclusiveMaximum != newSchema.ExclusiveMaximum)
             {
@@ -185,6 +204,21 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 CompareConstraint(context, oldSchema.Minimum, newSchema.Minimum, "minimum", true,
                     oldSchema.ExclusiveMinimum != newSchema.ExclusiveMinimum);
             }
+#else
+            if (oldSchema.Maximum.DifferFrom(newSchema.Maximum)
+                || oldSchema.ExclusiveMaximum != newSchema.ExclusiveMaximum)
+            {
+                CompareConstraint(context, oldSchema.Maximum, newSchema.Maximum, "maximum", false,
+                    oldSchema.ExclusiveMaximum != newSchema.ExclusiveMaximum);
+            }
+
+            if (oldSchema.Minimum.DifferFrom(newSchema.Minimum)
+                || oldSchema.ExclusiveMinimum != newSchema.ExclusiveMinimum)
+            {
+                CompareConstraint(context, oldSchema.Minimum, newSchema.Minimum, "minimum", true,
+                    oldSchema.ExclusiveMinimum != newSchema.ExclusiveMinimum);
+            }
+#endif
 
             if (oldSchema.MaxLength.DifferFrom(newSchema.MaxLength))
             {
@@ -252,6 +286,67 @@ namespace Criteo.OpenApi.Comparator.Comparators
              }
              context.Pop();
          }
+
+#if NET10_0
+        private static void CompareConstraint(ComparisonContext context, string oldConstraint,
+            string newConstraint, string attributeName, bool isLowerBound, bool additionalCondition = false)
+        {
+            if (TryParseConstraint(oldConstraint, out var oldValue)
+                && TryParseConstraint(newConstraint, out var newValue))
+            {
+                CompareConstraint(context, oldValue, newValue, attributeName, isLowerBound, additionalCondition);
+                return;
+            }
+
+            context.PushProperty(attributeName);
+            context.LogBreakingChange(ComparisonRules.ConstraintChanged, attributeName);
+            context.Pop();
+        }
+
+        private static bool TryParseConstraint(string value, out decimal? result)
+        {
+            if (value == null)
+            {
+                result = null;
+                return true;
+            }
+
+            var parsed = decimal.TryParse(value, System.Globalization.NumberStyles.Number,
+                System.Globalization.CultureInfo.InvariantCulture, out var number);
+            result = parsed ? number : null;
+            return parsed;
+        }
+#endif
+
+#if NET10_0
+        private static void CompareType(ComparisonContext context, JsonSchemaType? oldType, JsonSchemaType? newType)
+        {
+            var oldBaseType = oldType & ~JsonSchemaType.Null;
+            var newBaseType = newType & ~JsonSchemaType.Null;
+            if (oldBaseType == newBaseType)
+                return;
+
+            context.PushProperty("type");
+            context.LogBreakingChange(ComparisonRules.TypeChanged, newBaseType?.ToString().ToLowerInvariant() ?? "",
+                oldBaseType?.ToString().ToLowerInvariant() ?? "");
+            context.Pop();
+        }
+
+        private static void CompareNullable(ComparisonContext context, JsonSchemaType? oldType, JsonSchemaType? newType)
+        {
+            var oldNullable = oldType?.HasFlag(JsonSchemaType.Null) == true;
+            var newNullable = newType?.HasFlag(JsonSchemaType.Null) == true;
+            if (oldNullable == newNullable)
+                return;
+
+            context.PushProperty("nullable");
+            context.LogBreakingChange(
+                ComparisonRules.NullablePropertyChanged,
+                oldNullable.ToString().ToLowerInvariant(),
+                newNullable.ToString().ToLowerInvariant());
+            context.Pop();
+        }
+#endif
 
         private static bool Narrows(decimal? oldConstraint, decimal? newConstraint, bool isLowerBound)
         {
@@ -361,10 +456,19 @@ namespace Criteo.OpenApi.Comparator.Comparators
         private static bool IsEnumModelAsString(OpenApiObject enumExtension)
         {
             var isEnumModelAsString = false;
+#if NET10_0
+            if (enumExtension?.TryGetPropertyValue("modelAsString", out var modelAsString) == true
+                && modelAsString is JsonValue jsonValue
+                && jsonValue.TryGetValue<bool>(out var modelAsStringValue))
+            {
+                isEnumModelAsString = modelAsStringValue;
+            }
+#else
             if (enumExtension?["modelAsString"] != null && enumExtension.TryGetValue("modelAsString", out var modelAsString))
             {
                 isEnumModelAsString = (modelAsString as OpenApiBoolean)?.Value ?? false;
             }
+#endif
 
             return isEnumModelAsString;
         }
@@ -411,10 +515,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
             }
 
-            var newAllOfReferences = newAllOf.Where(schema => schema.Reference != null)
-                .Select(schema => schema.Reference.ReferenceV3).ToList();
-            var oldAllOfReferences = oldAllOf.Where(schema => schema.Reference != null)
-                .Select(schema => schema.Reference.ReferenceV3).ToList();
+            var newAllOfReferences = newAllOf.Where(schema => schema.GetReference() != null)
+                .Select(schema => schema.GetReference().ReferenceV3).ToList();
+            var oldAllOfReferences = oldAllOf.Where(schema => schema.GetReference() != null)
+                .Select(schema => schema.GetReference().ReferenceV3).ToList();
 
             var differenceCount = newAllOfReferences.Except(oldAllOfReferences).Count();
             differenceCount += oldAllOfReferences.Except(newAllOfReferences).Count();
@@ -440,10 +544,10 @@ namespace Criteo.OpenApi.Comparator.Comparators
                 return;
             }
 
-            var newOneOfReferences = newOneOf.Where(schema => schema.Reference != null)
-                .Select(schema => schema.Reference.ReferenceV3).ToList();
-            var oldOneOfReferences = oldOneOf.Where(schema => schema.Reference != null)
-                .Select(schema => schema.Reference.ReferenceV3).ToList();
+            var newOneOfReferences = newOneOf.Where(schema => schema.GetReference() != null)
+                .Select(schema => schema.GetReference().ReferenceV3).ToList();
+            var oldOneOfReferences = oldOneOf.Where(schema => schema.GetReference() != null)
+                .Select(schema => schema.GetReference().ReferenceV3).ToList();
 
             var differenceCount = newOneOfReferences.Except(oldOneOfReferences).Count();
             differenceCount += oldOneOfReferences.Except(newOneOfReferences).Count();

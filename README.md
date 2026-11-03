@@ -19,6 +19,14 @@ var differences = OpenApiComparator.Compare(
 );
 ```
 
+### .NET 10
+
+The package includes a `net10.0` build that uses Microsoft.OpenApi 3.10.2. The existing `netstandard2.0` build continues to use Microsoft.OpenApi 1.4.5. NuGet selects the matching build for your target framework.
+
+The basic comparator API is unchanged: pass the old and new specifications as strings. If your application also uses Microsoft.OpenApi types, update those references to version 3.10.2 for `net10.0`; OpenAPI.NET 3 moved model types from `Microsoft.OpenApi.Models` to `Microsoft.OpenApi`. The `ParsingError` API likewise uses the OpenAPI.NET 3 `Microsoft.OpenApi.OpenApiError` type on this target.
+
+If you parse OpenAPI documents directly in your application, use the matching OpenAPI.NET 3 reader APIs/packages (including `Microsoft.OpenApi.YamlReader` for YAML) rather than mixing them with the older `Microsoft.OpenApi.Readers` package.
+
 ## Command line tool
 
 The comparator is also available as a [command line tool](https://www.nuget.org/packages/Criteo.OpenApi.Comparator.Cli/0.1.0).
