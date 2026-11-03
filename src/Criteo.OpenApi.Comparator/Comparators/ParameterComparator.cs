@@ -34,14 +34,14 @@ namespace Criteo.OpenApi.Comparator.Comparators
 
                 if (!string.IsNullOrWhiteSpace(oldParameter.Reference?.ReferenceV3))
                 {
-                    oldParameter = FindReferencedParameter(oldParameter.Reference, context.OldOpenApiDocument.Components.Parameters);
+                    oldParameter = FindReferencedParameter(oldParameter.Reference, context.OldOpenApiDocument.Components?.Parameters);
                     areParametersReferenced = true;
                     if (oldParameter == null)
                         return;
                 }
                 if (!string.IsNullOrWhiteSpace(newParameter.Reference?.ReferenceV3))
                 {
-                    newParameter = FindReferencedParameter(newParameter.Reference, context.NewOpenApiDocument.Components.Parameters);
+                    newParameter = FindReferencedParameter(newParameter.Reference, context.NewOpenApiDocument.Components?.Parameters);
                     areParametersReferenced = true;
                     if (newParameter == null)
                         return;
